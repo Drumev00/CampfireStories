@@ -1,4 +1,4 @@
-﻿namespace CampfireStories.Server.Models.Identity
+﻿namespace CampfireStories.Server.Features.Identity.Models
 {
 	using System.ComponentModel.DataAnnotations;
 

@@ -1,4 +1,4 @@
-﻿namespace CampfireStories.Server.Controllers
+﻿namespace CampfireStories.Server.Features
 {
 	using Microsoft.AspNetCore.Mvc;
 
