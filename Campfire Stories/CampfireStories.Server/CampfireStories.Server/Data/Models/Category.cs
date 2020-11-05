@@ -4,7 +4,8 @@
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	
-	using CampfireStories.Server.Data.Models.Common;
+	using Data.Models.Common;
+	using static Data.Models.Common.Constants.Category;
 
 	public class Category : BaseDeletableModel<string>
 	{
@@ -17,8 +18,8 @@
 			StoryCategories = new HashSet<StoryCategories>();
 		}
 		[Required]
-		[MaxLength(40)]
-		[MinLength(3)]
+		[MaxLength(CategoryMaxLength)]
+		[MinLength(CategoryMinLength)]
 		public string Name { get; set; }
 
 		public virtual ICollection<StoryCategories> StoryCategories { get; set; }

@@ -3,10 +3,11 @@
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
-
-	using CampfireStories.Server.Data.Enumerations;
-	using CampfireStories.Server.Data.Models.Common;
 	using Microsoft.AspNetCore.Identity;
+
+	using Data.Enumerations;
+	using Data.Models.Common;
+	using static Data.Models.Common.Constants.User;
 
 	public class User : IdentityUser, IAuditInfo, IDeletableEntity
 	{
@@ -19,11 +20,15 @@
 			Comments = new HashSet<Comment>();
 			SubComments = new HashSet<SubComment>();
 			StoryReports = new HashSet<StoryReport>();
+			UserReports = new HashSet<UserReport>();
 			Stories = new HashSet<Story>();
 		}
 
+		[MinLength(MinBiographyLength)]
 		public string Biography { get; set; }
 
+		[MinLength(MinDisplayNameLength)]
+		[MaxLength(MaxDisplayNameLength)]
 		public string DisplayName { get; set; }
 
 		public string ProfilePictureUrl { get; set; }
@@ -44,6 +49,8 @@
 		public virtual ICollection<SubComment> SubComments { get; set; }
 
 		public virtual ICollection<StoryReport> StoryReports { get; set; }
+
+		public virtual ICollection<UserReport> UserReports { get; set; }
 
 		public virtual ICollection<Story> Stories { get; set; }
 	}

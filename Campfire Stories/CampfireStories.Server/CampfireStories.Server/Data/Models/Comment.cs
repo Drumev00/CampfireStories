@@ -5,7 +5,8 @@
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
-	using CampfireStories.Server.Data.Models.Common;
+	using Data.Models.Common;
+	using static Data.Models.Common.Constants.Comment;
 
 	public class Comment : BaseDeletableModel<string>
 	{
@@ -19,7 +20,7 @@
 		}
 
 		[Required]
-		[MaxLength(500)]
+		[MaxLength(ContentMaxLength)]
 		public string Content { get; set; }
 
 		public int Likes { get; set; }

@@ -5,6 +5,7 @@
 	public class HomeController : ApiController
 	{
 		//[Authorize]
+		[HttpGet]
 		public IActionResult Get()
 		{
 			return Ok("Works");

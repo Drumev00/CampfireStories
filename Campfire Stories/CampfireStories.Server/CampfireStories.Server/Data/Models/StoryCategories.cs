@@ -1,7 +1,7 @@
 ﻿namespace CampfireStories.Server.Data.Models
 {
 	using System;
-	using CampfireStories.Server.Data.Models.Common;
+	using Data.Models.Common;
 
 	public class StoryCategories : BaseDeletableModel<string>
 	{

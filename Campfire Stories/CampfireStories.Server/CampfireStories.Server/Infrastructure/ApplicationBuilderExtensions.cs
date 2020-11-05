@@ -16,5 +16,18 @@
 
 			dbContext.Database.Migrate();
 		}
+
+		public static IApplicationBuilder UseSwaggerUI (this IApplicationBuilder app)
+		{
+			app.UseSwagger()
+				.UseSwaggerUI(options =>
+				{
+					options.SwaggerEndpoint("/swagger/v1/swagger.json", "My CampfireStories API");
+					options.RoutePrefix = "swagger";
+
+				});
+
+			return app;
+		}
 	}
 }

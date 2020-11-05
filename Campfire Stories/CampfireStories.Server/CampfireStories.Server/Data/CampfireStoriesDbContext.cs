@@ -36,6 +36,8 @@
 
         public DbSet<StoryCategories> StoryCategories { get; set; }
 
+        public DbSet<UserReport> UserReports { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

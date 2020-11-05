@@ -3,9 +3,11 @@
 	using Data;
 	using Data.Models;
 	using Microsoft.AspNetCore.Authentication.JwtBearer;
+	using Microsoft.EntityFrameworkCore;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.IdentityModel.Tokens;
+	using Microsoft.OpenApi.Models;
 	using System.Text;
 
 	public static class ServiceCollectionExtensions
@@ -45,6 +47,32 @@
 					ValidateIssuer = false,
 					ValidateAudience = false
 				};
+			});
+
+			return services;
+		}
+
+		public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
+		{
+			services
+				.AddDbContext<CampfireStoriesDbContext>(options => options
+					.UseSqlServer(configuration.GetDefaultConnectionString()));
+
+			return services;
+		}
+		
+
+		public static IServiceCollection AddSwagger(this IServiceCollection services)
+		{
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc(
+					"v1",
+					new OpenApiInfo
+					{
+						Title = "My CampfireStories API",
+						Version = "v1"
+					});
 			});
 
 			return services;

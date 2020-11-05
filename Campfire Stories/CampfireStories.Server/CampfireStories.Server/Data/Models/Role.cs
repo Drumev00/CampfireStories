@@ -1,8 +1,9 @@
 ﻿namespace CampfireStories.Server.Data.Models
 {
-	using CampfireStories.Server.Data.Models.Common;
-	using Microsoft.AspNetCore.Identity;
 	using System;
+	using Microsoft.AspNetCore.Identity;
+
+	using Data.Models.Common;
 
 	public class Role : IdentityRole, IAuditInfo, IDeletableEntity
 	{

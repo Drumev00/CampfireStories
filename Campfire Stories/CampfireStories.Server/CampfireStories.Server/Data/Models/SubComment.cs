@@ -4,7 +4,8 @@
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
-	using CampfireStories.Server.Data.Models.Common;
+	using Data.Models.Common;
+	using static Data.Models.Common.Constants.SubComment;
 
 	public class SubComment : BaseDeletableModel<string>
 	{
@@ -16,7 +17,7 @@
 		}
 
 		[Required]
-		[MaxLength(500)]
+		[MaxLength(MaxSubCommentLength)]
 		public string Content { get; set; }
 
 		[Required]

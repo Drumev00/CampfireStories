@@ -4,7 +4,9 @@
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
-	using CampfireStories.Server.Data.Models.Common;
+
+	using Data.Models.Common;
+	using static Data.Models.Common.Constants.Story;
 
 	public class Story : BaseDeletableModel<string>
 	{
@@ -21,15 +23,15 @@
 		}
 
 		[Required]
-		[MinLength(1)]
-		[MaxLength(80)]
+		[MinLength(MinTitleLength)]
+		[MaxLength(MaxTitleLength)]
 		public string Title { get; set; }
 
 		[Required]
-		[MinLength(500)]
+		[MinLength(MinContentLength)]
 		public string Content { get; set; }
 
-		[Range(1, 10)]
+		[Range(MinRating, MaxRating)]
 		public double Rating { get; set; }
 
 		public int Votes { get; set; }
