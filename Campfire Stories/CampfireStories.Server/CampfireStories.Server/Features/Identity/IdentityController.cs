@@ -5,28 +5,28 @@
 	using Microsoft.Extensions.Options;
 
 	using Features.Identity.Models;
-	using CampfireStories.Server.Features.Common;
-	using Microsoft.AspNetCore.Identity;
-	using CampfireStories.Server.Data.Models;
+	using Features.Common;
+
+	using static Features.ApiRoutes;
+	using Microsoft.AspNetCore.Authorization;
+	using CampfireStories.Server.Infrastructure;
 
 	public class IdentityController : ApiController
 	{
-		private readonly UserManager<User> userManager;
 		private readonly IIdentityService identityService;
 		private readonly AppSettings appSettings;
 
 		public IdentityController(
 			IOptions<AppSettings> appSettings,
-			UserManager<User> userManager,
 			IIdentityService identityService)
 		{
-			this.userManager = userManager;
 			this.identityService = identityService;
 			this.appSettings = appSettings.Value;
 		}
 
 		[HttpPost]
-		[Route(nameof(Register))]
+		[AllowAnonymous]
+		[Route(IdentityRoutes.Register)]
 		public async Task<ActionResult<ResultModel<RegisterResponseModel>>> Register(RegisterUserRequestModel model)
 		{
 			var result = await this.identityService.RegisterAsync(
@@ -45,7 +45,8 @@
 		}
 
 		[HttpPost]
-		[Route(nameof(Login))]
+		[AllowAnonymous]
+		[Route(IdentityRoutes.Login)]
 		public async Task<ActionResult<ResultModel<LoginResponseModel>>> Login(LoginUserRequestModel model)
 		{
 			var result = await this.identityService.LoginAsync(model.Username, model.Password, appSettings.Secret);

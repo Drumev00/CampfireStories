@@ -11,6 +11,7 @@
 
 	using Data.Models;
 	using static Features.Common.Errors;
+	using static Data.Models.Common.Constants.Roles;
 	using Features.Common;
 	using Features.Identity.Models;
 	using Data.Enumerations;
@@ -117,7 +118,7 @@
 			}
 
 			var token = GenerateJwtToken(user.Id, user.UserName, secret);
-
+			await this.userManager.AddToRoleAsync(user, RegularUserRoleName);
 			return new ResultModel<RegisterResponseModel>
 			{
 				Result = new RegisterResponseModel

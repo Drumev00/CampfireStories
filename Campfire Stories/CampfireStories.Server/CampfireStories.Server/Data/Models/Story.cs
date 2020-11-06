@@ -36,6 +36,9 @@
 
 		public int Votes { get; set; }
 
+		public string PictureUrl { get; set; }
+
+
 		[Required]
 		[ForeignKey(nameof(Models.User))]
 		public string UserId { get; set; }

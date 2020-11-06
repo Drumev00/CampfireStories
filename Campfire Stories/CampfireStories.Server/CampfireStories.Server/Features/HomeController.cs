@@ -6,6 +6,7 @@
 	{
 		//[Authorize]
 		[HttpGet]
+		[Route("[controller]")]
 		public IActionResult Get()
 		{
 			return Ok("Works");

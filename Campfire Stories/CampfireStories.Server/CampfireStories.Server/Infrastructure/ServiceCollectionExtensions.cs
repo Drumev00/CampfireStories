@@ -1,6 +1,7 @@
 ﻿namespace CampfireStories.Server.Infrastructure
 {
-	using CampfireStories.Server.Features.Identity;
+	using Features.Category;
+	using Features.Identity;
 	using Data;
 	using Data.Models;
 	using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -65,7 +66,8 @@
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services)
 		{
 			return services
-				.AddTransient<IIdentityService, IdentityService>();
+				.AddTransient<IIdentityService, IdentityService>()
+				.AddTransient<ICategoryService, CategoryService>();
 		}
 		
 
