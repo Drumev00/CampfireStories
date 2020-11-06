@@ -48,5 +48,20 @@
 			public const int MinUserReportContent = 10;
 			public const int MaxUserReportContent = 500;
 		}
+
+		public static class Roles
+		{
+			public const string AdministratorRoleName = "Administrator";
+			public const string RegularUserRoleName = "User";
+			public const string BannedUserRoleName = "Banned";
+		}
+
+		public static class AdminCredentials
+		{
+			public const string AdminUsername = "Alex_Drumev";
+			public const string AdminEmail = "alex@mail.com";
+			public const string AdminPassword = "123123strong";
+			public const string AdminGender = "1";
+		}
 	}
 }

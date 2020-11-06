@@ -25,6 +25,7 @@ namespace CampfireStories.Server
 			services
 				.AddDatabase(this.Configuration)
 				.AddIdentity()
+				.AddApplicationServices()
 				.AddSwagger()
 				.AddJwtAuthentication(appSettings)
 				.AddControllers();

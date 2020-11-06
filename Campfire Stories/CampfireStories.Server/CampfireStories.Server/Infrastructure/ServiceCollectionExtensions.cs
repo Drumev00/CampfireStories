@@ -1,5 +1,6 @@
 ﻿namespace CampfireStories.Server.Infrastructure
 {
+	using CampfireStories.Server.Features.Identity;
 	using Data;
 	using Data.Models;
 	using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -59,6 +60,12 @@
 					.UseSqlServer(configuration.GetDefaultConnectionString()));
 
 			return services;
+		}
+
+		public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+		{
+			return services
+				.AddTransient<IIdentityService, IdentityService>();
 		}
 		
 

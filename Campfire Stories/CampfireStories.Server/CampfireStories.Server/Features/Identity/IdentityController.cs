@@ -1,12 +1,13 @@
 ﻿namespace CampfireStories.Server.Features.Identity
 {
 	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.Extensions.Options;
 
-	using Data.Models;
 	using Features.Identity.Models;
+	using CampfireStories.Server.Features.Common;
+	using Microsoft.AspNetCore.Identity;
+	using CampfireStories.Server.Data.Models;
 
 	public class IdentityController : ApiController
 	{
@@ -15,8 +16,8 @@
 		private readonly AppSettings appSettings;
 
 		public IdentityController(
-			UserManager<User> userManager,
 			IOptions<AppSettings> appSettings,
+			UserManager<User> userManager,
 			IIdentityService identityService)
 		{
 			this.userManager = userManager;
@@ -26,46 +27,34 @@
 
 		[HttpPost]
 		[Route(nameof(Register))]
-		public async Task<ActionResult> Register(RegisterUserRequestModel model)
+		public async Task<ActionResult<ResultModel<RegisterResponseModel>>> Register(RegisterUserRequestModel model)
 		{
-			var user = new User
-			{
-				Email = model.Email,
-				UserName = model.UserName
-			};
+			var result = await this.identityService.RegisterAsync(
+				model.UserName,
+				model.Password,
+				model.Gender,
+				model.Email,
+				this.appSettings.Secret);
 
-			var result = await this.userManager.CreateAsync(user, model.Password);
-
-			if (result.Succeeded)
+			if (!result.Success)
 			{
-				return Ok();
+				return BadRequest(new { result.Errors });
 			}
 
-			return BadRequest(result.Errors);
+			return result;
 		}
 
 		[HttpPost]
 		[Route(nameof(Login))]
-		public async Task<ActionResult<object>> Login(LoginUserRequestModel model)
+		public async Task<ActionResult<ResultModel<LoginResponseModel>>> Login(LoginUserRequestModel model)
 		{
-			var user = await userManager.FindByNameAsync(model.Username);
-			if (user == null)
+			var result = await this.identityService.LoginAsync(model.Username, model.Password, appSettings.Secret);
+			if (!result.Success)
 			{
-				return Unauthorized();
+				return this.Unauthorized(new { result.Errors });
 			}
 
-			var validatePassword = await this.userManager.CheckPasswordAsync(user, model.Password);
-			if (!validatePassword)
-			{
-				return Unauthorized();
-			}
-
-			var encryptedToken = this.identityService.GenerateJwtToken(user.Id, user.UserName, appSettings.Secret);
-
-			return new LoginResponseModel
-			{
-				Token = encryptedToken
-			};
+			return result;
 		}
 	}
 }

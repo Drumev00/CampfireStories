@@ -1,5 +1,6 @@
 ﻿namespace CampfireStories.Server.Infrastructure
 {
+	using CampfireStories.Server.Data.Models.Common;
 	using Data;
 
 	using Microsoft.AspNetCore.Builder;
@@ -15,6 +16,7 @@
 			var dbContext = services.ServiceProvider.GetService<CampfireStoriesDbContext>();
 
 			dbContext.Database.Migrate();
+			new DbContextSeeder().SeedAsync(dbContext, services.ServiceProvider).GetAwaiter().GetResult();
 		}
 
 		public static IApplicationBuilder UseSwaggerUI (this IApplicationBuilder app)

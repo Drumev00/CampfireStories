@@ -2,14 +2,14 @@
 {
 	using System;
 	using System.Linq;
+	using System.Threading;
+	using System.Reflection;
+	using System.Threading.Tasks;
 	using Microsoft.EntityFrameworkCore;
 	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-	using CampfireStories.Server.Data.Models;
-	using CampfireStories.Server.Data.Models.Common;
-	using System.Reflection;
-	using System.Threading.Tasks;
-	using System.Threading;
+	using Data.Models;
+	using Data.Models.Common;
 
     public class CampfireStoriesDbContext : IdentityDbContext<User, Role, string>
     {
