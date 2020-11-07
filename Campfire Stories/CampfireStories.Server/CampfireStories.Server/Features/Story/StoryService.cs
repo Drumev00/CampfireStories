@@ -12,16 +12,22 @@
 
 	using static Features.Common.Errors;
 	using System;
+	using CampfireStories.Server.Features.StoryCategories;
 
 	public class StoryService : IStoryService
 	{
 		private readonly CampfireStoriesDbContext dbContext;
 		private readonly IUserService userService;
+		private readonly IStoryCategoriesService storyCategoriesService;
 
-		public StoryService(CampfireStoriesDbContext dbContext, IUserService userService)
+		public StoryService(
+			CampfireStoriesDbContext dbContext,
+			IUserService userService,
+			IStoryCategoriesService storyCategoriesService)
 		{
 			this.dbContext = dbContext;
 			this.userService = userService;
+			this.storyCategoriesService = storyCategoriesService;
 		}
 
 		public async Task<ResultModel<DetailsStoryResponseModel>> CreateStoryAsync(CreateStoryRequestModel model)
@@ -57,21 +63,28 @@
 			await this.dbContext.Stories.AddAsync(story);
 			await this.dbContext.SaveChangesAsync();
 
+			await this.storyCategoriesService.CreateAsync(story.Id, model.Categories);
 
-			return new ResultModel<DetailsStoryResponseModel>
-			{
-				Result = new DetailsStoryResponseModel
+			return await this.dbContext
+				.Stories
+				.Where(s => s.Id == story.Id)
+				.Select(s => new ResultModel<DetailsStoryResponseModel>
 				{
-					CreatedOn = story.CreatedOn,
-					Title = story.Title,
-					Content = story.Content,
-					Username = story.User.UserName,
-					PictureUrl = story.PictureUrl,
-					Rating = story.Rating,
-					Votes = story.Votes,
-				},
-				Success = true,
-			};
+					Result = new DetailsStoryResponseModel
+					{
+						CreatedOn = s.CreatedOn,
+						Title = s.Title,
+						Content = s.Content,
+						Username = s.User.UserName,
+						PictureUrl = s.PictureUrl,
+						Rating = s.Rating,
+						Votes = s.Votes,
+						Categories = model.Categories,
+					},
+
+					Success = true,
+				})
+				.FirstOrDefaultAsync();
 		}
 
 		public async Task<ResultModel<bool>> DeleteStoryAsync(string storyId, string userId, string loggedUser)
@@ -107,6 +120,8 @@
 			{
 				story.IsDeleted = true;
 				story.DeletedOn = DateTime.UtcNow;
+
+				await this.storyCategoriesService.DeleteAsync(storyId);
 
 				this.dbContext.Update(story);
 				await this.dbContext.SaveChangesAsync();
@@ -196,8 +211,7 @@
 			story.ModifiedOn = DateTime.UtcNow;
 
 			this.dbContext.Update(story);
-			await this.dbContext.SaveChangesAsync();
-
+			await this.storyCategoriesService.UpdateAsync(storyId, model.Categories);
 
 			return new ResultModel<DetailsStoryResponseModel>
 			{
@@ -210,6 +224,7 @@
 					Username = story.User.UserName,
 					Rating = story.Rating,
 					Votes = story.Votes,
+					Categories = story.StoryCategories.Select(sc => sc.CategoryId).ToArray(),
 				},
 				Success = true,
 			};

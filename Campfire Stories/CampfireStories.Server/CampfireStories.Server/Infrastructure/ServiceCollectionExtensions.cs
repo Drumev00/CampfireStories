@@ -13,6 +13,7 @@
 	using System.Text;
 	using CampfireStories.Server.Features.User;
 	using CampfireStories.Server.Features.Story;
+	using CampfireStories.Server.Features.StoryCategories;
 
 	public static class ServiceCollectionExtensions
 	{
@@ -71,7 +72,8 @@
 				.AddTransient<IIdentityService, IdentityService>()
 				.AddTransient<ICategoryService, CategoryService>()
 				.AddTransient<IUserService, UserService>()
-				.AddTransient<IStoryService, StoryService>();
+				.AddTransient<IStoryService, StoryService>()
+				.AddTransient<IStoryCategoriesService, StoryCategoriesService>();
 		}
 		
 
