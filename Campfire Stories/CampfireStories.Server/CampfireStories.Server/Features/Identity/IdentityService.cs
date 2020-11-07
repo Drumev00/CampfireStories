@@ -10,11 +10,12 @@
 	using Microsoft.AspNetCore.Identity;
 
 	using Data.Models;
-	using static Features.Common.Errors;
-	using static Data.Models.Common.Constants.Roles;
 	using Features.Common;
 	using Features.Identity.Models;
 	using Data.Enumerations;
+
+	using static Features.Common.Errors;
+	using static Data.Models.Common.Constants.Roles;
 
 	public class IdentityService : IIdentityService
 	{

@@ -75,7 +75,7 @@
 
 			var category = await this.dbContext
 				.Categories
-				.Where(c => c.Id == categoryId)
+				.Where(c => c.Id == categoryId && !c.IsDeleted)
 				.FirstOrDefaultAsync();
 
 			category.DeletedOn = DateTime.UtcNow;
@@ -115,7 +115,7 @@
 
 			var category = this.dbContext
 				.Categories
-				.Where(c => c.Id == categoryId)
+				.Where(c => c.Id == categoryId && !c.IsDeleted)
 				.FirstOrDefault();
 
 			if (category == null)

@@ -43,7 +43,7 @@
 				return Unauthorized(new { result.Errors });
 			}
 
-			return this.Ok();
+			return this.Ok(result);
 		}
 
 		[HttpDelete]
@@ -60,7 +60,7 @@
 				});
 			}
 
-			return Ok();
+			return Ok(attempt);
 		}
 	}
 }

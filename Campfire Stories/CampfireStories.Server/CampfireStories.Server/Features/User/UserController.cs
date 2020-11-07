@@ -19,6 +19,20 @@
 			this.userService = userService;
 		}
 
+
+		[HttpGet]
+		[Route(UserRoutes.Profile)]
+		public async Task<ActionResult> Profile(string userId)
+		{
+			var result = await this.userService.GetProfile(userId);
+			if (!result.Success)
+			{
+				return BadRequest(result.Errors);
+			}
+
+			return Ok(result.Result);
+		}
+
 		[HttpPut]
 		[Route(UserRoutes.Update)]
 		public async Task<ActionResult<ResultModel<UpdateUserResponseModel>>> UpdateUser(UpdateUserRequestModel model)
@@ -38,10 +52,7 @@
 				return BadRequest(result.Errors);
 			}
 
-			return new ResultModel<UpdateUserResponseModel>
-			{
-				Result = result.Result
-			};
+			return result;
 		}
 
 		[HttpDelete]
@@ -62,7 +73,7 @@
 				return BadRequest(result.Errors);
 			}
 
-			return Ok();
+			return Ok(result);
 		}
 	}
 }

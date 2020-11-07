@@ -14,6 +14,10 @@
 
 		Task<ResultModel<UpdateUserResponseModel>> UpdateUser(UpdateUserRequestModel model);
 
+		Task<ResultModel<GetProfileResponseModel>> GetProfile(string userId);
+
 		Task<ResultModel<bool>> DeleteUser(string userId);
+
+		Task<bool> IsBanned(string userId);
 	}
 }

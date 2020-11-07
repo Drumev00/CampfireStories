@@ -20,7 +20,7 @@
 
 			public const int MinContentLength = 500;
 
-			public const int MinRating = 1;
+			public const int MinRating = 0;
 			public const int MaxRating = 10;
 		}
 

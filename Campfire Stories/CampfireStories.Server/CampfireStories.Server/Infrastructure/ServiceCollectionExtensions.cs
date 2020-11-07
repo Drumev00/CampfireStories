@@ -12,6 +12,7 @@
 	using Microsoft.OpenApi.Models;
 	using System.Text;
 	using CampfireStories.Server.Features.User;
+	using CampfireStories.Server.Features.Story;
 
 	public static class ServiceCollectionExtensions
 	{
@@ -69,7 +70,8 @@
 			return services
 				.AddTransient<IIdentityService, IdentityService>()
 				.AddTransient<ICategoryService, CategoryService>()
-				.AddTransient<IUserService, UserService>();
+				.AddTransient<IUserService, UserService>()
+				.AddTransient<IStoryService, StoryService>();
 		}
 		
 

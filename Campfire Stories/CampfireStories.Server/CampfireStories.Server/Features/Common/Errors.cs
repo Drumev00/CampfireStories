@@ -18,8 +18,15 @@
 
 		public static class UserErrors 
 		{
-			public const string InvalidUserId = "There\'s no user with such Id.";
+			public const string InvalidUserId = "There\'s no user with such Id or it is deleted.";
 			public const string UserHaveNoPermissionToUpdate = "You can modify only your user data.";
+			public const string BannedUserCreateStory = "You\'re banned. You have no permission to write a story";
+
+		}
+
+		public static class StoryErrors
+		{
+			public const string NotFoundOrDeletedStory = "There\'s no such story or it\'s deleted.";
 
 		}
 	}

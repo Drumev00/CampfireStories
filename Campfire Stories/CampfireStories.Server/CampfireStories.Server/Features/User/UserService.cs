@@ -99,12 +99,50 @@
 			};
 		}
 
+		public async Task<bool> IsBanned(string userId)
+		{
+			var user = await this.userManager.FindByIdAsync(userId);
+
+			return await this.userManager.IsInRoleAsync(user, BannedUserRoleName);
+		}
+
 		private async Task<User> GetById(string id)
 		{
 			return await this.dbContext
 				.Users
-				.Where(u => u.Id == id)
+				.Where(u => u.Id == id && !u.IsDeleted)
 				.FirstOrDefaultAsync();
+		}
+
+		public async Task<ResultModel<GetProfileResponseModel>> GetProfile(string userId)
+		{
+			var user = await this.dbContext
+				.Users
+				.Where(u => u.Id == userId && !u.IsDeleted)
+				.FirstOrDefaultAsync();
+			if (user == null)
+			{
+				return new ResultModel<GetProfileResponseModel>
+				{
+					Errors = { UserErrors.InvalidUserId }
+				};
+			}
+
+			return new ResultModel<GetProfileResponseModel>
+			{
+				Result = new GetProfileResponseModel
+				{
+					UserName = user.UserName,
+					Email = user.Email,
+					DisplayName = user.DisplayName,
+					CreatedOn = user.CreatedOn,
+					Gender = user.Gender.ToString(),
+					Biography = user.Biography,
+					ProfilePictureUrl = user.ProfilePictureUrl,
+				},
+
+				Success = true,
+			};
 		}
 	}
 }
