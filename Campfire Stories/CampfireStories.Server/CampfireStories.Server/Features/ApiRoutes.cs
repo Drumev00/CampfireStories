@@ -16,6 +16,14 @@
 			public const string Update = CategoryRoute + "/update";
 			public const string Delete = CategoryRoute + "/delete";
 		}
+
+		public static class UserRoutes
+		{
+			public const string UserRoute = "/user";
+			public const string Update = UserRoute + "/update";
+			public const string Delete = UserRoute + "/delete";
+
+		}
 	}
 }
 

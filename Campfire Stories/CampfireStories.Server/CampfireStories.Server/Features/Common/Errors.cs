@@ -14,6 +14,12 @@
 		{
 			public const string CategoryNameMustHaveValue = "Category name musn't be null or whitespace!";
 			public const string NoPermissionToCreateCategory = "You\'re unauthorized to do this.";
+		}
+
+		public static class UserErrors 
+		{
+			public const string InvalidUserId = "There\'s no user with such Id.";
+			public const string UserHaveNoPermissionToUpdate = "You can modify only your user data.";
 
 		}
 	}

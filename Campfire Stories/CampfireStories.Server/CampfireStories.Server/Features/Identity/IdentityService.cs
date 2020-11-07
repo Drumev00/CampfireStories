@@ -105,6 +105,7 @@
 			{
 				UserName = username,
 				Email = email,
+				DisplayName = username,
 				Gender = (Gender)Enum.Parse(typeof(Gender), gender),
 			};
 

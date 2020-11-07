@@ -3,31 +3,31 @@
 	using System;
 	using System.Linq;
 	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Identity;
+	using System.Collections.Generic;
+	using Microsoft.EntityFrameworkCore;
 
 	using Data;
 	using Data.Models;
+	using Features.User;
 	using Features.Common;
+	using Features.Category.Models;
+
 	using static Features.Common.Errors;
-	using static Data.Models.Common.Constants.Roles;
-	using System.Collections.Generic;
-	using CampfireStories.Server.Features.Category.Models;
-	using Microsoft.EntityFrameworkCore;
 
 	public class CategoryService : ICategoryService
 	{
 		private readonly CampfireStoriesDbContext dbContext;
-		private readonly UserManager<User> userManager;
+		private readonly IUserService userService;
 
-		public CategoryService(CampfireStoriesDbContext dbContext, UserManager<User> userManager)
+		public CategoryService(CampfireStoriesDbContext dbContext, IUserService userService)
 		{
 			this.dbContext = dbContext;
-			this.userManager = userManager;
+			this.userService = userService;
 		}
 
 		public async Task<ResultModel<string>> CreateCategoryAsync(string name, string userId)
 		{
-			var isAdmin = await IsAdminAsync(userId);
+			var isAdmin = await this.userService.IsAdminAsync(userId);
 			if (!isAdmin)
 			{
 				return new ResultModel<string>
@@ -63,7 +63,7 @@
 
 		public async Task<ResultModel<bool>> DeleteCategoryAsync(string categoryId, string userId)
 		{
-			var isAdmin = await this.IsAdminAsync(userId);
+			var isAdmin = await this.userService.IsAdminAsync(userId);
 			if (!isAdmin)
 			{
 				return new ResultModel<bool>
@@ -103,7 +103,7 @@
 
 		public async Task<ResultModel<bool>> UpdateCategoryAsync(string newName, string categoryId, string userId)
 		{
-			var isAdmin = await this.IsAdminAsync(userId);
+			var isAdmin = await this.userService.IsAdminAsync(userId);
 			if (!isAdmin)
 			{
 				return new ResultModel<bool>
@@ -136,22 +136,6 @@
 			{
 				Success = true,
 			};
-		}
-
-		private async Task<bool> IsAdminAsync(string userId)
-		{
-			if (userId == null || string.IsNullOrWhiteSpace(userId))
-			{
-				throw new ArgumentException(Identity.InvalidUser);
-			}
-
-			var user = await this.userManager.FindByIdAsync(userId);
-			if (user == null)
-			{
-				throw new ArgumentNullException(Identity.InvalidUser);
-			}
-
-			return await this.userManager.IsInRoleAsync(user, AdministratorRoleName);
 		}
 	}
 }

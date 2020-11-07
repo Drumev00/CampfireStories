@@ -4,10 +4,10 @@
 	using System.Threading.Tasks;
 
 	using Features.Category.Models;
+	using Features.Common;
 	using Infrastructure;
 
 	using static Features.ApiRoutes;
-	using CampfireStories.Server.Features.Common;
 
 	public class CategoryController : ApiController
 	{
