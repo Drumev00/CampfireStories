@@ -116,28 +116,25 @@
 					Errors = { UserErrors.BannedUserCreateStory }
 				};
 			}
-			if (isAdmin || loggedUser == userId)
-			{
-				story.IsDeleted = true;
-				story.DeletedOn = DateTime.UtcNow;
-
-				await this.storyCategoriesService.DeleteAsync(storyId);
-
-				this.dbContext.Update(story);
-				await this.dbContext.SaveChangesAsync();
-
-				return new ResultModel<bool>
-				{
-					Success = true,
-				};
-			}
-			else
+			if (!isAdmin && loggedUser != userId)
 			{
 				return new ResultModel<bool>
 				{
 					Errors = { UserErrors.UserHaveNoPermissionToUpdate }
 				};
 			}
+			story.IsDeleted = true;
+			story.DeletedOn = DateTime.UtcNow;
+
+			await this.storyCategoriesService.DeleteAsync(storyId);
+
+			this.dbContext.Update(story);
+			await this.dbContext.SaveChangesAsync();
+
+			return new ResultModel<bool>
+			{
+				Success = true,
+			};
 		}
 
 		public async Task<ResultModel<DetailsStoryResponseModel>> GetDetailsAsync(string storyId)

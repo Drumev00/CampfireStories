@@ -35,7 +35,7 @@
 
 		[HttpPut]
 		[Route(UserRoutes.Update)]
-		public async Task<ActionResult<ResultModel<UpdateUserResponseModel>>> UpdateUser(UpdateUserRequestModel model)
+		public async Task<ActionResult> UpdateUser(UpdateUserRequestModel model)
 		{
 			var loggedUserId = this.User.GetId();
 			if (loggedUserId != model.UserId)
@@ -52,7 +52,7 @@
 				return BadRequest(result.Errors);
 			}
 
-			return result;
+			return Ok(result.Result);
 		}
 
 		[HttpDelete]

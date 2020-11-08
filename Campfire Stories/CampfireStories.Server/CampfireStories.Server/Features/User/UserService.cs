@@ -68,7 +68,7 @@
 			}
 
 			var user = await this.userManager.FindByIdAsync(userId);
-			if (user == null)
+			if (user == null || user.IsDeleted)
 			{
 				throw new ArgumentNullException(Identity.InvalidUser);
 			}

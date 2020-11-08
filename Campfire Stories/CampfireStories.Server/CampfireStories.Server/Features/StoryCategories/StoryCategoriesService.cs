@@ -82,7 +82,6 @@
 				this.dbContext.Remove(storyCategory);
 			}
 
-
 			await this.CreateAsync(storyId, categories);
 			await this.dbContext.SaveChangesAsync();
 

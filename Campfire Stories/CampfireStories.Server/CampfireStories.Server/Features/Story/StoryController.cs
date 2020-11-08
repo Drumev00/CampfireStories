@@ -21,7 +21,7 @@
 
 		[HttpPost]
 		[Route(StoryRoutes.Create)]
-		public async Task<ActionResult<ResultModel<DetailsStoryResponseModel>>> Create(CreateStoryRequestModel model)
+		public async Task<ActionResult> Create(CreateStoryRequestModel model)
 		{
 			var result = await this.storyService.CreateStoryAsync(model);
 			if (!result.Success)
@@ -63,7 +63,7 @@
 		public async Task<ActionResult> DeleteStory(string storyId, DeleteStoryRequestModel model)
 		{
 			var user = this.User.GetId();
-			if (user != model.LoggedUser)
+			if (user != model.UserId)
 			{
 				return Unauthorized(new ResultModel<bool>
 				{
@@ -71,7 +71,7 @@
 				});
 			}
 
-			var result = await this.storyService.DeleteStoryAsync(storyId, model.UserId, model.LoggedUser);
+			var result = await this.storyService.DeleteStoryAsync(storyId, model.UserId, user);
 			if (!result.Success)
 			{
 				return Unauthorized(result.Errors);

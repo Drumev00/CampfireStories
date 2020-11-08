@@ -33,6 +33,14 @@
 			public const string Update = StoryRoute + "/{storyId}";
 			public const string Delete = StoryRoute + "/{storyId}";
 		}
+
+		public static class CommentRoutes
+		{
+			public const string CommentRoute = "/comment";
+			public const string Create = CommentRoute;
+			public const string Update = CommentRoute + "/{commentId}";
+			public const string Delete = CommentRoute + "/{commentId}";
+		}
 	}
 }
 

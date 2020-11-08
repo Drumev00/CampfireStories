@@ -27,7 +27,13 @@
 		public static class StoryErrors
 		{
 			public const string NotFoundOrDeletedStory = "There\'s no such story or it\'s deleted.";
+		}
 
+		public static class CommentErrors
+		{
+			public const string BannedUserCreateComment = "You\'re banned. You have no permission to write comments.";
+			public const string NotFoundOrDeletedComment = "There\'s no such comment or it\'s deleted.";
+			public const string UserHaveNoPermissionToDeleteCommetns = "You have no permission to delete comments!";
 		}
 	}
 }

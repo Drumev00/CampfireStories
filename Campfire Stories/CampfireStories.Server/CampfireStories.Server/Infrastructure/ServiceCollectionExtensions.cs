@@ -14,6 +14,7 @@
 	using CampfireStories.Server.Features.User;
 	using CampfireStories.Server.Features.Story;
 	using CampfireStories.Server.Features.StoryCategories;
+	using CampfireStories.Server.Features.Comment;
 
 	public static class ServiceCollectionExtensions
 	{
@@ -73,7 +74,8 @@
 				.AddTransient<ICategoryService, CategoryService>()
 				.AddTransient<IUserService, UserService>()
 				.AddTransient<IStoryService, StoryService>()
-				.AddTransient<IStoryCategoriesService, StoryCategoriesService>();
+				.AddTransient<IStoryCategoriesService, StoryCategoriesService>()
+				.AddTransient<ICommentService, CommentService>();
 		}
 		
 
