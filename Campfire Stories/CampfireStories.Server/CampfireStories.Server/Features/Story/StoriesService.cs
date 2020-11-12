@@ -1,5 +1,6 @@
 ﻿namespace CampfireStories.Server.Features.Story
 {
+	using System;
 	using System.Linq;
 	using System.Threading.Tasks;
 	using Microsoft.EntityFrameworkCore;
@@ -8,26 +9,29 @@
 	using Data.Models;
 	using Features.User;
 	using Features.Common;
+	using Features.Comment;
 	using Features.Story.Models;
+	using Features.StoryCategories;
 
 	using static Features.Common.Errors;
-	using System;
-	using CampfireStories.Server.Features.StoryCategories;
 
-	public class StoryService : IStoryService
+	public class StoriesService : IStoriesService
 	{
 		private readonly CampfireStoriesDbContext dbContext;
-		private readonly IUserService userService;
+		private readonly IUsersService userService;
 		private readonly IStoryCategoriesService storyCategoriesService;
+		private readonly ICommentsService commentService;
 
-		public StoryService(
+		public StoriesService(
 			CampfireStoriesDbContext dbContext,
-			IUserService userService,
-			IStoryCategoriesService storyCategoriesService)
+			IUsersService userService,
+			IStoryCategoriesService storyCategoriesService,
+			ICommentsService commentService)
 		{
 			this.dbContext = dbContext;
 			this.userService = userService;
 			this.storyCategoriesService = storyCategoriesService;
+			this.commentService = commentService;
 		}
 
 		public async Task<ResultModel<DetailsStoryResponseModel>> CreateStoryAsync(CreateStoryRequestModel model)
@@ -139,6 +143,16 @@
 
 		public async Task<ResultModel<DetailsStoryResponseModel>> GetDetailsAsync(string storyId)
 		{
+			if (storyId == null || string.IsNullOrWhiteSpace(storyId))
+			{
+				return new ResultModel<DetailsStoryResponseModel>
+				{
+					Errors = { StoryErrors.NotFoundOrDeletedStory }
+				};
+			}
+			var categoryIds = await this.storyCategoriesService.GetAllByStoryId(storyId);
+			var comments = await this.commentService.GetAllByStoryId(storyId);
+
 			var story = await this.dbContext
 				.Stories
 				.Where(s => s.Id == storyId && !s.IsDeleted)
@@ -153,18 +167,13 @@
 						Username = s.User.UserName,
 						Rating = s.Rating,
 						Votes = s.Votes,
+						Categories = categoryIds.Result,
+						Comments = comments.ToList(),
 					},
 
 					Success = true,
 				})
 				.FirstOrDefaultAsync();
-			if (story == null)
-			{
-				return new ResultModel<DetailsStoryResponseModel>
-				{
-					Errors = { StoryErrors.NotFoundOrDeletedStory }
-				};
-			}
 
 			return story;
 		}

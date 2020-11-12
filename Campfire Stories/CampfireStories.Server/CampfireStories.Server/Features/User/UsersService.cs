@@ -14,12 +14,12 @@
 	using static Data.Models.Common.Constants.Roles;
 	using static Features.Common.Errors;
 
-	public class UserService : IUserService
+	public class UsersService : IUsersService
 	{
 		private readonly UserManager<User> userManager;
 		private readonly CampfireStoriesDbContext dbContext;
 
-		public UserService(UserManager<User> userManager, CampfireStoriesDbContext dbContext)
+		public UsersService(UserManager<User> userManager, CampfireStoriesDbContext dbContext)
 		{
 			this.userManager = userManager;
 			this.dbContext = dbContext;
@@ -62,17 +62,8 @@
 
 		public async Task<bool> IsAdminAsync(string userId)
 		{
-			if (userId == null || string.IsNullOrWhiteSpace(userId))
-			{
-				throw new ArgumentException(Identity.InvalidUser);
-			}
-
 			var user = await this.userManager.FindByIdAsync(userId);
-			if (user == null || user.IsDeleted)
-			{
-				throw new ArgumentNullException(Identity.InvalidUser);
-			}
-
+			
 			return await this.userManager.IsInRoleAsync(user, AdministratorRoleName);
 		}
 

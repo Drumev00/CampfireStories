@@ -13,16 +13,22 @@
 
 	using static Features.Common.Errors;
 	using System;
+	using CampfireStories.Server.Features.SubComments;
 
-	public class CommentService : ICommentService
+	public class CommentsService : ICommentsService
 	{
 		private readonly CampfireStoriesDbContext dbContext;
-		private readonly IUserService userService;
+		private readonly IUsersService userService;
+		private readonly ISubCommentsService subCommentsService;
 
-		public CommentService(CampfireStoriesDbContext dbContext, IUserService userService)
+		public CommentsService(
+			CampfireStoriesDbContext dbContext,
+			IUsersService userService,
+			ISubCommentsService subCommentsService)
 		{
 			this.dbContext = dbContext;
 			this.userService = userService;
+			this.subCommentsService = subCommentsService;
 		}
 
 		public async Task<ResultModel<CreateCommentResponseModel>> CreateCommentAsync(CreateCommentRequestModel model)
@@ -125,11 +131,12 @@
 
 		public async Task<IEnumerable<CreateCommentResponseModel>> GetAllByStoryId(string storyId)
 		{
-			return await this.dbContext
+			var comments = await this.dbContext
 				.Comments
 				.Where(c => c.StoryId == storyId && !c.IsDeleted)
 				.Select(c => new CreateCommentResponseModel
 				{
+					Id = c.Id,
 					Content = c.Content,
 					CreatedOn = c.CreatedOn,
 					Likes = c.Likes,
@@ -142,12 +149,20 @@
 					},
 				})
 				.OrderByDescending(c => c.Likes)
+				.ThenByDescending(c => c.CreatedOn)
 				.ToListAsync();
+			foreach (var comment in comments)
+			{
+				var subComments = await this.subCommentsService.GetAllByRootCommentId(comment.Id);
+				comment.SubComments = subComments;
+			}
+
+			return comments;
 		}
 
-		public async Task<ResultModel<bool>> UpdateCommentAsync(UpdateCommentRequestModel model, string commentId, string loggedUser, bool isAdmin)
+		public async Task<ResultModel<bool>> UpdateCommentAsync(UpdateCommentRequestModel model, string commentId, string loggedUser)
 		{
-			var isBanned = await this.userService.IsBanned(model.UserId);
+			var isBanned = await this.userService.IsBanned(loggedUser);
 			if (isBanned)
 			{
 				return new ResultModel<bool>
@@ -168,7 +183,7 @@
 				};
 			}
 
-			if (loggedUser != model.UserId && !isAdmin)
+			if (loggedUser != comment.UserId)
 			{
 				return new ResultModel<bool>
 				{

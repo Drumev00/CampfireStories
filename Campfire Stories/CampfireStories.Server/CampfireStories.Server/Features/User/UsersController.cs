@@ -10,11 +10,11 @@
 	using static Features.Common.Errors;
 	using static ApiRoutes;
 
-	public class UserController : ApiController
+	public class UsersController : ApiController
 	{
-		private readonly IUserService userService;
+		private readonly IUsersService userService;
 
-		public UserController(IUserService userService)
+		public UsersController(IUsersService userService)
 		{
 			this.userService = userService;
 		}

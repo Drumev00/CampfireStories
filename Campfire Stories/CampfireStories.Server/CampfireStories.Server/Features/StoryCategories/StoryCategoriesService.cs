@@ -11,6 +11,7 @@
 	using static Features.Common.Errors;
 	using CampfireStories.Server.Data.Models;
 	using System;
+	using CampfireStories.Server.Features.Common;
 
 	public class StoryCategoriesService : IStoryCategoriesService
 	{
@@ -68,6 +69,28 @@
 			await this.dbContext.SaveChangesAsync();
 
 			return storyId;
+		}
+
+		public async Task<ResultModel<string[]>> GetAllByStoryId(string storyId)
+		{
+			if (storyId == null || string.IsNullOrWhiteSpace(storyId))
+			{
+				return new ResultModel<string[]>
+				{
+					Errors = { StoryErrors.NotFoundOrDeletedStory }
+				};
+			}
+
+			return new ResultModel<string[]>
+			{
+				Result = await this.dbContext
+					.StoryCategories
+					.Where(sc => sc.StoryId == storyId && !sc.IsDeleted)
+					.Select(sc => sc.Category.Name)
+					.ToArrayAsync(),
+
+				Success = true,
+			};
 		}
 
 		public async Task<string> UpdateAsync(string storyId, string[] categories)

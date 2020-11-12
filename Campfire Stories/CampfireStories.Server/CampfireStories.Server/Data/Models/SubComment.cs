@@ -20,6 +20,10 @@
 		[MaxLength(MaxSubCommentLength)]
 		public string Content { get; set; }
 
+		public int Likes { get; set; }
+
+		public int Dislikes { get; set; }
+
 		[Required]
 		[ForeignKey(nameof(Models.User))]
 		public string UserId { get; set; }

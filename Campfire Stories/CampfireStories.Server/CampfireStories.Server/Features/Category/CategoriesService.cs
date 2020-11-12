@@ -14,12 +14,12 @@
 
 	using static Features.Common.Errors;
 
-	public class CategoryService : ICategoryService
+	public class CategoriesService : ICategoriesService
 	{
 		private readonly CampfireStoriesDbContext dbContext;
-		private readonly IUserService userService;
+		private readonly IUsersService userService;
 
-		public CategoryService(CampfireStoriesDbContext dbContext, IUserService userService)
+		public CategoriesService(CampfireStoriesDbContext dbContext, IUsersService userService)
 		{
 			this.dbContext = dbContext;
 			this.userService = userService;

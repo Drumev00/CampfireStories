@@ -6,7 +6,7 @@
 	using Features.Category.Models;
 	using Features.Common;
 
-	public interface ICategoryService
+	public interface ICategoriesService
 	{
 		Task<ResultModel<string>> CreateCategoryAsync(string name, string userId);
 

@@ -35,5 +35,11 @@
 			public const string NotFoundOrDeletedComment = "There\'s no such comment or it\'s deleted.";
 			public const string UserHaveNoPermissionToDeleteCommetns = "You have no permission to delete comments!";
 		}
+
+		public static class SubCommentErrors
+		{
+			public const string BannedUserCreateSubComment = "You\'re banned. You have no permission to write comments.";
+			public const string NotFoundOrDeletedSubComment = "There\'s no such subcomment or it\'s deleted.";
+		}
 	}
 }

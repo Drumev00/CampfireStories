@@ -5,7 +5,7 @@
 	using Features.Common;
 	using Features.Story.Models;
 
-	public interface IStoryService
+	public interface IStoriesService
 	{
 		Task<ResultModel<DetailsStoryResponseModel>> CreateStoryAsync(CreateStoryRequestModel model);
 

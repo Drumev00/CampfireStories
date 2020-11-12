@@ -15,6 +15,7 @@
 	using CampfireStories.Server.Features.Story;
 	using CampfireStories.Server.Features.StoryCategories;
 	using CampfireStories.Server.Features.Comment;
+	using CampfireStories.Server.Features.SubComments;
 
 	public static class ServiceCollectionExtensions
 	{
@@ -71,11 +72,12 @@
 		{
 			return services
 				.AddTransient<IIdentityService, IdentityService>()
-				.AddTransient<ICategoryService, CategoryService>()
-				.AddTransient<IUserService, UserService>()
-				.AddTransient<IStoryService, StoryService>()
+				.AddTransient<ICategoriesService, CategoriesService>()
+				.AddTransient<IUsersService, UsersService>()
+				.AddTransient<IStoriesService, StoriesService>()
 				.AddTransient<IStoryCategoriesService, StoryCategoriesService>()
-				.AddTransient<ICommentService, CommentService>();
+				.AddTransient<ICommentsService, CommentsService>()
+				.AddTransient<ISubCommentsService, SubCommentsService>();
 		}
 		
 

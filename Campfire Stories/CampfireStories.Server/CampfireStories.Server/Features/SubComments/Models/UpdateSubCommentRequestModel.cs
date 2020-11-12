@@ -1,8 +1,8 @@
-﻿namespace CampfireStories.Server.Features.Comment.Models
+﻿namespace CampfireStories.Server.Features.SubComments.Models
 {
 	using System.ComponentModel.DataAnnotations;
 
-	public class UpdateCommentRequestModel
+	public class UpdateSubCommentRequestModel
 	{
 		[Required]
 		public string Content { get; set; }

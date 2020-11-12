@@ -5,7 +5,7 @@
 	using Features.Common;
 	using Features.User.Models;
 
-	public interface IUserService
+	public interface IUsersService
 	{
 		Task<bool> IsAdminAsync(string userId);
 

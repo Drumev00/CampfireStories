@@ -40,6 +40,16 @@
 			public const string Create = CommentRoute;
 			public const string Update = CommentRoute + "/{commentId}";
 			public const string Delete = CommentRoute + "/{commentId}";
+			public const string All = CommentRoute + "/{storyId}";
+
+		}
+
+		public static class SubCommentRoutes
+		{
+			public const string SubCommentRoute = "/subComment";
+			public const string Create = SubCommentRoute;
+			public const string Update = SubCommentRoute + "/{subCommentId}";
+			public const string Delete = SubCommentRoute + "/{subCommentId}";
 		}
 	}
 }

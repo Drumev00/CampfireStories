@@ -1,6 +1,8 @@
 ﻿namespace CampfireStories.Server.Features.Story.Models
 {
+	using CampfireStories.Server.Features.Comment.Models;
 	using System;
+	using System.Collections.Generic;
 
 	public class DetailsStoryResponseModel
 	{
@@ -19,5 +21,7 @@
 		public DateTime CreatedOn { get; set; }
 
 		public string[] Categories { get; set; }
+
+		public IEnumerable<CreateCommentResponseModel> Comments { get; set; }
 	}
 }

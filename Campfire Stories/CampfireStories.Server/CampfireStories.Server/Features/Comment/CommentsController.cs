@@ -3,22 +3,19 @@
 	using Microsoft.AspNetCore.Mvc;
 	using System.Threading.Tasks;
 
+	using Features.User;
 	using Infrastructure;
 	using Features.Comment.Models;
 
-	using static Features.Common.Errors;
 	using static ApiRoutes;
-	using CampfireStories.Server.Features.User;
 
-	public class CommentController : ApiController
+	public class CommentsController : ApiController
 	{
-		private readonly ICommentService commentService;
-		private readonly IUserService userService;
+		private readonly ICommentsService commentService;
 
-		public CommentController(ICommentService commentService, IUserService userService)
+		public CommentsController(ICommentsService commentService)
 		{
 			this.commentService = commentService;
-			this.userService = userService;
 		}
 
 		[HttpPost]
@@ -39,9 +36,8 @@
 		public async Task<ActionResult> Update(UpdateCommentRequestModel model, string commentId)
 		{
 			var loggedUser = this.User.GetId();
-			var isAdmin = await this.userService.IsAdminAsync(model.UserId);
 			
-			var result = await this.commentService.UpdateCommentAsync(model, commentId, loggedUser, isAdmin);
+			var result = await this.commentService.UpdateCommentAsync(model, commentId, loggedUser);
 			if (!result.Success)
 			{
 				return BadRequest(result.Errors);
@@ -62,6 +58,15 @@
 			}
 
 			return Ok(result.Success);
+		}
+
+		[HttpGet]
+		[Route(CommentRoutes.All)]
+		public async Task<ActionResult> All(string storyId)
+		{
+			var result = await this.commentService.GetAllByStoryId(storyId);
+			
+			return Ok(result);
 		}
 	}
 }

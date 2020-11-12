@@ -10,11 +10,11 @@
 	using CampfireStories.Server.Infrastructure;
 	using static CampfireStories.Server.Features.Common.Errors;
 
-	public class StoryController : ApiController
+	public class StoriesController : ApiController
 	{
-		private readonly IStoryService storyService;
+		private readonly IStoriesService storyService;
 
-		public StoryController(IStoryService storyService)
+		public StoriesController(IStoriesService storyService)
 		{
 			this.storyService = storyService;
 		}
