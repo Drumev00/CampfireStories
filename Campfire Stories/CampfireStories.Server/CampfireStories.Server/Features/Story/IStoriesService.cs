@@ -7,12 +7,12 @@
 
 	public interface IStoriesService
 	{
-		Task<ResultModel<DetailsStoryResponseModel>> CreateStoryAsync(CreateStoryRequestModel model);
+		Task<ResultModel<string>> CreateStoryAsync(CreateStoryRequestModel model, string userId);
 
 		Task<ResultModel<DetailsStoryResponseModel>> GetDetailsAsync(string storyId);
 
-		Task<ResultModel<DetailsStoryResponseModel>> UpdateStoryAsync(UpdateStoryRequestModel model, string storyId);
+		Task<ResultModel<bool>> UpdateStoryAsync(UpdateStoryRequestModel model, string storyId, string userId);
 
-		Task<ResultModel<bool>> DeleteStoryAsync(string storyId, string userId, string loggedUser);
+		Task<ResultModel<bool>> DeleteStoryAsync(string storyId, string userId);
 	}
 }

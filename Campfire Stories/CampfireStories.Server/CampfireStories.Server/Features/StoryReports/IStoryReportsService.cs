@@ -8,9 +8,11 @@
 
 	public interface IStoryReportsService
 	{
-		Task<ResultModel<bool>> ReportStoryAsync(CreateStoryReportRequestModel model, string reporterId);
+		Task<ResultModel<string>> ReportStoryAsync(CreateStoryReportRequestModel model, string reporterId);
 
-		Task<IEnumerable<ListingStoryReportsResponseModel>> GetAll(bool read);
+		Task<IEnumerable<ListingStoryReportsResponseModel>> GetAllByUserId(bool read, string userId);
+
+		Task<IEnumerable<ListingStoryReportsResponseModel>> GetAllForAdmin(bool read);
 
 		Task<ResultModel<DetailsStoryReportResponseModel>> GetDetailsById(string reportId);
 

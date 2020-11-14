@@ -58,7 +58,6 @@
 				Result = category.Id ,
 				Success = true,
 			};
-
 		}
 
 		public async Task<ResultModel<bool>> DeleteCategoryAsync(string categoryId, string userId)
@@ -85,6 +84,7 @@
 
 			return new ResultModel<bool>
 			{
+				Result = true,
 				Success = true,
 			};
 		}

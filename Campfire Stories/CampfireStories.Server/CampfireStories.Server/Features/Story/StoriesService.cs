@@ -34,23 +34,23 @@
 			this.commentService = commentService;
 		}
 
-		public async Task<ResultModel<DetailsStoryResponseModel>> CreateStoryAsync(CreateStoryRequestModel model)
+		public async Task<ResultModel<string>> CreateStoryAsync(CreateStoryRequestModel model, string userId)
 		{
 			var author = await this.dbContext
 				.Users
-				.Where(u => u.Id == model.UserId && !u.IsDeleted)
+				.Where(u => u.Id == userId && !u.IsDeleted)
 				.FirstOrDefaultAsync();
-			if (author == null || model.UserId == null)
+			if (author == null)
 			{
-				return new ResultModel<DetailsStoryResponseModel>
+				return new ResultModel<string>
 				{
 					Errors = { UserErrors.InvalidUserId }
 				};
 			}
-			var isBanned = await this.userService.IsBanned(model.UserId);
+			var isBanned = await this.userService.IsBanned(userId);
 			if (isBanned)
 			{
-				return new ResultModel<DetailsStoryResponseModel>
+				return new ResultModel<string>
 				{
 					Errors = { UserErrors.BannedUserCreateStory }
 				};
@@ -61,7 +61,7 @@
 				Title = model.Title,
 				Content = model.Content,
 				PictureUrl = model.PictureUrl,
-				UserId = model.UserId,
+				UserId = userId,
 			};
 
 			await this.dbContext.Stories.AddAsync(story);
@@ -69,42 +69,20 @@
 
 			await this.storyCategoriesService.CreateAsync(story.Id, model.Categories);
 
-			return await this.dbContext
-				.Stories
-				.Where(s => s.Id == story.Id)
-				.Select(s => new ResultModel<DetailsStoryResponseModel>
-				{
-					Result = new DetailsStoryResponseModel
-					{
-						CreatedOn = s.CreatedOn,
-						Title = s.Title,
-						Content = s.Content,
-						Username = s.User.UserName,
-						PictureUrl = s.PictureUrl,
-						Rating = s.Rating,
-						Votes = s.Votes,
-						Categories = model.Categories,
-					},
-
-					Success = true,
-				})
-				.FirstOrDefaultAsync();
+			return new ResultModel<string>
+			{
+				Result = story.Id,
+				Success = true,
+			};
 		}
 
-		public async Task<ResultModel<bool>> DeleteStoryAsync(string storyId, string userId, string loggedUser)
+		public async Task<ResultModel<bool>> DeleteStoryAsync(string storyId, string userId)
 		{
 			var story = await this.dbContext
 				.Stories
 				.Where(s => s.Id == storyId && !s.IsDeleted)
 				.FirstOrDefaultAsync();
-			var isAdmin = await this.userService.IsAdminAsync(loggedUser);
-			if (userId == null)
-			{
-				return new ResultModel<bool>
-				{
-					Errors = { UserErrors.InvalidUserId }
-				};
-			}
+			var isAdmin = await this.userService.IsAdminAsync(userId);
 			if (story == null)
 			{
 				return new ResultModel<bool>
@@ -112,7 +90,7 @@
 					Errors = { StoryErrors.NotFoundOrDeletedStory }
 				};
 			}
-			var isBanned = await this.userService.IsBanned(loggedUser);
+			var isBanned = await this.userService.IsBanned(userId);
 			if (isBanned)
 			{
 				return new ResultModel<bool>
@@ -120,7 +98,7 @@
 					Errors = { UserErrors.BannedUserCreateStory }
 				};
 			}
-			if (!isAdmin && loggedUser != userId)
+			if (!isAdmin && userId != story.UserId)
 			{
 				return new ResultModel<bool>
 				{
@@ -132,7 +110,7 @@
 
 			await this.storyCategoriesService.DeleteAsync(storyId);
 
-			this.dbContext.Update(story);
+			this.dbContext.Stories.Update(story);
 			await this.dbContext.SaveChangesAsync();
 
 			return new ResultModel<bool>
@@ -178,7 +156,7 @@
 			return story;
 		}
 
-		public async Task<ResultModel<DetailsStoryResponseModel>> UpdateStoryAsync(UpdateStoryRequestModel model, string storyId)
+		public async Task<ResultModel<bool>> UpdateStoryAsync(UpdateStoryRequestModel model, string storyId, string userId)
 		{
 			var story = await this.dbContext
 				.Stories
@@ -186,7 +164,7 @@
 				.FirstOrDefaultAsync();
 			if (story == null)
 			{
-				return new ResultModel<DetailsStoryResponseModel>
+				return new ResultModel<bool>
 				{
 					Errors = { UserErrors.InvalidUserId }
 				};
@@ -194,23 +172,30 @@
 			var isBanned = await this.userService.IsBanned(story.UserId);
 			if (isBanned)
 			{
-				return new ResultModel<DetailsStoryResponseModel>
+				return new ResultModel<bool>
 				{
 					Errors = { UserErrors.BannedUserCreateStory }
+				};
+			}
+			if (userId != story.UserId)
+			{
+				return new ResultModel<bool>
+				{
+					Errors = { UserErrors.UserHaveNoPermissionToUpdate }
 				};
 			}
 
 
 			// All of them aren't nullable.
-			story.Title = model.Title == null ?
+			story.Title = model.Title == null || string.IsNullOrWhiteSpace(model.Title) ?
 				model.Title = story.Title :
 				story.Title = model.Title;
 
-			story.Content = model.Content == null ?
+			story.Content = model.Content == null || string.IsNullOrWhiteSpace(model.Content) ?
 				model.Content = story.Content :
 				story.Content = model.Content;
 
-			story.PictureUrl = model.PictureUrl == null ?
+			story.PictureUrl = model.PictureUrl == null || string.IsNullOrWhiteSpace(model.PictureUrl) ?
 				model.PictureUrl = story.PictureUrl :
 				story.PictureUrl = model.PictureUrl;
 
@@ -219,19 +204,9 @@
 			this.dbContext.Update(story);
 			await this.storyCategoriesService.UpdateAsync(storyId, model.Categories);
 
-			return new ResultModel<DetailsStoryResponseModel>
+			return new ResultModel<bool>
 			{
-				Result = new DetailsStoryResponseModel
-				{
-					Title = story.Title,
-					CreatedOn = story.CreatedOn,
-					PictureUrl = story.PictureUrl,
-					Content = story.Content,
-					Username = story.User.UserName,
-					Rating = story.Rating,
-					Votes = story.Votes,
-					Categories = story.StoryCategories.Select(sc => sc.CategoryId).ToArray(),
-				},
+				Result = true,
 				Success = true,
 			};
 		}

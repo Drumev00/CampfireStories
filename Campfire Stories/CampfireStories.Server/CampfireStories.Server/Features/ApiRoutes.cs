@@ -20,9 +20,13 @@
 		public static class UserRoutes
 		{
 			public const string UserRoute = "/user";
+			public const string AdminRoute = "/admin";
+
 			public const string Update = UserRoute + "/{userId}";
 			public const string Delete = UserRoute + "/{userId}";
 			public const string Profile = UserRoute + "/{userId}";
+			public const string Ban = AdminRoute + UserRoute + "/{userId}";
+			public const string Unban = AdminRoute + UserRoute + "/{userId}";
 		}
 
 		public static class StoryRoutes
@@ -60,6 +64,19 @@
 			public const string GetDetailsById = StoryReportRoute + "/{storyReportId}";
 			public const string Update = StoryReportRoute + "/{storyReportId}";
 			public const string Delete = StoryReportRoute + "/{storyReportId}";
+			public const string AdminListing = "/admin" + StoryReportRoute;
+
+		}
+
+		public static class UserReportRoutes
+		{
+			public const string UserReportRoute = "/userReport";
+			public const string Create = UserReportRoute;
+			public const string AllByRead = UserReportRoute;
+			public const string Details = UserReportRoute + "/{userReportId}";
+			public const string Update = UserReportRoute + "/{userReportId}";
+			public const string Delete = UserReportRoute + "/{userReportId}";
+			public const string AdminListing = "/admin" + UserReportRoute;
 		}
 	}
 }

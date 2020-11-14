@@ -17,6 +17,7 @@
 	using CampfireStories.Server.Features.Comment;
 	using CampfireStories.Server.Features.SubComments;
 	using CampfireStories.Server.Features.StoryReports;
+	using CampfireStories.Server.Features.UserReports;
 
 	public static class ServiceCollectionExtensions
 	{
@@ -79,7 +80,8 @@
 				.AddTransient<IStoryCategoriesService, StoryCategoriesService>()
 				.AddTransient<ICommentsService, CommentsService>()
 				.AddTransient<ISubCommentsService, SubCommentsService>()
-				.AddTransient<IStoryReportsService, StoryReportsService>();
+				.AddTransient<IStoryReportsService, StoryReportsService>()
+				.AddTransient<IUserReportsService, UserReportsService>();
 		}
 		
 

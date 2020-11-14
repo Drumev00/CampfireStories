@@ -1,5 +1,6 @@
 ﻿namespace CampfireStories.Server.Features.Comment
 {
+	using System;
 	using System.Linq;
 	using System.Threading.Tasks;
 	using System.Collections.Generic;
@@ -7,13 +8,12 @@
 
 	using Data;
 	using Data.Models;
-	using Features.Comment.Models;
-	using Features.Common;
 	using Features.User;
+	using Features.Common;
+	using Features.SubComments;
+	using Features.Comment.Models;
 
 	using static Features.Common.Errors;
-	using System;
-	using CampfireStories.Server.Features.SubComments;
 
 	public class CommentsService : ICommentsService
 	{
@@ -31,15 +31,15 @@
 			this.subCommentsService = subCommentsService;
 		}
 
-		public async Task<ResultModel<CreateCommentResponseModel>> CreateCommentAsync(CreateCommentRequestModel model)
+		public async Task<ResultModel<string>> CreateCommentAsync(CreateCommentRequestModel model, string userId)
 		{
 			var user = await this.dbContext
 				.Users
-				.Where(u => u.Id == model.UserId && !u.IsDeleted)
+				.Where(u => u.Id == userId && !u.IsDeleted)
 				.FirstOrDefaultAsync();
 			if (user == null)
 			{
-				return new ResultModel<CreateCommentResponseModel>
+				return new ResultModel<string>
 				{
 					Errors = { UserErrors.InvalidUserId }
 				};
@@ -51,15 +51,15 @@
 				.FirstOrDefaultAsync();
 			if (story == null)
 			{
-				return new ResultModel<CreateCommentResponseModel>
+				return new ResultModel<string>
 				{
 					Errors = { StoryErrors.NotFoundOrDeletedStory }
 				};
 			}
-			var isBanned = await this.userService.IsBanned(model.UserId);
+			var isBanned = await this.userService.IsBanned(userId);
 			if (isBanned)
 			{
-				return new ResultModel<CreateCommentResponseModel>
+				return new ResultModel<string>
 				{
 					Errors = { CommentErrors.BannedUserCreateComment }
 				};
@@ -69,7 +69,7 @@
 			{
 				Content = model.Content,
 				StoryId = model.StoryId,
-				UserId = model.UserId,
+				UserId = userId,
 				Likes = 0,
 				Dislikes = 0,
 			};
@@ -77,28 +77,11 @@
 			await this.dbContext.AddAsync(comment);
 			await this.dbContext.SaveChangesAsync();
 
-			return await this.dbContext
-				.Comments
-				.Where(c => c.Id == comment.Id)
-				.Select(c => new ResultModel<CreateCommentResponseModel>
-				{
-					Result = new CreateCommentResponseModel
-					{
-						Content = c.Content,
-						CreatedOn = c.CreatedOn,
-						Likes = c.Likes,
-						Dislikes = c.Dislikes,
-						User = new UserCommentDetailsModel
-						{
-							UserId = c.User.Id,
-							UserName = c.User.UserName,
-							ProfilePic = c.User.ProfilePictureUrl,
-						},
-					},
-
-					Success = true
-				})
-				.FirstOrDefaultAsync();
+			return new ResultModel<string>
+			{
+				Result = comment.Id,
+				Success = true,
+			};
 		}
 
 		public async Task<ResultModel<bool>> DeleteCommentAsync(string commentId, string userId)
@@ -108,7 +91,7 @@
 			{
 				return new ResultModel<bool>
 				{
-					Errors = { CommentErrors.UserHaveNoPermissionToDeleteCommetns }
+					Errors = { CommentErrors.UserHaveNoPermissionToDeleteComments }
 				};
 			}
 
@@ -116,6 +99,8 @@
 				.Comments
 				.Where(c => c.Id == commentId && !c.IsDeleted)
 				.FirstOrDefaultAsync();
+
+			await this.subCommentsService.DeleteAllByRootCommentIdAsync(commentId);
 
 			comment.IsDeleted = true;
 			comment.DeletedOn = DateTime.UtcNow;
@@ -160,7 +145,7 @@
 			return comments;
 		}
 
-		public async Task<ResultModel<bool>> UpdateCommentAsync(UpdateCommentRequestModel model, string commentId, string loggedUser)
+		public async Task<ResultModel<bool>> UpdateCommentAsync(string content, string commentId, string loggedUser)
 		{
 			var isBanned = await this.userService.IsBanned(loggedUser);
 			if (isBanned)
@@ -190,7 +175,7 @@
 					Errors = { UserErrors.UserHaveNoPermissionToUpdate }
 				};
 			}
-			comment.Content = model.Content;
+			comment.Content = content;
 
 			this.dbContext.Update(comment);
 			await this.dbContext.SaveChangesAsync();

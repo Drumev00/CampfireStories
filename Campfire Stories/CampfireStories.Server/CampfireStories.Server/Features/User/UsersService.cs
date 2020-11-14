@@ -25,12 +25,12 @@
 			this.dbContext = dbContext;
 		}
 
-		public async Task<ResultModel<UpdateUserResponseModel>> UpdateUser(UpdateUserRequestModel model)
+		public async Task<ResultModel<bool>> UpdateUser(UpdateUserRequestModel model)
 		{
 			var user = await GetById(model.UserId);
 			if (user == null)
 			{
-				return new ResultModel<UpdateUserResponseModel>
+				return new ResultModel<bool>
 				{
 					Errors = { UserErrors.InvalidUserId }
 				};
@@ -43,19 +43,9 @@
 			this.dbContext.Update(user);
 			await this.dbContext.SaveChangesAsync();
 
-			return new ResultModel<UpdateUserResponseModel>
+			return new ResultModel<bool>
 			{
-				Result = new UpdateUserResponseModel
-				{
-					UserName = user.UserName,
-					Email = user.Email,
-					CreatedOn = user.CreatedOn,
-					Gender = user.Gender.ToString(),
-					Biography = model.Biography,
-					DisplayName = model.DisplayName,
-					ProfilePictureUrl = model.ProfilePictureUrl,
-				},
-
+				Result = true,
 				Success = true,
 			};
 		}
@@ -81,7 +71,7 @@
 			user.IsDeleted = true;
 			user.DeletedOn = DateTime.UtcNow;
 
-			this.dbContext.Update(user);
+			this.dbContext.Users.Update(user);
 			await this.dbContext.SaveChangesAsync();
 
 			return new ResultModel<bool>
@@ -95,14 +85,6 @@
 			var user = await this.userManager.FindByIdAsync(userId);
 
 			return await this.userManager.IsInRoleAsync(user, BannedUserRoleName);
-		}
-
-		private async Task<User> GetById(string id)
-		{
-			return await this.dbContext
-				.Users
-				.Where(u => u.Id == id && !u.IsDeleted)
-				.FirstOrDefaultAsync();
 		}
 
 		public async Task<ResultModel<GetProfileResponseModel>> GetProfile(string userId)
@@ -132,6 +114,54 @@
 					ProfilePictureUrl = user.ProfilePictureUrl,
 				},
 
+				Success = true,
+			};
+		}
+
+		public async Task<ResultModel<bool>> BanUser(string userId)
+		{
+			var user = await this.GetById(userId);
+			if (user == null)
+			{
+				return new ResultModel<bool>
+				{
+					Errors = { UserErrors.InvalidUserId }
+				};
+			}
+			await this.userManager.RemoveFromRoleAsync(user, RegularUserRoleName);
+			await this.userManager.AddToRoleAsync(user, BannedUserRoleName);
+
+			return new ResultModel<bool>
+			{
+				Result = true,
+				Success = true,
+			};
+		}
+
+		private async Task<User> GetById(string id)
+		{
+			return await this.dbContext
+				.Users
+				.Where(u => u.Id == id && !u.IsDeleted)
+				.FirstOrDefaultAsync();
+		}
+
+		public async Task<ResultModel<bool>> UnbanUser(string userId)
+		{
+			var user = await this.GetById(userId);
+			if (user == null)
+			{
+				return new ResultModel<bool>
+				{
+					Errors = { UserErrors.InvalidUserId }
+				};
+			}
+			await this.userManager.RemoveFromRoleAsync(user, BannedUserRoleName);
+			await this.userManager.AddToRoleAsync(user, RegularUserRoleName);
+
+			return new ResultModel<bool>
+			{
+				Result = true,
 				Success = true,
 			};
 		}

@@ -19,9 +19,6 @@
 		public string PictureUrl { get; set; }
 
 		[Required]
-		public string UserId { get; set; }
-
-		[Required]
 		public string[] Categories { get; set; }
 	}
 }

@@ -28,7 +28,7 @@
 				return BadRequest(result.Errors);
 			}
 
-			return Ok(result.Result);
+			return Created(nameof(Create), result.Result);
 		}
 
 		[HttpPut]

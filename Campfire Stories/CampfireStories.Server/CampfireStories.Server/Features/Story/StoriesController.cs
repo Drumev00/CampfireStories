@@ -3,12 +3,10 @@
 	using Microsoft.AspNetCore.Mvc;
 	using System.Threading.Tasks;
 
-	using Features.Common;
+	using Infrastructure;
 	using Features.Story.Models;
 
 	using static ApiRoutes;
-	using CampfireStories.Server.Infrastructure;
-	using static CampfireStories.Server.Features.Common.Errors;
 
 	public class StoriesController : ApiController
 	{
@@ -23,7 +21,8 @@
 		[Route(StoryRoutes.Create)]
 		public async Task<ActionResult> Create(CreateStoryRequestModel model)
 		{
-			var result = await this.storyService.CreateStoryAsync(model);
+			var loggedUser = this.User.GetId();
+			var result = await this.storyService.CreateStoryAsync(model, loggedUser);
 			if (!result.Success)
 			{
 				return BadRequest(result.Errors);
@@ -49,7 +48,8 @@
 		[Route(StoryRoutes.Update)]
 		public async Task<ActionResult> UpdateStory([FromBody] UpdateStoryRequestModel model, string storyId)
 		{
-			var result = await this.storyService.UpdateStoryAsync(model, storyId);
+			var loggedUser = this.User.GetId();
+			var result = await this.storyService.UpdateStoryAsync(model, storyId, loggedUser);
 			if (!result.Success)
 			{
 				return BadRequest(result.Errors);
@@ -60,18 +60,10 @@
 
 		[HttpDelete]
 		[Route(StoryRoutes.Delete)]
-		public async Task<ActionResult> DeleteStory(string storyId, DeleteStoryRequestModel model)
+		public async Task<ActionResult> DeleteStory(string storyId)
 		{
-			var user = this.User.GetId();
-			if (user != model.UserId)
-			{
-				return Unauthorized(new ResultModel<bool>
-				{
-					Errors = { UserErrors.UserHaveNoPermissionToUpdate }
-				});
-			}
-
-			var result = await this.storyService.DeleteStoryAsync(storyId, model.UserId, user);
+			var loggedUser = this.User.GetId();
+			var result = await this.storyService.DeleteStoryAsync(storyId, loggedUser);
 			if (!result.Success)
 			{
 				return Unauthorized(result.Errors);

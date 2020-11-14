@@ -25,11 +25,14 @@
 			this.usersService = usersService;
 		}
 
-		public async Task<IEnumerable<ListingStoryReportsResponseModel>> GetAll(bool read)
+		public async Task<IEnumerable<ListingStoryReportsResponseModel>> GetAllByUserId(bool read, string userId)
 		{
 			return await this.dbContext
 				.StoryReports
-				.Where(sr => sr.IsRead == read)
+				.Where(
+					sr => sr.IsRead == read &&
+					!sr.IsDeleted &&
+					sr.ReporterId == userId)
 				.Select(sr => new ListingStoryReportsResponseModel
 				{
 					Id = sr.Id,
@@ -39,19 +42,18 @@
 					User = new UserDetailsReportModel
 					{
 						UserId = sr.ReporterId,
-						ProfilePic = sr.Reporter.ProfilePictureUrl,
 						UserName = sr.Reporter.UserName,
 					},
 				})
 				.ToListAsync();
 		}
 
-		public async Task<ResultModel<bool>> ReportStoryAsync(CreateStoryReportRequestModel model, string reporterId)
+		public async Task<ResultModel<string>> ReportStoryAsync(CreateStoryReportRequestModel model, string reporterId)
 		{
 			var isBanned = await this.usersService.IsBanned(reporterId);
 			if (isBanned)
 			{
-				return new ResultModel<bool>
+				return new ResultModel<string>
 				{
 					Errors = { StoryReportErrors.BannedUserReports }
 				};
@@ -69,9 +71,9 @@
 			await this.dbContext.StoryReports.AddAsync(storyReport);
 			await this.dbContext.SaveChangesAsync();
 
-			return new ResultModel<bool>
+			return new ResultModel<string>
 			{
-				Result = true,
+				Result = storyReport.Id,
 				Success = true,
 			};
 		}
@@ -132,11 +134,11 @@
 				};
 			}
 
-			report.Title = model.Title == null ?
+			report.Title = model.Title == null || string.IsNullOrWhiteSpace(model.Title) ?
 				model.Title = report.Title :
 				report.Title = model.Title;
 
-			report.Content = model.Content == null ?
+			report.Content = model.Content == null || string.IsNullOrWhiteSpace(model.Content) ?
 				model.Content = report.Content :
 				report.Content = model.Content;
 
@@ -184,6 +186,26 @@
 				Result = true,
 				Success = true,
 			};
+		}
+
+		public async Task<IEnumerable<ListingStoryReportsResponseModel>> GetAllForAdmin(bool read)
+		{
+			return await this.dbContext
+				.StoryReports
+				.Where(sr => sr.IsRead == read && !sr.IsDeleted)
+				.Select(sr => new ListingStoryReportsResponseModel
+				{
+					Id = sr.Id,
+					Title = sr.Title,
+					Content = sr.Content.Substring(0, 90) + "...",
+					StoryTitle = sr.Story.Title,
+					User = new UserDetailsReportModel
+					{
+						UserId = sr.ReporterId,
+						UserName = sr.Reporter.UserName,
+					},
+				})
+				.ToListAsync();
 		}
 	}
 }

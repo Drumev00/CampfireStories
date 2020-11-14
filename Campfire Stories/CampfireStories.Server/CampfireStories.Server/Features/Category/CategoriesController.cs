@@ -40,10 +40,10 @@
 			var result = await this.categoryService.UpdateCategoryAsync(model.NewName, model.CategoryId, userId);
 			if (!result.Success)
 			{
-				return Unauthorized(new { result.Errors });
+				return Unauthorized(result.Errors);
 			}
 
-			return this.Ok(result);
+			return this.Ok(result.Result);
 		}
 
 		[HttpDelete]
@@ -51,16 +51,13 @@
 		public async Task<ActionResult<ResultModel<bool>>> Delete([FromBody] CategoryDeleteModel model)
 		{
 			var userId = this.User.GetId();
-			var attempt = await this.categoryService.DeleteCategoryAsync(model.Id, userId);
-			if (!attempt.Success)
+			var result = await this.categoryService.DeleteCategoryAsync(model.Id, userId);
+			if (!result.Success)
 			{
-				return this.Unauthorized(new ResultModel<bool>
-				{
-					Errors = { Errors.CategoryErrors.NoPermissionToCreateCategory },
-				});
+				return this.Unauthorized(Errors.CategoryErrors.NoPermissionToCreateCategory);
 			}
 
-			return Ok(attempt);
+			return Ok(result.Result);
 		}
 	}
 }

@@ -14,6 +14,8 @@
 
 		Task<ResultModel<bool>> UpdateAsync(UpdateSubCommentRequestModel model, string subCommentId, string userId);
 
-		Task<ResultModel<bool>> DeleteAsync(string subCommentid, string userId);
+		Task<ResultModel<bool>> DeleteAsync(string subCommentId, string userId);
+
+		Task<ResultModel<bool>> DeleteAllByRootCommentIdAsync(string rootCommentId);
 	}
 }

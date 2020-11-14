@@ -11,9 +11,6 @@
 		public string Content { get; set; }
 
 		[Required]
-		public string UserId { get; set; }
-
-		[Required]
 		public string StoryId { get; set; }
 
 	}

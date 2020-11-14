@@ -9,10 +9,11 @@
 	{
 		Task<bool> IsAdminAsync(string userId);
 
-		// Will make this after the UserReport / StoryReport CRUD is done so I can use the report as a reason for the ban.
-		// Task<bool> BanUser(string userId);
+		Task<ResultModel<bool>> BanUser(string userId);
 
-		Task<ResultModel<UpdateUserResponseModel>> UpdateUser(UpdateUserRequestModel model);
+		Task<ResultModel<bool>> UnbanUser(string userId);
+
+		Task<ResultModel<bool>> UpdateUser(UpdateUserRequestModel model);
 
 		Task<ResultModel<GetProfileResponseModel>> GetProfile(string userId);
 

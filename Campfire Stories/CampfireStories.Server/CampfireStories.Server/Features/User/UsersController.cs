@@ -40,10 +40,7 @@
 			var loggedUserId = this.User.GetId();
 			if (loggedUserId != model.UserId)
 			{
-				return BadRequest( new ResultModel<UpdateUserResponseModel>
-				{
-					Errors = { UserErrors.UserHaveNoPermissionToUpdate }
-				});
+				return Unauthorized(UserErrors.UserHaveNoPermissionToUpdate);
 			}
 
 			var result = await this.userService.UpdateUser(model);
@@ -57,15 +54,12 @@
 
 		[HttpDelete]
 		[Route(UserRoutes.Delete)]
-		public async Task<ActionResult<ResultModel<bool>>> DeleteUser(DeleteUserModel model)
+		public async Task<ActionResult> DeleteUser(DeleteUserModel model)
 		{
 			var loggedUser = this.User.GetId();
 			if (loggedUser != model.UserId)
 			{
-				return BadRequest(new ResultModel<bool>
-				{
-					Errors = { UserErrors.UserHaveNoPermissionToUpdate }
-				});
+				return Unauthorized(UserErrors.UserHaveNoPermissionToUpdate);
 			}
 			var result = await this.userService.DeleteUser(model.UserId);
 			if (!result.Success)
@@ -74,6 +68,46 @@
 			}
 
 			return Ok(result);
+		}
+
+		[HttpPost]
+		[Route(UserRoutes.Ban)]
+		public async Task<ActionResult> BanUser(string userId)
+		{
+			var loggedUser = this.User.GetId();
+			var isAdmin = await this.userService.IsAdminAsync(loggedUser);
+			if (!isAdmin || loggedUser == userId)
+			{
+				return Unauthorized(UserErrors.UserHaveNoPermissionToBan);
+			}
+
+			var result = await this.userService.BanUser(userId);
+			if (!result.Success)
+			{
+				return BadRequest(result.Errors);
+			}
+
+			return Ok(result.Result);
+		}
+
+		[HttpGet]
+		[Route(UserRoutes.Unban)]
+		public async Task<ActionResult> UnbanUser(string userId)
+		{
+			var loggedUser = this.User.GetId();
+			var isAdmin = await this.userService.IsAdminAsync(loggedUser);
+			if (!isAdmin || loggedUser == userId)
+			{
+				return Unauthorized(UserErrors.UserHaveNoPermissionToBan);
+			}
+
+			var result = await this.userService.UnbanUser(userId);
+			if (!result.Success)
+			{
+				return BadRequest(result.Errors);
+			}
+
+			return Ok(result.Result);
 		}
 	}
 }

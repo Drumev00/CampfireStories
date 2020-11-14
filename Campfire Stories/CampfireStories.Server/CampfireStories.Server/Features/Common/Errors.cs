@@ -21,7 +21,7 @@
 			public const string InvalidUserId = "There\'s no user with such Id or it is deleted.";
 			public const string UserHaveNoPermissionToUpdate = "You can modify only your user data.";
 			public const string BannedUserCreateStory = "You\'re banned. You have no permission to write a story";
-
+			public const string UserHaveNoPermissionToBan = "Only administrators can ban users.";
 		}
 
 		public static class StoryErrors
@@ -33,7 +33,7 @@
 		{
 			public const string BannedUserCreateComment = "You\'re banned. You have no permission to write comments.";
 			public const string NotFoundOrDeletedComment = "There\'s no such comment or it\'s deleted.";
-			public const string UserHaveNoPermissionToDeleteCommetns = "You have no permission to delete comments!";
+			public const string UserHaveNoPermissionToDeleteComments = "You have no permission to delete comments!";
 		}
 
 		public static class SubCommentErrors

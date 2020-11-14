@@ -68,11 +68,34 @@
 			};
 		}
 
-		public async Task<ResultModel<bool>> DeleteAsync(string subCommentid, string userId)
+		public async Task<ResultModel<bool>> DeleteAllByRootCommentIdAsync(string rootCommentId)
+		{
+			var subComments = await this.dbContext
+				.SubComments
+				.Where(sc => sc.RootCommentId == rootCommentId && !sc.IsDeleted)
+				.ToListAsync();
+
+			foreach (var subComment in subComments)
+			{
+				subComment.IsDeleted = true;
+				subComment.DeletedOn = DateTime.UtcNow;
+			}
+
+			this.dbContext.SubComments.UpdateRange(subComments);
+			await this.dbContext.SaveChangesAsync();
+
+			return new ResultModel<bool>
+			{
+				Result = true,
+				Success = true,
+			};
+		}
+
+		public async Task<ResultModel<bool>> DeleteAsync(string subCommentId, string userId)
 		{
 			var subComment = await this.dbContext
 				.SubComments
-				.Where(sc => sc.Id == subCommentid && !sc.IsDeleted)
+				.Where(sc => sc.Id == subCommentId && !sc.IsDeleted)
 				.FirstOrDefaultAsync();
 			if (subComment == null)
 			{

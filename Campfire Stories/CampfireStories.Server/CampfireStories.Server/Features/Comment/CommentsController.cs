@@ -3,7 +3,6 @@
 	using Microsoft.AspNetCore.Mvc;
 	using System.Threading.Tasks;
 
-	using Features.User;
 	using Infrastructure;
 	using Features.Comment.Models;
 
@@ -22,7 +21,8 @@
 		[Route(CommentRoutes.Create)]
 		public async Task<ActionResult> Create(CreateCommentRequestModel model)
 		{
-			var result = await this.commentService.CreateCommentAsync(model);
+			var loggedUser = this.User.GetId();
+			var result = await this.commentService.CreateCommentAsync(model, loggedUser);
 			if (!result.Success)
 			{
 				return BadRequest(result.Errors);
@@ -36,8 +36,7 @@
 		public async Task<ActionResult> Update(UpdateCommentRequestModel model, string commentId)
 		{
 			var loggedUser = this.User.GetId();
-			
-			var result = await this.commentService.UpdateCommentAsync(model, commentId, loggedUser);
+			var result = await this.commentService.UpdateCommentAsync(model.Content, commentId, loggedUser);
 			if (!result.Success)
 			{
 				return BadRequest(result.Errors);

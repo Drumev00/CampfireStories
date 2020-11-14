@@ -23,7 +23,7 @@
 
 		[HttpPost]
 		[Route(StoryReportRoutes.Create)]
-		public async Task<ActionResult> CreateReport(CreateStoryReportRequestModel model)
+		public async Task<ActionResult> Create(CreateStoryReportRequestModel model)
 		{
 			var loggedUser = this.User.GetId();
 			var result = await this.storyReportsService.ReportStoryAsync(model, loggedUser);
@@ -32,7 +32,7 @@
 				return BadRequest(result.Errors);
 			}
 
-			return Ok(result.Result);
+			return Created(nameof(Create), result.Result);
 		}
 
 		[HttpGet]
@@ -40,12 +40,7 @@
 		public async Task<ActionResult> AllByRead(bool read)
 		{
 			var loggedUser = this.User.GetId();
-			var isAdmin = await this.usersService.IsAdminAsync(loggedUser);
-			if (!isAdmin)
-			{
-				return Unauthorized(StoryReportErrors.AdminPermission);
-			}
-			var result = await this.storyReportsService.GetAll(read);
+			var result = await this.storyReportsService.GetAllByUserId(read, loggedUser);
 
 			return Ok(result);
 		}
@@ -96,6 +91,22 @@
 			}
 
 			return Ok(result.Result);
+		}
+
+		[HttpGet]
+		[Route(StoryReportRoutes.AdminListing)]
+		public async Task<ActionResult> AdminListing(bool read)
+		{
+			var loggedUser = this.User.GetId();
+			var isAdmin = await this.usersService.IsAdminAsync(loggedUser);
+			if (!isAdmin)
+			{
+				return Unauthorized(StoryReportErrors.AdminPermission);
+			}
+
+			var result = await this.storyReportsService.GetAllForAdmin(read);
+
+			return Ok(result);
 		}
 
 	}
