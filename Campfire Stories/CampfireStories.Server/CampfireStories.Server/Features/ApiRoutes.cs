@@ -51,6 +51,16 @@
 			public const string Update = SubCommentRoute + "/{subCommentId}";
 			public const string Delete = SubCommentRoute + "/{subCommentId}";
 		}
+
+		public static class StoryReportRoutes
+		{
+			public const string StoryReportRoute = "/storyReport";
+			public const string Create = StoryReportRoute;
+			public const string AllReadOrNot = StoryReportRoute;
+			public const string GetDetailsById = StoryReportRoute + "/{storyReportId}";
+			public const string Update = StoryReportRoute + "/{storyReportId}";
+			public const string Delete = StoryReportRoute + "/{storyReportId}";
+		}
 	}
 }
 

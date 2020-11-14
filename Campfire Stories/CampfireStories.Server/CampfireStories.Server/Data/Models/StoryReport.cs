@@ -24,6 +24,8 @@
 		[MaxLength(MaxReportContent)]
 		public string Content { get; set; }
 
+		public bool IsRead { get; set; }
+
 		[Required]
 		[ForeignKey(nameof(Models.User))]
 		public string ReporterId { get; set; }

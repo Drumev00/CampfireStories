@@ -41,5 +41,13 @@
 			public const string BannedUserCreateSubComment = "You\'re banned. You have no permission to write comments.";
 			public const string NotFoundOrDeletedSubComment = "There\'s no such subcomment or it\'s deleted.";
 		}
+
+		public static class StoryReportErrors
+		{
+			public const string BannedUserReports = "You\'re banned. You have no permission to report.";
+			public const string AdminPermission = "Only administrators have a permission to get all reports.";
+			public const string ReportNotFoundOrDeleted = "Report not found or it is deleted.";
+
+		}
 	}
 }
