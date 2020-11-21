@@ -1,5 +1,6 @@
 ﻿namespace CampfireStories.Server.Features.Story
 {
+	using System.Collections.Generic;
 	using System.Threading.Tasks;
 
 	using Features.Common;
@@ -8,6 +9,8 @@
 	public interface IStoriesService
 	{
 		Task<ResultModel<string>> CreateStoryAsync(CreateStoryRequestModel model, string userId);
+
+		Task<IEnumerable<ListingStoryResponseModel>> GetAll();
 
 		Task<ResultModel<DetailsStoryResponseModel>> GetDetailsAsync(string storyId);
 

@@ -44,6 +44,15 @@
 			return Ok(result);
 		}
 
+		[HttpGet]
+		[Route(StoryRoutes.GetAll)]
+		public async Task<ActionResult> GetAllStories()
+		{
+			var result = await this.storyService.GetAll();
+
+			return Ok(result);
+		}
+
 		[HttpPut]
 		[Route(StoryRoutes.Update)]
 		public async Task<ActionResult> UpdateStory([FromBody] UpdateStoryRequestModel model, string storyId)

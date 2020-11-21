@@ -1,0 +1,25 @@
+<article>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <i class="fas fa-user"></i>
+        <h1 class="login-title">Log in</h1>
+        <p class="login-additional">New to our Campfire? <span [routerLink]="['/register']">Register <i
+                    class="fas fa-chevron-right"></i></span></p>
+        <section class="input-holder">
+            <div class="username">
+                <label for="input-username">Username</label>
+                <input type="text" formControlName="username">
+            </div>
+            <div *ngIf="username.touched && username.errors?.required" class="alert alert-danger">
+                Username field is required!
+            </div>
+            <div class="password">
+                <label for="input-password">Password</label>
+                <input type="password" formControlName="password">
+            </div>
+            <div *ngIf="password.touched && password.errors?.required" class="alert alert-danger">
+                Password field is required!
+            </div>
+        </section>
+        <button class="submit">Login</button>
+    </form>
+</article>

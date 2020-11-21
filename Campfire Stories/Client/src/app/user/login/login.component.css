@@ -1,0 +1,75 @@
+form {
+    display: inline-flex;
+    padding: 8% 10% 5% 10%;
+    border: 3px solid black;
+    flex-direction: column;
+    align-items: center;
+}
+
+article {
+    text-align: center;
+}
+
+form i.fa-user {
+    font-size: 40px;
+    color: white;
+    background: red;
+    border-radius: 50%;
+    padding: 20px;
+}
+
+.login-title {
+    font-family: Arial, sans-serif;
+    font-weight: 100;
+}
+
+.login-additional {
+    color: gray;
+}
+
+.login-additional span:hover{
+    cursor: pointer;
+}
+
+.login-additional span,
+.login-additional i  {
+    color: blue;
+}
+
+.fa-chevron-right {
+    font-size: 10px;
+}
+
+.input-holder > div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.input-holder > div > label {
+    font-weight: 200;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.submit {
+    background: #D10608;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 12px 30%;
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 35px;
+    outline: none;
+    width: 100%;
+}
+
+input[type=text],
+input[type=password] {
+    border: none;
+    border-bottom: 2px solid red;
+    outline: none;
+    text-align: center;
+    width: 160%;
+  }

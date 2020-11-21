@@ -33,6 +33,7 @@
 		{
 			public const string StoryRoute = "/story";
 			public const string Create = StoryRoute;
+			public const string GetAll = StoryRoute;
 			public const string Details = StoryRoute + "/{storyId}";
 			public const string Update = StoryRoute + "/{storyId}";
 			public const string Delete = StoryRoute + "/{storyId}";

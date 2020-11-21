@@ -1,0 +1,60 @@
+<article>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <i class="fas fa-user"></i>
+        <h1 class="register-title">Join to our campfire gathering</h1>
+        <p class="register-additional">Have a Campfire account? <span [routerLink]="['/login']">Login <i
+                    class="fas fa-chevron-right"></i></span></p>
+        <section class="input-holder">
+            <div class="username">
+                <label for="input-username">Username</label>
+                <input type="text" formControlName="username">
+            </div>
+            <div *ngIf="username.touched && username.errors?.required" class="alert alert-danger">
+                Username field is required!
+            </div>
+            <div *ngIf="username.touched && username.errors?.minlength" class="alert alert-danger">
+                Username should be more than 1 character!
+            </div>
+            <div *ngIf="username.touched && username.errors?.maxlength" class="alert alert-danger">
+                Username should be less than 50 characters!
+            </div>
+            <div class="displayName">
+                <label for="input-displayName">Display Name <span>(optional)</span></label>
+                <input type="text" formControlName="displayName">
+            </div>
+            <div class="email">
+                <label for="input-email">Email</label>
+                <input type="email" formControlName="email">
+            </div>
+            <div *ngIf="email.touched && email.errors?.required" class="alert alert-danger">
+                Email field is required!
+            </div>
+            <div class="password">
+                <label for="input-password">Password</label>
+                <input type="password" formControlName="password">
+            </div>
+            <div *ngIf="password.touched && password.errors?.required" class="alert alert-danger">
+                Password field is required!
+            </div>
+            <div *ngIf="password.touched && password.errors?.minlength" class="alert alert-danger">
+                Password should be atleast 6 characters!
+            </div>
+        </section>
+        <section class="genders">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" value="Male"
+                checked formControlName="gender">
+                <label class="form-check-label" for="exampleRadios1">
+                    Male
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" value="Female" formControlName="gender">
+                <label class="form-check-label" for="exampleRadios2">
+                    Female
+                </label>
+            </div>
+        </section>
+        <button class="submit">Create Account</button>
+    </form>
+</article>

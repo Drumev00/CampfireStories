@@ -14,6 +14,7 @@
 	using Features.StoryCategories;
 
 	using static Features.Common.Errors;
+	using System.Collections.Generic;
 
 	public class StoriesService : IStoriesService
 	{
@@ -117,6 +118,22 @@
 			{
 				Success = true,
 			};
+		}
+
+		// Pagination later on...
+		public async Task<IEnumerable<ListingStoryResponseModel>> GetAll()
+		{
+			return await this.dbContext
+				.Stories
+				.Select(s => new ListingStoryResponseModel
+				{
+					Title = s.Title,
+					Content = s.Content.Substring(0, 150),
+					PictureUrl = s.PictureUrl,
+					UserId = s.UserId,
+					UserName = s.User.UserName,
+				})
+				.ToListAsync();
 		}
 
 		public async Task<ResultModel<DetailsStoryResponseModel>> GetDetailsAsync(string storyId)
