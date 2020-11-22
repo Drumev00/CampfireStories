@@ -67,18 +67,15 @@
 			}
 
 			var encryptedToken = this.GenerateJwtToken(user.Id, user.UserName, secret);
-
+			var isAdmin = await this.userManager.IsInRoleAsync(user, AdministratorRoleName);
 			return new ResultModel<LoginResponseModel>
 			{
 				Result = new LoginResponseModel
 				{
+					UserId = user.Id,
 					UserName = username,
-					Email = user.Email,
-					DisplayName = user.DisplayName,
-					ProfilePictureUrl = user.ProfilePictureUrl,
-					Gender = user.Gender.ToString(),
-					Biography = user.Biography,
-					Token = encryptedToken
+					Token = encryptedToken,
+					IsAdmin = isAdmin,
 				},
 
 				Success = true,

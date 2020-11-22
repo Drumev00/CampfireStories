@@ -1,0 +1,38 @@
+.campfire-img {
+    display: flex;
+    justify-content: center;
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 5px solid #DD3333;
+    margin-bottom: 15px;
+}
+
+.campfire-img  img{
+    width: 30%;
+}
+
+.navbar ul {
+    list-style: none;
+}
+
+.unauthenticated {
+    display: flex;
+}
+
+.authenticated {
+    display: flex;
+}
+
+.navbar ul li {
+    margin-right: 15px;
+    outline: none;
+    font-size: 20px;
+    font-family: 'Texturina', serif;
+}
+
+.navbar ul li:hover {
+    cursor: pointer;
+}

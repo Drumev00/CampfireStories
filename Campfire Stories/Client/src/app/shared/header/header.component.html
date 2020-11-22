@@ -1,0 +1,18 @@
+<div class="campfire-img">
+    <img src="https://res.cloudinary.com/dn2ouybbf/image/upload/v1606069816/howlerhero_rg6j2m.jpg" alt="Campfire">
+</div>
+
+<header>
+    <nav class="navbar">
+        <ul>
+            <section *ngIf="!isLoggedIn()" class="unauthenticated">
+                <li [routerLink]="['/login']">Login</li>
+                <li [routerLink]="['/register']">Register</li>
+            </section>
+            <section *ngIf="isLoggedIn()" class="authenticated">
+                <li>Hello, {{username}}</li>
+                <li (click)="logout()">Logout</li>
+            </section>
+        </ul>
+    </nav>
+</header>

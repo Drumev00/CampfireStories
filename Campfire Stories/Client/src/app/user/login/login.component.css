@@ -1,7 +1,7 @@
 form {
     display: inline-flex;
     padding: 8% 10% 5% 10%;
-    border: 3px solid black;
+    border: 3px solid red;
     flex-direction: column;
     align-items: center;
 }
@@ -21,6 +21,7 @@ form i.fa-user {
 .login-title {
     font-family: Arial, sans-serif;
     font-weight: 100;
+    color: white;
 }
 
 .login-additional {
@@ -38,6 +39,24 @@ form i.fa-user {
 
 .fa-chevron-right {
     font-size: 10px;
+}
+
+.username label {
+    color: white;
+}
+
+.username input {
+    background-color: black;
+    color: white;
+}
+
+.password label {
+    color: white;
+}
+
+.password input {
+    background-color: black;
+    color: white;
 }
 
 .input-holder > div {

@@ -24,7 +24,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.auth.login(this.loginForm.value).subscribe(data => {
-      console.log(data)
+      this.auth.setUserInfo(data.result.token,
+                            data.result.userId,
+                            data.result.userName,
+                            data.result.isAdmin)
     })
   }
 

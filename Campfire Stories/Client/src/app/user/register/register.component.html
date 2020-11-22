@@ -22,6 +22,12 @@
                 <label for="input-displayName">Display Name <span>(optional)</span></label>
                 <input type="text" formControlName="displayName">
             </div>
+            <div *ngIf="displayName.touched && displayName.errors?.minlength" class="alert alert-danger">
+                Display name field should be more than 1 character!
+            </div>
+            <div *ngIf="displayName.touched && displayName.errors?.maxlength" class="alert alert-danger">
+                Display name field should be less than 50 characters!
+            </div>
             <div class="email">
                 <label for="input-email">Email</label>
                 <input type="email" formControlName="email">
