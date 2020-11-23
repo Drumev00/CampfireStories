@@ -1,0 +1,18 @@
+<form [formGroup]="createCategoryForm" (ngSubmit)="create()">
+    <div>
+        <label class="name">Category Name</label>
+        <input formControlName="name" class="input-name" type="text" placeholder="Name...">
+    </div>
+    <button type="submit" class="btn btn-primary">Add Category</button>
+</form>
+<div class="validate">
+    <div *ngIf="name.touched && name.errors?.required" class="alert alert-danger">
+        Category name field is required!
+    </div>
+    <div *ngIf="name.touched && name.errors?.minlength" class="alert alert-danger">
+        Category name field should be more than 2 characters!
+    </div>
+    <div *ngIf="name.touched && name.errors?.maxlength" class="alert alert-danger">
+        Category name field should be less than 40 characters!
+    </div>
+</div>

@@ -1,0 +1,30 @@
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Texturina', serif;
+    margin-top: 6%;
+}
+
+.btn {
+    background-color: #D10608;
+    border: none;
+}
+
+.input-name, .name {
+    margin-right: 20px;
+}
+
+.input-name {
+    background-color: black;
+    border: none;
+    border-bottom: 2px solid red;
+    outline: none;
+    text-align: center;
+}
+
+.validate {
+    margin: 0 auto;
+    width: 30%;
+    text-align: center;
+}

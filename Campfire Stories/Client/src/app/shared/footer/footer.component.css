@@ -3,6 +3,10 @@ footer {
     padding: 20px;
     text-align: center;
     margin-top: 20px;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 }
 
 footer h4 {

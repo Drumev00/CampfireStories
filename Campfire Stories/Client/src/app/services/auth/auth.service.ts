@@ -30,6 +30,10 @@ export class AuthService {
     return localStorage.getItem('username');
   }
 
+  getUserId(): string {
+    return localStorage.getItem('userId');
+  }
+
   setUserInfo(token: string, id: string, username: string, isAdmin: boolean): void {
     localStorage.setItem('token', token);
     localStorage.setItem('userId', id);

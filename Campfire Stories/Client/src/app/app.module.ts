@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { AuthService } from './services/auth/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { SharedModule } from './shared/shared.module';
     HttpClientModule,
     UserModule,
     SharedModule,
+    AdminModule
   ],
   providers: [
     AuthService,

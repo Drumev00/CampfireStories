@@ -7,14 +7,14 @@
         <section class="input-holder">
             <div class="username">
                 <label for="input-username">Username</label>
-                <input type="text" formControlName="username">
+                <input type="text" formControlName="username" placeholder="Your username...">
             </div>
             <div *ngIf="username.touched && username.errors?.required" class="alert alert-danger">
                 Username field is required!
             </div>
             <div class="password">
                 <label for="input-password">Password</label>
-                <input type="password" formControlName="password">
+                <input type="password" formControlName="password" placeholder="Your password...">
             </div>
             <div *ngIf="password.touched && password.errors?.required" class="alert alert-danger">
                 Password field is required!

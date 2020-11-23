@@ -28,4 +28,8 @@ export class HeaderComponent implements OnInit {
   isLoggedIn(): boolean {
     return this.auth.isAuthenticated();
   }
+
+  isAdmin(): boolean {
+    return this.auth.adminCheck();
+  }
 }

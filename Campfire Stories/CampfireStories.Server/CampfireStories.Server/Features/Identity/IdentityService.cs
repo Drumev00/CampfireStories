@@ -65,7 +65,7 @@
 					Errors = { Identity.PasswordsDontMatch }
 				};
 			}
-
+			var displayName = string.IsNullOrWhiteSpace(user.DisplayName) ? user.DisplayName = user.UserName : user.DisplayName;
 			var encryptedToken = this.GenerateJwtToken(user.Id, user.UserName, secret);
 			var isAdmin = await this.userManager.IsInRoleAsync(user, AdministratorRoleName);
 			return new ResultModel<LoginResponseModel>
@@ -76,6 +76,7 @@
 					UserName = username,
 					Token = encryptedToken,
 					IsAdmin = isAdmin,
+					DisplayName = displayName,
 				},
 
 				Success = true,

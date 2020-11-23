@@ -12,7 +12,7 @@
 		public static class CategoryRoutes
 		{
 			public const string CategoryRoute = "/category";
-			public const string Create = CategoryRoute + "/{categoryId}";
+			public const string Create = CategoryRoute;
 			public const string Update = CategoryRoute + "/{categoryId}";
 			public const string Delete = CategoryRoute + "/{categoryId}";
 		}
