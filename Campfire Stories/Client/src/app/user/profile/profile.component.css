@@ -1,0 +1,38 @@
+.user-features {
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+    flex-wrap: wrap;
+}
+
+.row {
+    margin: 25px 10px;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    box-sizing: border-box;
+}
+
+.row input,
+.row textarea {
+    color: black;
+    margin-bottom: 5%;
+}
+
+.row input,
+.row textarea,
+.row label {
+    margin-left: 15%;
+}
+
+.btn {
+    background-color: #DD3333;
+    border: none;
+    color: black;
+    font-family: 'Texturina', serif;
+    font-weight: bold;
+    outline: none;
+    width: 85%;
+    align-self: flex-end;
+    margin-top: 40px;
+}

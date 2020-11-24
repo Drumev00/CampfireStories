@@ -8,7 +8,7 @@
         <div *ngIf="isAdmin()" class="dropdown admin">
             <span>Admin <i class="fas fa-chevron-down"></i></span>
             <div class="dropdown-content">
-                <a [routerLink]="['/create/category']">Create category</a>
+                <a [routerLink]="['/list/category']">See categories</a>
             </div>
         </div>
         <ul>
@@ -18,7 +18,7 @@
                     <li [routerLink]="['/register']">Register</li>
                 </section>
                 <section *ngIf="isLoggedIn()" class="authenticated">
-                    <li>Hello, {{username}}</li>
+                    <li>Hello, <span [routerLink]="['user/profile', userId]">{{username}}</span></li>
                     <li (click)="logout()">Logout</li>
                 </section>
             </div>

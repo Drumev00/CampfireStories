@@ -20,6 +20,10 @@ export class HeaderComponent implements OnInit {
     return localStorage.getItem('username');
   }
 
+  get userId(): string {
+    return localStorage.getItem('userId');
+  }
+
   logout(): void {
     this.auth.logout();
     this.router.navigate(['/login']);

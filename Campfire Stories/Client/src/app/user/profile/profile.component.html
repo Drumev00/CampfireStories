@@ -1,0 +1,33 @@
+<section class="user-features">
+    <div class="row">
+        <label>Profile Photo</label>
+        <input type="file">
+    </div>
+    <div class="row username">
+        <label>Username</label>
+        <input type="text" [value]="user.userName" disabled>
+    </div>
+    <div class="row email">
+        <label>Email</label>
+        <input type="text" [value]="user.email">
+    </div>
+    <div class="row biography">
+        <label>Biography</label>
+        <textarea type="text" [value]="user.biography"></textarea>
+    </div>
+    <div class="row">
+        <label>Created On</label>
+        <input type="text" [value]="user.createdOn" disabled>
+    </div>
+    <div class="row">
+        <label>Display Name</label>
+        <input type="text" [value]="user.displayName">
+    </div>
+    <div class="row">
+        <label>Gender</label>
+        <input type="text" [value]="user.gender" disabled>
+    </div>
+    <div class="row">
+        <button class="btn btn-primary">Save Changes</button>
+    </div>
+</section>

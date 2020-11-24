@@ -98,6 +98,7 @@
 				{
 					Name = c.Name,
 				})
+				.OrderBy(c => c.Name)
 				.ToListAsync();
 		}
 

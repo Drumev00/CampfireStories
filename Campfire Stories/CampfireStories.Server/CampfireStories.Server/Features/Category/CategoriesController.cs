@@ -20,7 +20,7 @@
 
 		[HttpPost]
 		[Route(CategoryRoutes.Create)]
-		public async Task<ActionResult<string>> Create(CreateCategoryRequestModel model)
+		public async Task<ActionResult> Create(CreateCategoryRequestModel model)
 		{
 			var userId = this.User.GetId();
 			var result = await this.categoryService.CreateCategoryAsync(model.Name, userId);
@@ -30,6 +30,15 @@
 			};
 
 			return Created(nameof(Create), result);
+		}
+
+		[HttpGet]
+		[Route(CategoryRoutes.GetAll)]
+		public async Task<ActionResult> GetAll()
+		{
+			var result = await this.categoryService.GetAll();
+
+			return Ok(result);
 		}
 
 		[HttpPut]

@@ -25,8 +25,16 @@ nav.navbar {
     
 }
 
+.navbar ul li span:hover {
+    cursor: pointer;
+}
+
 .navbar ul li:hover {
     cursor: pointer;
+}
+
+.navbar ul li span {
+    outline: none;
 }
 
 .campfire-img  img{
@@ -80,10 +88,20 @@ nav.navbar {
 
   .dropdown-content a:hover {
     cursor: pointer;
+    color: white;
+}
+
+.dropdown-content:hover {
+    background-color: black;
+    color: white;
 }
   
   .dropdown:hover .dropdown-content {
     display: block;
+  }
+
+  .admin span:hover {
+      cursor: pointer;
   }
 
 .admin li {

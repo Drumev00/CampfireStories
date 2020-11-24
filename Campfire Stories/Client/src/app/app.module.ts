@@ -12,6 +12,7 @@ import { CategoryService } from './services/admin/category.service';
 import { AuthGuardService } from './services/auth/auth-guard.service';
 import { AdminGuardService } from './services/auth/admin-guard.service';
 import { TokenInterceptorService } from './services/auth/token-interceptor.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TokenInterceptorService } from './services/auth/token-interceptor.servi
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true,
-    }
+    },
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

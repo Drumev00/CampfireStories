@@ -4,12 +4,14 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateCategoryComponent } from './create-category/create-category.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ListCategoriesComponent } from './list-categories/list-categories.component';
 
 
 
 @NgModule({
   declarations: [
-    CreateCategoryComponent
+    CreateCategoryComponent,
+    ListCategoriesComponent
   ],
   imports: [
     CommonModule,
