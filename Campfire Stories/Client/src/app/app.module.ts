@@ -5,9 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserModule } from './user/user.module';
 import { AuthService } from './services/auth/auth.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { AdminModule } from './admin/admin.module';
+import { CategoryService } from './services/admin/category.service';
+import { AuthGuardService } from './services/auth/auth-guard.service';
+import { AdminGuardService } from './services/auth/admin-guard.service';
+import { TokenInterceptorService } from './services/auth/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -23,6 +27,14 @@ import { AdminModule } from './admin/admin.module';
   ],
   providers: [
     AuthService,
+    CategoryService,
+    AuthGuardService,
+    AdminGuardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent]
 })
