@@ -5,9 +5,6 @@
 	public class UpdateCategoryRequestModel
 	{
 		[Required]
-		public string CategoryId { get; set; }
-
-		[Required]
 		public string NewName { get; set; }
 	}
 }

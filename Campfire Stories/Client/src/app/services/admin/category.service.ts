@@ -10,16 +10,27 @@ import { ICategory } from 'src/app/models/ICategory';
   providedIn: 'root'
 })
 export class CategoryService {
-  createRoute: string = environment.apiURL + 'category'
-  listRoute: string = environment.apiURL + 'category';
+  categoryRoute: string = environment.apiURL + 'category'
   constructor(private http : HttpClient, private auth: AuthService) { }
 
  createCategory(data): Observable<any> {
-   return this.http.post(this.createRoute, data, {responseType: 'text'});
+   return this.http.post(this.categoryRoute, data, {responseType: 'text'});
  }
 
  getAll(): Observable<ICategory[]> {
-   return this.http.get<ICategory[]>(this.listRoute);
+   return this.http.get<ICategory[]>(this.categoryRoute);
+ }
+
+ delete(id): Observable<any> {
+   return this.http.delete(this.categoryRoute + `/${id}`,);
+ }
+
+ getDetails(id): Observable<ICategory> {
+   return this.http.get<ICategory>(this.categoryRoute + `/${id}`)
+ }
+
+ editCategory(id: string, data: ICategory): Observable<any> {
+   return this.http.put(this.categoryRoute + `/${id}`, data);
  }
 
 }

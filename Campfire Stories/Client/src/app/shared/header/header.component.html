@@ -18,7 +18,7 @@
                     <li [routerLink]="['/register']">Register</li>
                 </section>
                 <section *ngIf="isLoggedIn()" class="authenticated">
-                    <li>Hello, <span [routerLink]="['user/profile', userId]">{{username}}</span></li>
+                    <li>Hello, <span [routerLink]="['user/profile', userId]">{{displayName}}</span></li>
                     <li (click)="logout()">Logout</li>
                 </section>
             </div>

@@ -96,10 +96,30 @@
 				.Where(c => !c.IsDeleted)
 				.Select(c => new CategoryListingModel
 				{
+					CategoryId = c.Id,
 					Name = c.Name,
 				})
 				.OrderBy(c => c.Name)
 				.ToListAsync();
+		}
+
+		public async Task<ResultModel<DetailsCategoryResponseModel>> GetDetails(string id)
+		{
+			var category = await this.dbContext
+				.Categories
+				.Where(c => c.Id == id)
+				.Select(c => new ResultModel<DetailsCategoryResponseModel>
+				{
+					Result = new DetailsCategoryResponseModel
+					{
+						Name = c.Name,
+					},
+
+					Success = true,
+				})
+				.FirstOrDefaultAsync();
+
+			return category;
 		}
 
 		public async Task<ResultModel<bool>> UpdateCategoryAsync(string newName, string categoryId, string userId)
@@ -135,6 +155,7 @@
 
 			return new ResultModel<bool>
 			{
+				Result = true,
 				Success = true,
 			};
 		}

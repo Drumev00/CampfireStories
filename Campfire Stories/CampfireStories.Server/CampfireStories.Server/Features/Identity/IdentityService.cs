@@ -16,14 +16,18 @@
 
 	using static Features.Common.Errors;
 	using static Data.Models.Common.Constants.Roles;
+	using CampfireStories.Server.Data;
+	using Microsoft.EntityFrameworkCore;
 
 	public class IdentityService : IIdentityService
 	{
 		private readonly UserManager<User> userManager;
+		private readonly CampfireStoriesDbContext dbContext;
 
-		public IdentityService(UserManager<User> userManager)
+		public IdentityService(UserManager<User> userManager, CampfireStoriesDbContext dbContext)
 		{
 			this.userManager = userManager;
+			this.dbContext = dbContext;
 		}
 
 		public string GenerateJwtToken(string userId, string userName, string secret)
@@ -48,7 +52,11 @@
 
 		public async Task<ResultModel<LoginResponseModel>> LoginAsync(string username, string password, string secret)
 		{
-			var user = await userManager.FindByNameAsync(username);
+			// Getting user using UserManager via username includes the deleted ones.
+			var user = await this.dbContext
+				.Users
+				.Where(u => u.UserName == username)
+				.FirstOrDefaultAsync();
 			if (user == null)
 			{
 				return new ResultModel<LoginResponseModel>

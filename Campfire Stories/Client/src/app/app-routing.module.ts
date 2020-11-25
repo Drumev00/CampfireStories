@@ -8,13 +8,15 @@ import { AdminGuardService } from './services/auth/admin-guard.service';
 import { ListCategoriesComponent } from './admin/list-categories/list-categories.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { AuthGuardService } from './services/auth/auth-guard.service';
+import { EditCategoryComponent } from './admin/edit-category/edit-category.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'user/profile/:id', component: ProfileComponent, canActivate: [AuthGuardService]},
   { path: 'create/category', component: CreateCategoryComponent, canActivate: [AdminGuardService] },
   { path: 'list/category', component: ListCategoriesComponent, canActivate: [AdminGuardService] },
-  { path: 'user/profile/:id', component: ProfileComponent, canActivate: [AuthGuardService]}
+  { path: 'edit/category/:id', component: EditCategoryComponent, canActivate: [AdminGuardService]}
 ];
 
 @NgModule({

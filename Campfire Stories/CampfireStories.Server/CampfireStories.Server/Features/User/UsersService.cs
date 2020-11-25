@@ -25,9 +25,9 @@
 			this.dbContext = dbContext;
 		}
 
-		public async Task<ResultModel<bool>> UpdateUser(UpdateUserRequestModel model)
+		public async Task<ResultModel<bool>> UpdateUser(string userId, UpdateUserRequestModel model)
 		{
-			var user = await GetById(model.UserId);
+			var user = await GetById(userId);
 			if (user == null)
 			{
 				return new ResultModel<bool>
@@ -37,7 +37,13 @@
 			}
 
 			user.Biography = model.Biography;
-			user.DisplayName = model.DisplayName;
+
+			// In case the user deteles his display name. I need it because I render it on the front-end (the header).
+			user.DisplayName = string.IsNullOrWhiteSpace(model.DisplayName) ?
+				user.DisplayName = user.UserName :
+				user.DisplayName = model.DisplayName;
+
+			user.Email = model.Email;
 			user.ProfilePictureUrl = model.ProfilePictureUrl;
 
 			this.dbContext.Update(user);
@@ -76,6 +82,7 @@
 
 			return new ResultModel<bool>
 			{
+				Result = true,
 				Success = true
 			};
 		}

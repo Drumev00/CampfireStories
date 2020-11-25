@@ -5,6 +5,9 @@
 	public class CategoryListingModel
 	{
 		[Required]
+		public string CategoryId { get; set; }
+
+		[Required]
 		public string Name { get; set; }
 	}
 }

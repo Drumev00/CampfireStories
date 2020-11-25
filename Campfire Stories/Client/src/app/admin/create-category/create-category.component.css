@@ -9,6 +9,8 @@ form {
 .btn {
     background-color: #D10608;
     border: none;
+    border-color: #D10608;
+    outline: none;
 }
 
 .input-name, .name {

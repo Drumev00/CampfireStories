@@ -1,17 +1,19 @@
 ﻿namespace CampfireStories.Server.Features.User.Models
 {
-	using System;
+	using System.ComponentModel.DataAnnotations;
 
+	using static Data.Models.Common.Constants.User;
 	public class UpdateUserRequestModel
 	{
 		public string Biography { get; set; }
 
-		public string Gender { get; set; }
-
+		[MinLength(MinDisplayNameLength)]
+		[MaxLength(MaxDisplayNameLength)]
 		public string DisplayName { get; set; }
 
-		public string ProfilePictureUrl { get; set; }
+		[Required]
+		public string Email { get; set; }
 
-		public string UserId { get; set; }
+		public string ProfilePictureUrl { get; set; }
 	}
 }

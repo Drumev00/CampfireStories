@@ -1,0 +1,18 @@
+<form [formGroup]="editForm">
+    <div class="form-container">
+        <label class="name">Category Name</label>
+        <input formControlName="newName" class="input-name" type="text" placeholder="New Name...">
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="edit(categoryId)">Edit Category</button>
+</form>
+<section class="validations">
+    <div *ngIf="newName.touched && newName.errors?.required" class="alert alert-danger">
+        Category name field is required!
+    </div>
+    <div *ngIf="newName.touched && newName.errors?.minlength" class="alert alert-danger">
+        Category name should be atleast 3 characters!
+    </div>
+    <div *ngIf="newName.touched && newName.errors?.maxlength" class="alert alert-danger">
+        Category name should be less than 40 characters!
+    </div>
+</section>

@@ -25,7 +25,15 @@
     float: left;
 }
 
+.fa-edit:hover {
+    cursor: pointer;
+}
+
 .fa-trash-alt {
     float: right;
     color: brown;
+}
+
+.fa-trash-alt:hover {
+    cursor: pointer;
 }

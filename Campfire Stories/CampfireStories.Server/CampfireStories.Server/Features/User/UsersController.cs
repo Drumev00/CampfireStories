@@ -35,15 +35,15 @@
 
 		[HttpPut]
 		[Route(UserRoutes.Update)]
-		public async Task<ActionResult> UpdateUser(UpdateUserRequestModel model)
+		public async Task<ActionResult> UpdateUser(string userId, UpdateUserRequestModel model)
 		{
 			var loggedUserId = this.User.GetId();
-			if (loggedUserId != model.UserId)
+			if (loggedUserId != userId)
 			{
 				return Unauthorized(UserErrors.UserHaveNoPermissionToUpdate);
 			}
 
-			var result = await this.userService.UpdateUser(model);
+			var result = await this.userService.UpdateUser(loggedUserId, model);
 			if (!result.Success)
 			{
 				return BadRequest(result.Errors);
@@ -54,20 +54,20 @@
 
 		[HttpDelete]
 		[Route(UserRoutes.Delete)]
-		public async Task<ActionResult> DeleteUser(DeleteUserModel model)
+		public async Task<ActionResult> DeleteUser(string userId)
 		{
 			var loggedUser = this.User.GetId();
-			if (loggedUser != model.UserId)
+			if (loggedUser != userId)
 			{
 				return Unauthorized(UserErrors.UserHaveNoPermissionToUpdate);
 			}
-			var result = await this.userService.DeleteUser(model.UserId);
+			var result = await this.userService.DeleteUser(userId);
 			if (!result.Success)
 			{
 				return BadRequest(result.Errors);
 			}
 
-			return Ok(result);
+			return Ok(result.Result);
 		}
 
 		[HttpPost]

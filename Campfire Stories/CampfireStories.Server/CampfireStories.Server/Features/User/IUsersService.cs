@@ -13,7 +13,7 @@
 
 		Task<ResultModel<bool>> UnbanUser(string userId);
 
-		Task<ResultModel<bool>> UpdateUser(UpdateUserRequestModel model);
+		Task<ResultModel<bool>> UpdateUser(string userId, UpdateUserRequestModel model);
 
 		Task<ResultModel<GetProfileResponseModel>> GetProfile(string userId);
 

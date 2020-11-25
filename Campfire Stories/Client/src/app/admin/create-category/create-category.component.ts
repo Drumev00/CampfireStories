@@ -30,7 +30,7 @@ export class CreateCategoryComponent implements OnInit {
   
   create() {
     this.categoryService.createCategory(this.createCategoryForm.value).subscribe(data => {
-      this.router.navigate(['/'])
+      this.router.navigate(['/list/category'])
     })
   }
 }

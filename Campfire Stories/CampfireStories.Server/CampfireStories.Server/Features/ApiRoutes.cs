@@ -14,6 +14,7 @@
 			public const string CategoryRoute = "/category";
 			public const string GetAll = CategoryRoute;
 			public const string Create = CategoryRoute;
+			public const string Details = CategoryRoute + "/{categoryId}";
 			public const string Update = CategoryRoute + "/{categoryId}";
 			public const string Delete = CategoryRoute + "/{categoryId}";
 		}

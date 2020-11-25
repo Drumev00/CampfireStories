@@ -36,3 +36,23 @@
     align-self: flex-end;
     margin-top: 40px;
 }
+
+.alert-biography {
+    width: 20%;
+    height: 80px;
+    margin-left: 80px;
+    margin-top: 80px;
+}
+
+.fa-trash-alt {
+    width: fit-content;
+    background: brown;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+    top: -35px;
+}
+
+.fa-trash-alt:hover {
+    cursor: pointer;
+}

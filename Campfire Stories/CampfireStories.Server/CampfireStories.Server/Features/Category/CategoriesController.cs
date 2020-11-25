@@ -41,12 +41,25 @@
 			return Ok(result);
 		}
 
+		[HttpGet]
+		[Route(CategoryRoutes.Details)]
+		public async Task<ActionResult> Details(string categoryId)
+		{
+			var result = await this.categoryService.GetDetails(categoryId);
+			if (!result.Success)
+			{
+				return BadRequest(result.Errors);
+			}
+
+			return Ok(result.Result);
+		}
+
 		[HttpPut]
 		[Route(CategoryRoutes.Update)]
-		public async Task<ActionResult> Update(UpdateCategoryRequestModel model)
+		public async Task<ActionResult> Update(string categoryId, UpdateCategoryRequestModel model)
 		{
 			var userId = this.User.GetId();
-			var result = await this.categoryService.UpdateCategoryAsync(model.NewName, model.CategoryId, userId);
+			var result = await this.categoryService.UpdateCategoryAsync(model.NewName, categoryId, userId);
 			if (!result.Success)
 			{
 				return Unauthorized(result.Errors);
@@ -57,10 +70,10 @@
 
 		[HttpDelete]
 		[Route(CategoryRoutes.Delete)]
-		public async Task<ActionResult<ResultModel<bool>>> Delete([FromBody] CategoryDeleteModel model)
+		public async Task<ActionResult<ResultModel<bool>>> Delete(string categoryId)
 		{
 			var userId = this.User.GetId();
-			var result = await this.categoryService.DeleteCategoryAsync(model.Id, userId);
+			var result = await this.categoryService.DeleteCategoryAsync(categoryId, userId);
 			if (!result.Success)
 			{
 				return this.Unauthorized(Errors.CategoryErrors.NoPermissionToCreateCategory);

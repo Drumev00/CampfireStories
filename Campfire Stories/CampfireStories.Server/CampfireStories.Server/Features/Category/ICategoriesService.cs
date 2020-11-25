@@ -12,6 +12,8 @@
 
 		Task<IEnumerable<CategoryListingModel>> GetAll();
 
+		Task<ResultModel<DetailsCategoryResponseModel>> GetDetails(string id);
+
 		Task<ResultModel<bool>> UpdateCategoryAsync(string newName, string categoryId, string userId);
 
 		Task<ResultModel<bool>> DeleteCategoryAsync(string categoryId, string userId);

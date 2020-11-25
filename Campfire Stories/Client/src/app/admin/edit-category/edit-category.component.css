@@ -1,0 +1,38 @@
+form {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+    font-family: 'Texturia', serif;
+}
+
+.input-name {
+    background-color: black;
+    border: none;
+    border-bottom: 2px solid red;
+    outline: none;
+    text-align: center;
+    font-family: 'Texturia', serif;
+}
+
+.form-container label,
+.form-container input {
+    margin: 0px 15px;
+}
+
+.btn {
+    background: #D10608;
+    border: none;
+    outline: none;
+    font-family: 'Texturina', serif;
+}
+
+.alert {
+    text-align: center;
+    width: 40%;
+    margin-top: 20px;
+}
+
+.validations {
+    display: flex;
+    justify-content: center;
+}

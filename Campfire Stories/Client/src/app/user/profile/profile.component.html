@@ -1,33 +1,49 @@
-<section class="user-features">
-    <div class="row">
-        <label>Profile Photo</label>
-        <input type="file">
-    </div>
-    <div class="row username">
-        <label>Username</label>
-        <input type="text" [value]="user.userName" disabled>
-    </div>
-    <div class="row email">
-        <label>Email</label>
-        <input type="text" [value]="user.email">
-    </div>
-    <div class="row biography">
-        <label>Biography</label>
-        <textarea type="text" [value]="user.biography"></textarea>
-    </div>
-    <div class="row">
-        <label>Created On</label>
-        <input type="text" [value]="user.createdOn" disabled>
-    </div>
-    <div class="row">
-        <label>Display Name</label>
-        <input type="text" [value]="user.displayName">
-    </div>
-    <div class="row">
-        <label>Gender</label>
-        <input type="text" [value]="user.gender" disabled>
-    </div>
-    <div class="row">
-        <button class="btn btn-primary">Save Changes</button>
-    </div>
-</section>
+<form [formGroup]="profileForm">
+    <section class="user-features">
+        <div class="row">
+            <label>Profile Photo</label>
+            <input type="file" >
+        </div>
+        <div class="row username">
+            <label>Username</label>
+            <input type="text" formControlName="userName">
+        </div>
+        <div class="row email">
+            <label>Email</label>
+            <input type="text" formControlName="email">
+        </div>
+        <div *ngIf="email.touched && email.errors?.required" class="alert alert-danger alert-biography">
+            Your email field is required!
+        </div>
+        <div *ngIf="biography.touched && biography.errors?.minlength" class="alert alert-danger alert-biography">
+            Your biography should be atleast 20 characters!
+        </div>
+        <div class="row biography">
+            <label>Biography</label>
+            <textarea type="text" formControlName="biography"></textarea>
+        </div>
+        <div class="row">
+            <label>Created On</label>
+            <input type="text" formControlName="createdOn">
+        </div>
+        <div class="row">
+            <label>Display Name</label>
+            <input type="text" formControlName="displayName">
+        </div>
+        <div *ngIf="displayName.touched && displayName.errors?.minlength" class="alert alert-danger alert-biography">
+            Your display name should be atleast 2 characters!
+        </div>
+        <div *ngIf="displayName.touched && displayName.errors?.maxlength" class="alert alert-danger alert-biography">
+            Your display name should be less than 50 characters!
+        </div>
+        <div class="row">
+            <label>Gender</label>
+            <input type="text" formControlName="gender">
+        </div>
+        <div class="row">
+            <button class="btn btn-primary" (click)="edit(userId)">Save Changes</button><i (click)="delete(userId)" class="fas fa-trash-alt"></i>
+        </div>
+    </section>
+    
+
+</form>

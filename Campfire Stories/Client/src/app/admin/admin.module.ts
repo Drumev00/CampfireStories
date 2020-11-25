@@ -5,13 +5,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreateCategoryComponent } from './create-category/create-category.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ListCategoriesComponent } from './list-categories/list-categories.component';
+import { EditCategoryComponent } from './edit-category/edit-category.component';
 
 
 
 @NgModule({
   declarations: [
     CreateCategoryComponent,
-    ListCategoriesComponent
+    ListCategoriesComponent,
+    EditCategoryComponent
   ],
   imports: [
     CommonModule,
