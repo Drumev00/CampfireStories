@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   apiURL: 'https://localhost:44365/',
+  uploadBaseUrl: 'https://api.cloudinary.com/v1_1/dn2ouybbf/image/upload/',
+  getBaseUrl: 'https://res.cloudinary.com/dn2ouybbf/image/upload',
 };
 
 /*

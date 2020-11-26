@@ -34,9 +34,10 @@ export class AuthService {
     return localStorage.getItem('userId');
   }
 
-  setUserInfo(token: string, id: string, displayName: string, isAdmin: boolean): void {
+  setUserInfo(token: string, id: string, displayName: string, isAdmin: boolean, profilePic: string): void {
     localStorage.setItem('token', token);
     localStorage.setItem('userId', id);
+    localStorage.setItem('profilePic', profilePic);
     localStorage.setItem('displayName', displayName);
     localStorage.setItem('isAdmin', isAdmin.toString())
   }
@@ -66,5 +67,6 @@ export class AuthService {
     localStorage.removeItem('userId');
     localStorage.removeItem('displayName');
     localStorage.removeItem('isAdmin');
+    localStorage.removeItem('profilePic');
   }
 }

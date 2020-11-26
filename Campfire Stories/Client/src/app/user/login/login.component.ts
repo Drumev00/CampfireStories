@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
       this.auth.setUserInfo(data.result.token,
                             data.result.userId,
                             data.result.displayName,
-                            data.result.isAdmin)
+                            data.result.isAdmin,
+                            data.result.profilePictureUrl)
     })
   }
 

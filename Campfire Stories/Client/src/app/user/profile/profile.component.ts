@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users/users.service';
 import { IUser } from 'src/app/models/IUser';
-import { map, switchMap, mergeMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { UploadService } from 'src/app/services/upload/upload.service';
+import { stringify } from 'querystring';
 
 
 @Component({
@@ -17,23 +19,25 @@ export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   userId: string;
   user: IUser;
+  selectedFile: File;
+  selectedFileUrl: string;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private usersService: UsersService,
     private datePipe: DatePipe,
     private fb: FormBuilder,
-    private auth: AuthService) {
-      this.profileForm = this.fb.group({
-        'userName': [''],
-        'email': [''],
-        'biography': [''],
-        'createdOn': [''],
-        'displayName': [''],
-        'gender': [''],
-        'profilePictureUrl': [''],
-      })
-     }
+    private auth: AuthService,
+    private uploadService: UploadService) {
+    this.profileForm = this.fb.group({
+      'userName': [''],
+      'email': [''],
+      'biography': [''],
+      'createdOn': [''],
+      'displayName': [''],
+      'gender': [''],
+    })
+  }
 
   ngOnInit(): void {
     this.fetch();
@@ -44,28 +48,42 @@ export class ProfileComponent implements OnInit {
       this.userId = params['id']
       return this.userId
     }),
-    mergeMap(id => this.usersService.getUser(id))).subscribe(res => {
-      this.user = res;
-      this.user.createdOn = this.datePipe.transform(res.createdOn, 'dd/MM/yyyy')
-      this.profileForm = this.fb.group({
-        'userName': [this.user.userName, [Validators.required]],
-        'email': [this.user.email, Validators.required],
-        'biography': [this.user.biography, [Validators.minLength(20)]],
-        'createdOn': [this.user.createdOn, [Validators.required]],
-        'displayName': [this.user.displayName, [Validators.minLength(2), Validators.maxLength(50)]],
-        'gender': [this.user.gender, [Validators.required]],
-        'profilePictureUrl': [this.user.profilePictureUrl],
+      mergeMap(id => this.usersService.getUser(id))).subscribe(res => {
+        this.user = res;
+        this.user.createdOn = this.datePipe.transform(res.createdOn, 'dd/MM/yyyy')
+        this.profileForm = this.fb.group({
+          'userName': [this.user.userName, [Validators.required]],
+          'email': [this.user.email, Validators.required],
+          'biography': [this.user.biography, [Validators.minLength(20)]],
+          'createdOn': [this.user.createdOn, [Validators.required]],
+          'displayName': [this.user.displayName, [Validators.minLength(2), Validators.maxLength(50)]],
+          'gender': [this.user.gender, [Validators.required]],
+        })
+        this.profileForm.controls['userName'].disable();
+        this.profileForm.controls['createdOn'].disable();
+        this.profileForm.controls['gender'].disable();
       })
-    })
-    this.profileForm.get('userName').disable();
-    this.profileForm.get('createdOn').disable();
-    this.profileForm.get('gender').disable();
+
   }
 
   edit(userId: string): void {
-    this.usersService.editUser(userId, this.profileForm.value).subscribe(data => {
+    const userToSend: IUser = {
+      biography: this.profileForm.value.biography,
+      displayName: this.profileForm.value.displayName,
+      email: this.profileForm.value.email,
+      profilePictureUrl: this.selectedFileUrl,
+    }
+    this.usersService.editUser(userId, userToSend).subscribe(data => {
       this.fetch();
-      localStorage.setItem('displayName', this.profileForm.value.displayName);
+      console.log(this.profileForm.value)
+      if (this.displayName.value.trim()) {
+        localStorage.setItem('displayName', this.profileForm.value.displayName);
+      }
+      else {
+        localStorage.setItem('displayName', this.user.userName);
+      }
+      localStorage.setItem('profilePic', this.selectedFileUrl);
+
     });
   }
 
@@ -73,6 +91,29 @@ export class ProfileComponent implements OnInit {
     this.usersService.deleteUser(userId).subscribe();
     this.auth.logout();
     this.router.navigate(['register']);
+  }
+
+  resetPhoto() {
+    this.usersService.resetPhoto(this.userId).pipe(
+      mergeMap(params => this.usersService.getUser(this.userId)))
+      .subscribe(res =>{
+        console.log(res);
+        this.user = res;
+        localStorage.setItem('profilePic', res.profilePictureUrl);
+      } )
+  }
+
+  onFileSelected($event) {
+    this.selectedFile = $event.target.files[0];
+    const fd = new FormData();
+    fd.append('file', this.selectedFile, this.selectedFile.name);
+    fd.append('upload_preset', 'kfrkwxy7');
+    fd.append('cloud_name', 'dn2ouybbf');
+
+    this.uploadService.uploadImage(fd).subscribe(res => {
+      this.selectedFileUrl = res['secure_url'];
+      console.log(res);
+    });
   }
 
   get biography() {

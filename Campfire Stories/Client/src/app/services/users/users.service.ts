@@ -22,4 +22,8 @@ export class UsersService {
   deleteUser(id: string): Observable<any> {
     return this.http.delete(this.userRoute + `/${id}`);
   }
+
+  resetPhoto(id: string): Observable<any> {
+    return this.http.get(this.userRoute + '/reset');
+  }
 }

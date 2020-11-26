@@ -85,6 +85,7 @@
 					Token = encryptedToken,
 					IsAdmin = isAdmin,
 					DisplayName = displayName,
+					ProfilePictureUrl = user.ProfilePictureUrl,
 				},
 
 				Success = true,
@@ -110,6 +111,7 @@
 
 			var user = new User
 			{
+				ProfilePictureUrl = "https://res.cloudinary.com/dn2ouybbf/image/upload/v1606411713/by9buhmgr5ipeum4dzyr.jpg",
 				UserName = username,
 				Email = email,
 				DisplayName = username,

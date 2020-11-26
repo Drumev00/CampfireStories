@@ -22,7 +22,18 @@ nav.navbar {
     margin-right: 15px;
     outline: none;
     font-size: 20px;
-    
+    height: 30px;
+}
+
+.profile-img {
+    min-width: 70px;
+    min-height: 70px;
+    max-width: 70px;
+    max-height: 70px;
+    border-radius: 50%;
+    position: relative;
+    top: -24px;
+    outline: none;
 }
 
 .navbar ul li span:hover {

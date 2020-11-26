@@ -27,6 +27,7 @@
 			public const string Update = UserRoute + "/{userId}";
 			public const string Delete = UserRoute + "/{userId}";
 			public const string Profile = UserRoute + "/{userId}";
+			public const string ResetPhoto = UserRoute + "/reset";
 			public const string Ban = AdminRoute + UserRoute + "/{userId}";
 			public const string Unban = AdminRoute + UserRoute + "/{userId}";
 		}

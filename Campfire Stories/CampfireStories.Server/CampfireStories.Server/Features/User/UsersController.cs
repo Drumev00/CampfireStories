@@ -52,6 +52,17 @@
 			return Ok(result.Result);
 		}
 
+		[HttpGet]
+		[Route(UserRoutes.ResetPhoto)]
+		public async Task<ActionResult> ResetPhoto(string profilePictureUrl)
+		{
+			var loggedUser = this.User.GetId();
+			var result = await this.userService.ResetPhoto(loggedUser, profilePictureUrl);
+
+			return Ok(result);
+		}
+
+
 		[HttpDelete]
 		[Route(UserRoutes.Delete)]
 		public async Task<ActionResult> DeleteUser(string userId)

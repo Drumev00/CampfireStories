@@ -39,7 +39,7 @@
 			user.Biography = model.Biography;
 
 			// In case the user deteles his display name. I need it because I render it on the front-end (the header).
-			user.DisplayName = string.IsNullOrWhiteSpace(model.DisplayName) ?
+			user.DisplayName = string.IsNullOrWhiteSpace(model.DisplayName) || model.DisplayName == "" ?
 				user.DisplayName = user.UserName :
 				user.DisplayName = model.DisplayName;
 
@@ -171,6 +171,24 @@
 				Result = true,
 				Success = true,
 			};
+		}
+
+		public async Task<bool> ResetPhoto(string userId, string profilePictureUrl)
+		{
+			var user = await this.dbContext
+				.Users
+				.Where(u => u.Id == userId)
+				.FirstOrDefaultAsync();
+
+			if (string.IsNullOrWhiteSpace(profilePictureUrl))
+			{
+				profilePictureUrl = "https://res.cloudinary.com/dn2ouybbf/image/upload/v1606411713/by9buhmgr5ipeum4dzyr.jpg";
+			}
+			user.ProfilePictureUrl = profilePictureUrl;
+			this.dbContext.Users.Update(user);
+			await this.dbContext.SaveChangesAsync();
+
+			return true;
 		}
 	}
 }

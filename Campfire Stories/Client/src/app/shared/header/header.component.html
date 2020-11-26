@@ -1,5 +1,5 @@
 <div class="campfire-img">
-    <img [routerLink]="['/']" src="https://res.cloudinary.com/dn2ouybbf/image/upload/v1606069816/howlerhero_rg6j2m.jpg"
+    <img [routerLink]="['/']" src="{{cloudUrl}}/v1606069816/howlerhero_rg6j2m.jpg"
         alt="Campfire">
 </div>
 
@@ -18,7 +18,10 @@
                     <li [routerLink]="['/register']">Register</li>
                 </section>
                 <section *ngIf="isLoggedIn()" class="authenticated">
-                    <li>Hello, <span [routerLink]="['user/profile', userId]">{{displayName}}</span></li>
+                    <li>Hello, <span [routerLink]="['user', 'profile', userId]">{{displayName}}</span></li>
+                    <li>
+                        <img class="profile-img" [src]="profilePic" [routerLink]="['user', 'profile', userId]">
+                    </li>
                     <li (click)="logout()">Logout</li>
                 </section>
             </div>

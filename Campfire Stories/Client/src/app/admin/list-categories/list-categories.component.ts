@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class ListCategoriesComponent implements OnInit {
   categories: ICategory[];
+  selectedCategoryId: string;
   constructor(private categoryService: CategoryService, private router: Router) { }
 
   ngOnInit(): void {

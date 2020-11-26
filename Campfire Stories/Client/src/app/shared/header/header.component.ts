@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -8,16 +9,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
+  cloudUrl: string;
   constructor(
     private auth: AuthService,
-    private router: Router) { }
+    private router: Router) {
+      this.cloudUrl = environment.getBaseUrl;
+     }
 
   ngOnInit(): void {
   }
 
   get displayName() {
     return localStorage.getItem('displayName')
+  }
+
+  get profilePic() {
+    return localStorage.getItem('profilePic')
   }
 
   get userId(): string {

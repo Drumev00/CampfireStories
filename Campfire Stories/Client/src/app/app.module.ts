@@ -13,6 +13,7 @@ import { AuthGuardService } from './services/auth/auth-guard.service';
 import { AdminGuardService } from './services/auth/admin-guard.service';
 import { TokenInterceptorService } from './services/auth/token-interceptor.service';
 import { DatePipe } from '@angular/common';
+import { UploadService } from './services/upload/upload.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { DatePipe } from '@angular/common';
       useClass: TokenInterceptorService,
       multi: true,
     },
-    DatePipe
+    DatePipe,
+    UploadService
   ],
   bootstrap: [AppComponent]
 })

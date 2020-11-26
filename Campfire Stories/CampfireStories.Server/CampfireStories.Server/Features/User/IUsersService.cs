@@ -11,6 +11,8 @@
 
 		Task<ResultModel<bool>> BanUser(string userId);
 
+		Task<bool> ResetPhoto(string userId, string profilePictureUrl);
+
 		Task<ResultModel<bool>> UnbanUser(string userId);
 
 		Task<ResultModel<bool>> UpdateUser(string userId, UpdateUserRequestModel model);

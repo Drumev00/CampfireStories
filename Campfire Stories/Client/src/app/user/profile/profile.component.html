@@ -1,8 +1,14 @@
-<form [formGroup]="profileForm">
+<form *ngIf="user" [formGroup]="profileForm">
     <section class="user-features">
         <div class="row">
-            <label>Profile Photo</label>
-            <input type="file" >
+            <div class="d-flex justify-content-center">
+                <label>Profile Photo</label>
+                <div class="cross">
+                    <i (click)="resetPhoto()" class="far fa-times-circle"></i>
+                </div>
+                <img class="profile" [src]="user.profilePictureUrl">
+                <input class="input-file" type="file" (change)="onFileSelected($event)">
+            </div>
         </div>
         <div class="row username">
             <label>Username</label>
@@ -41,9 +47,8 @@
             <input type="text" formControlName="gender">
         </div>
         <div class="row">
-            <button class="btn btn-primary" (click)="edit(userId)">Save Changes</button><i (click)="delete(userId)" class="fas fa-trash-alt"></i>
+            <button class="btn btn-primary" (click)="edit(userId)">Save Changes</button><i (click)="delete(userId)"
+                class="fas fa-trash-alt"></i>
         </div>
     </section>
-    
-
 </form>
