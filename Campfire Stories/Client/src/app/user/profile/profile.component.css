@@ -25,7 +25,7 @@
     margin-left: 15%;
 }
 
-.btn {
+.btn-primary {
     background-color: #DD3333;
     border: none;
     color: black;
@@ -39,9 +39,8 @@
 
 .alert-biography {
     width: 20%;
-    height: 80px;
+    height: 60px;
     margin-left: 80px;
-    margin-top: 80px;
 }
 
 .fa-trash-alt {
@@ -84,4 +83,13 @@
 
 .d-flex {
     margin-left: 90px;
+}
+
+.modal-body {
+    color: red;
+    text-align: center;
+}
+
+.modal-title {
+    color: black;
 }

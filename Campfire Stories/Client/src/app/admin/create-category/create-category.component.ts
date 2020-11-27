@@ -3,6 +3,7 @@ import { CategoryService } from 'src/app/services/admin/category.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-category',
@@ -15,7 +16,8 @@ export class CreateCategoryComponent implements OnInit {
     private categoryService: CategoryService,
     private fb: FormBuilder,
     private router: Router,
-    private auth: AuthService) {
+    private auth: AuthService,
+    private toastrService: ToastrService) {
       this.createCategoryForm = this.fb.group({
         'name': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40)]]
       });
@@ -31,6 +33,7 @@ export class CreateCategoryComponent implements OnInit {
   create() {
     this.categoryService.createCategory(this.createCategoryForm.value).subscribe(data => {
       this.router.navigate(['/list/category'])
+      this.toastrService.success("A new category has been created!");
     })
   }
 }

@@ -7,7 +7,7 @@ import { DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UploadService } from 'src/app/services/upload/upload.service';
-import { stringify } from 'querystring';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -28,7 +28,8 @@ export class ProfileComponent implements OnInit {
     private datePipe: DatePipe,
     private fb: FormBuilder,
     private auth: AuthService,
-    private uploadService: UploadService) {
+    private uploadService: UploadService,
+    private toastrService: ToastrService) {
     this.profileForm = this.fb.group({
       'userName': [''],
       'email': [''],
@@ -67,6 +68,9 @@ export class ProfileComponent implements OnInit {
   }
 
   edit(userId: string): void {
+    if (this.profileForm.invalid) {
+      this.toastrService.warning("Submitted form is invalid!");
+    }
     const userToSend: IUser = {
       biography: this.profileForm.value.biography,
       displayName: this.profileForm.value.displayName,
@@ -83,6 +87,7 @@ export class ProfileComponent implements OnInit {
         localStorage.setItem('displayName', this.user.userName);
       }
       localStorage.setItem('profilePic', this.selectedFileUrl);
+      this.toastrService.success("You successfully modified your profile!")
 
     });
   }
@@ -91,6 +96,7 @@ export class ProfileComponent implements OnInit {
     this.usersService.deleteUser(userId).subscribe();
     this.auth.logout();
     this.router.navigate(['register']);
+    this.toastrService.success("You deleted your account succesfully.")
   }
 
   resetPhoto() {
@@ -100,7 +106,9 @@ export class ProfileComponent implements OnInit {
         console.log(res);
         this.user = res;
         localStorage.setItem('profilePic', res.profilePictureUrl);
-      } )
+      })
+
+    this.toastrService.success("You managed to change your photo.");
   }
 
   onFileSelected($event) {

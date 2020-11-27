@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,8 @@ export class HeaderComponent implements OnInit {
   cloudUrl: string;
   constructor(
     private auth: AuthService,
-    private router: Router) {
+    private router: Router,
+    private toastrService: ToastrService) {
       this.cloudUrl = environment.getBaseUrl;
      }
 
@@ -34,6 +36,7 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.auth.logout();
     this.router.navigate(['/login']);
+    this.toastrService.success("You logged out successfully.");
   }
 
   isLoggedIn(): boolean {

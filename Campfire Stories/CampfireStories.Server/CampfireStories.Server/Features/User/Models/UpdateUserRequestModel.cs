@@ -5,6 +5,7 @@
 	using static Data.Models.Common.Constants.User;
 	public class UpdateUserRequestModel
 	{
+		[MinLength(MinBiographyLength)]
 		public string Biography { get; set; }
 
 		[MinLength(MinDisplayNameLength)]

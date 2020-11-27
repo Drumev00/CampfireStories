@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/admin/category.service';
 import { ICategory } from 'src/app/models/ICategory';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-categories',
@@ -12,7 +12,10 @@ import { Observable } from 'rxjs';
 export class ListCategoriesComponent implements OnInit {
   categories: ICategory[];
   selectedCategoryId: string;
-  constructor(private categoryService: CategoryService, private router: Router) { }
+  constructor(
+    private categoryService: CategoryService,
+     private router: Router,
+     private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.getAll();
@@ -27,6 +30,7 @@ export class ListCategoriesComponent implements OnInit {
   deleteCategory(categoryId): void {
     this.categoryService.delete(categoryId).subscribe(data => {
       this.getAll()
+      this.toastrService.warning("A category has been deleted.");
     })
   }
 

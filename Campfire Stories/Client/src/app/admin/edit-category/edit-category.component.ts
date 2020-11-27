@@ -4,6 +4,8 @@ import { ICategory } from 'src/app/models/ICategory';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-edit-category',
@@ -19,7 +21,8 @@ export class EditCategoryComponent implements OnInit {
     private categoryService: CategoryService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private router: Router) {
+    private router: Router,
+    private toastrService: ToastrService) {
       this.editForm = this.fb.group({
         'newName': [''],
       });
@@ -42,6 +45,7 @@ export class EditCategoryComponent implements OnInit {
     this.categoryService.editCategory(categoryId, this.editForm.value).subscribe(data => {
       console.log(data)
       this.router.navigate(['list', 'category']);
+      this.toastrService.success("You modified your category successfully!");
     });
   }
 
