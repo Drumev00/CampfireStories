@@ -1,0 +1,46 @@
+<form [formGroup]="formGroup" (ngSubmit)="postStory()">
+    <div class="form-wrapper">
+        <div class="elements-wrapper">
+            <div class="title form-group">
+                <label>Title</label>
+                <input class="input-data" type="text" formControlName="title" placeholder="Title...">
+            </div>
+            <div class="tiny-mce">
+                <h4>Content</h4>
+                <editor formControlName="content" [init]="{
+                    height: 500,
+                    menubar: false,
+                    plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                    ],
+                    toolbar:
+                    'undo redo | formatselect | bold italic backcolor | \
+                    alignleft aligncenter alignright alignjustify | \
+                    bullist numlist outdent indent | removeformat | help'
+                    }">
+                </editor>
+            </div>
+            <div class="story-picture form-group">
+                <label for="file-upload">Choose your story picture</label>
+                <input id="file-upload" type="file" (change)="uploadPhoto($event)">
+            </div>
+            <h4 class="category-title">Choose your categories</h4>
+            <div class="categories">
+                <div formArrayName="selectedIds" *ngFor="let category of idsFormArray.controls; let i = index">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                          id="defaultCheck1" [formControlName]="i">
+                        <label class="form-check-label" for="defaultCheck1">
+                            {{categoriesFromApi[i].name}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-holder">
+                <button class="btn-send">Send us Story</button>
+            </div>
+        </div>
+    </div>
+</form>

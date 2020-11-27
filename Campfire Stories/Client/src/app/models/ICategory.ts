@@ -1,4 +1,5 @@
 export interface ICategory {
     categoryId: string,
-    name: string;
+    isChecked: boolean,
+    name: string,
 }

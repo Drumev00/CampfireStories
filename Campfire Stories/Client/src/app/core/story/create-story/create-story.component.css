@@ -1,0 +1,57 @@
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 70%;
+    margin: 0px auto;
+    border: 3px solid red;
+}
+
+.elements-wrapper {
+    margin: 20px 0px;
+}
+
+.elements-wrapper h4{
+    text-align: center;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 22px;
+}
+
+.input-data {
+    background: black;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid red;
+    text-align: center;
+}
+
+.category-title {
+    margin-bottom: 50px;
+}
+
+.categories {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100px;
+}
+
+.btn-holder {
+    text-align: center;
+    margin-top: 30px;
+    outline: none;
+}
+
+.btn-send {
+    color: black;
+    font-weight: bold;
+    font-family: 'Texturina', serif;
+    border: none;
+    background: #D10608;
+    border-radius: 12px;
+    padding: 5px 35px;
+}

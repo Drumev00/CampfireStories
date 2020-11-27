@@ -9,6 +9,7 @@ import { ListCategoriesComponent } from './admin/list-categories/list-categories
 import { ProfileComponent } from './user/profile/profile.component';
 import { AuthGuardService } from './services/auth/auth-guard.service';
 import { EditCategoryComponent } from './admin/edit-category/edit-category.component';
+import { CreateStoryComponent } from './core/story/create-story/create-story.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'user/profile/:id', component: ProfileComponent, canActivate: [AuthGuardService]},
   { path: 'create/category', component: CreateCategoryComponent, canActivate: [AdminGuardService] },
   { path: 'list/category', component: ListCategoriesComponent, canActivate: [AdminGuardService] },
-  { path: 'edit/category/:id', component: EditCategoryComponent, canActivate: [AdminGuardService]}
+  { path: 'edit/category/:id', component: EditCategoryComponent, canActivate: [AdminGuardService]},
+  { path: 'create/story', component: CreateStoryComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({

@@ -17,6 +17,8 @@ import { AdminGuardService } from './services/auth/admin-guard.service';
 import { TokenInterceptorService } from './services/auth/token-interceptor.service';
 import { UploadService } from './services/upload/upload.service';
 import { ErrorInterceptorService } from './services/error/error-interceptor.service';
+import { CoreModule } from './core/core.module';
+import { StoryService } from './services/story/story.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { ErrorInterceptorService } from './services/error/error-interceptor.serv
     ToastrModule.forRoot(),
     UserModule,
     SharedModule,
-    AdminModule
+    AdminModule,
+    CoreModule,
   ],
   providers: [
     AuthService,
@@ -49,6 +52,7 @@ import { ErrorInterceptorService } from './services/error/error-interceptor.serv
       useClass: ErrorInterceptorService,
       multi: true,
     },
+    StoryService
   ],
   bootstrap: [AppComponent]
 })
