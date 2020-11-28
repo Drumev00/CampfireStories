@@ -1,0 +1,40 @@
+.story-picture{
+    width: 50%;
+    text-align: center;
+}
+
+.story-picture img{
+    width: 100%;
+    height: 150px;
+}
+
+.title h5{
+    text-align: center;
+    font-family: 'Texturina', serif;
+}
+
+.content {
+    width: 52%;
+    text-align: center;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Texturina', serif;
+}
+
+.col-4 {
+    margin-top: 50px;
+}
+
+.author p a:hover {
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+}
+
+.author p a {
+    color: red;
+}

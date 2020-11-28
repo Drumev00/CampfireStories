@@ -125,10 +125,11 @@
 		{
 			return await this.dbContext
 				.Stories
+				.OrderByDescending(s => s.CreatedOn)
 				.Select(s => new ListingStoryResponseModel
 				{
 					Title = s.Title,
-					Content = s.Content.Substring(0, 150),
+					Content = s.Content.Substring(0, 350) + "...",
 					PictureUrl = s.PictureUrl,
 					UserId = s.UserId,
 					UserName = s.User.UserName,

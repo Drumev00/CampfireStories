@@ -7,6 +7,7 @@
 	using Features.Story.Models;
 
 	using static ApiRoutes;
+	using Microsoft.AspNetCore.Authorization;
 
 	public class StoriesController : ApiController
 	{
@@ -45,6 +46,7 @@
 		}
 
 		[HttpGet]
+		[AllowAnonymous]
 		[Route(StoryRoutes.GetAll)]
 		public async Task<ActionResult> GetAllStories()
 		{

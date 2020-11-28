@@ -1,0 +1,35 @@
+<section class="info">
+    <h2>{{viewUser.userName}}'s profile</h2>
+    <button>View his Stories</button>
+</section>
+<section *ngIf="viewUser" class="d-flex flex-column profile-wrapper">
+    <div class="profile-photo d-flex flex-column">
+        <label>Profile photo</label>
+        <img [src]="viewUser.profilePictureUrl" alt="Profile picture">
+    </div>
+    <div class="flex-column">
+        <label>Username:</label>
+        <p>{{viewUser.userName}}</p>
+    </div>
+    <div class="flex-column">
+        <label>Display Name:</label>
+        <p>{{viewUser.displayName}}</p>
+    </div>
+    <div class="flex-column">
+        <label>Email:</label>
+        <p>{{viewUser.email}}</p>
+    </div>
+    <div class="flex-column">
+        <label>Gender:</label>
+        <p>{{viewUser.gender}}</p>
+    </div>
+    
+    <div class="flex-column">
+        <label>Created On:</label>
+        <p>{{viewUser.createdOn}}</p>
+    </div>
+</section>
+<div class="flex-column">
+    <label>Biography:</label>
+    <p>{{viewUser.biography}}</p>
+</div>

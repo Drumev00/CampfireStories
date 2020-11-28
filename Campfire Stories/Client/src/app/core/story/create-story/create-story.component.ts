@@ -67,6 +67,10 @@ export class CreateStoryComponent implements OnInit {
   } )};
 
   postStory() {
+    if (this.formGroup.invalid) {
+      this.toastrService.error('You don\'t populate the fields correctly.');
+      return;
+    }
     this.sanitizer.sanitize(SecurityContext.HTML, this.content);
     const selectedCategoryIds = this.formGroup.value.selectedIds
     .map((checked, i) => checked ? this.selectedIds[i] : null)
@@ -90,7 +94,6 @@ export class CreateStoryComponent implements OnInit {
   }
 
   private addCheckboxes() {
-    const ra = this.categoriesFromApi;
     this.categoriesFromApi.forEach(() => this.idsFormArray.push(new FormControl(false)));
   }
 
