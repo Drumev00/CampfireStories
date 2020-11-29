@@ -5,13 +5,15 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ListStoryComponent } from './story/list-story/list-story.component';
+import { DetailsStoryComponent } from './story/details-story/details-story.component';
 
 
 
 @NgModule({
   declarations: [
     CreateStoryComponent,
-    ListStoryComponent
+    ListStoryComponent,
+    DetailsStoryComponent
   ],
   imports: [
     CommonModule,

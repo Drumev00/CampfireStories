@@ -70,13 +70,17 @@ export class ProfileComponent implements OnInit {
   edit(userId: string): void {
     if (this.profileForm.invalid) {
       this.toastrService.warning("Submitted form is invalid!");
+      return;
     }
     const userToSend: IUser = {
       biography: this.profileForm.value.biography,
       displayName: this.profileForm.value.displayName,
       email: this.profileForm.value.email,
-      profilePictureUrl: this.selectedFileUrl,
     }
+    if (this.selectedFileUrl) {
+      userToSend.profilePictureUrl = this.selectedFileUrl;
+    }
+    
     this.usersService.editUser(userId, userToSend).subscribe(data => {
       this.fetch();
       console.log(this.profileForm.value)
@@ -86,6 +90,7 @@ export class ProfileComponent implements OnInit {
       else {
         localStorage.setItem('displayName', this.user.userName);
       }
+
       localStorage.setItem('profilePic', this.selectedFileUrl);
       this.toastrService.success("You successfully modified your profile!")
 
@@ -102,7 +107,7 @@ export class ProfileComponent implements OnInit {
   resetPhoto() {
     this.usersService.resetPhoto(this.userId).pipe(
       mergeMap(params => this.usersService.getUser(this.userId)))
-      .subscribe(res =>{
+      .subscribe(res => {
         console.log(res);
         this.user = res;
         localStorage.setItem('profilePic', res.profilePictureUrl);

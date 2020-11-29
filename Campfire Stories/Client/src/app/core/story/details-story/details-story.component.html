@@ -1,0 +1,33 @@
+<article *ngIf="story" class="content-wrapper">
+    <div class="title">
+        <h2>{{story['result'].title}}</h2>
+    </div>
+    <section class="categories">
+        <div class="category">
+            <p><strong>{{story.createdOn}}</strong> / </p>
+            <p>{{categories}}</p>
+        </div>
+    </section>
+    <div *ngIf="userId !== story['result'].userId" class="rating">
+        <p>Rating: <strong>{{story['result'].rating}}</strong>/10. From {{story['result'].votes}} votes.</p>
+        <p>Author: <a [routerLink]="['/user', 'viewProfile', story['result'].userId]">{{story['result'].username}}</a></p>
+    </div>
+    <div *ngIf="userId === story['result'].userId" class="rating">
+        <p>Rating: <strong>{{story['result'].rating}}</strong>/10. From {{story['result'].votes}} votes.</p>
+        <p>Author: <a [routerLink]="['/user', 'profile', story['result'].userId]">{{story['result'].username}}</a></p>
+    </div>
+    <section class="story-img">
+        <img [src]="story['result'].pictureUrl" alt="Story image">
+    </section>
+    <div class="content">
+        <p [innerHTML]="story['result'].content"></p>
+    </div>
+    <div *ngIf="userId !== story['result'].userId" class="rating">
+        <p>Rating: <strong>{{story['result'].rating}}</strong>/10. From {{story['result'].votes}} votes.</p>
+        <p>Author: <a [routerLink]="['/user', 'viewProfile', story['result'].userId]">{{story['result'].username}}</a></p>
+    </div>
+    <div *ngIf="userId === story['result'].userId" class="rating">
+        <p>Rating: <strong>{{story['result'].rating}}</strong>/10. From {{story['result'].votes}} votes.</p>
+        <p>Author: <a [routerLink]="['/user', 'profile', story['result'].userId]">{{story['result'].username}}</a></p>
+    </div>
+</article>

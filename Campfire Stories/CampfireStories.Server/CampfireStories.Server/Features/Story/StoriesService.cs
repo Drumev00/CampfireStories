@@ -62,6 +62,7 @@
 				Title = model.Title,
 				Content = model.Content,
 				PictureUrl = model.PictureUrl,
+				Rating = 0,
 				UserId = userId,
 			};
 
@@ -128,6 +129,7 @@
 				.OrderByDescending(s => s.CreatedOn)
 				.Select(s => new ListingStoryResponseModel
 				{
+					Id = s.Id,
 					Title = s.Title,
 					Content = s.Content.Substring(0, 350) + "...",
 					PictureUrl = s.PictureUrl,
@@ -160,6 +162,7 @@
 						CreatedOn = s.CreatedOn,
 						PictureUrl = s.PictureUrl,
 						Content = s.Content,
+						UserId = s.UserId,
 						Username = s.User.UserName,
 						Rating = s.Rating,
 						Votes = s.Votes,

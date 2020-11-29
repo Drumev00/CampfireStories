@@ -5,5 +5,5 @@ export interface IUser {
     createdOn?: string,
     displayName: string,
     gender?: string,
-    profilePictureUrl: string,
+    profilePictureUrl?: string,
 };

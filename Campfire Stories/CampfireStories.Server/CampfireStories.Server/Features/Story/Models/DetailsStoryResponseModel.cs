@@ -18,6 +18,8 @@
 
 		public string Username { get; set; }
 
+		public string UserId { get; set; }
+
 		public DateTime CreatedOn { get; set; }
 
 		public string[] Categories { get; set; }

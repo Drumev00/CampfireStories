@@ -19,4 +19,8 @@ export class StoryService {
   getAll(): Observable<IStory[]> {
     return this.http.get<IStory[]>(this.storyRoute);
   }
+
+  getById(id: string): Observable<IStory> {
+    return this.http.get<IStory>(this.storyRoute + `/${id}`);
+  }
 }
