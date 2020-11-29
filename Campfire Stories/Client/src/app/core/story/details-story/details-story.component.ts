@@ -15,27 +15,55 @@ export class DetailsStoryComponent implements OnInit {
   storyId: string;
   story: IStory;
   categories: string;
+  isRated: boolean;
 
   constructor(
     private storyService: StoryService,
     private route: ActivatedRoute,
     private datePipe: DatePipe,
-    private router: Router,) { }
+    private router: Router, ) { }
 
   ngOnInit(): void {
+    this.fetch();
+  }
+
+  fetch() {
     this.route.params.pipe(map(params => {
       this.storyId = params['id'];
       return this.storyId;
     }),
-    mergeMap(id => this.storyService.getById(id))).subscribe(res => {
-      this.story = res;
-      this.categories = res['result'].categories.join(' / ');
-      this.story.createdOn = this.datePipe.transform(res['result'].createdOn);
-      console.log(this.story)
+      mergeMap(id => this.storyService.getById(id))).subscribe(res => {
+        this.story = res;
+        this.categories = res['result'].categories.join(' / ');
+        this.story.createdOn = this.datePipe.transform(res['result'].createdOn);
+        console.log(this.story)
+      })
+  }
+
+  rate(rating: number) {
+    const dataToSend = {
+      storyId: this.storyId,
+      rating: rating,
+    };
+    this.storyService.rate(dataToSend).subscribe(res => {
+      console.log(res);
+      if (this.storyId === res.storyId && this.userId === res.userId) {
+        this.isRated = true;
+      }
+      this.story['result'].rating = res.rating;
+      this.story['result'].votes = res.votes;
     })
   }
 
   get userId() {
     return localStorage.getItem('userId');
+  }
+
+  get rating() {
+    return this.story['result'].rating;
+  }
+
+  get votes() {
+    return this.story['result'].votes;
   }
 }

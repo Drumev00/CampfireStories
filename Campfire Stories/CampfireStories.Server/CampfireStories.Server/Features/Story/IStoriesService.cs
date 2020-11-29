@@ -17,5 +17,7 @@
 		Task<ResultModel<bool>> UpdateStoryAsync(UpdateStoryRequestModel model, string storyId, string userId);
 
 		Task<ResultModel<bool>> DeleteStoryAsync(string storyId, string userId);
+
+		Task<RateStoryResponseModel> Rate(string storyId, int rating);
 	}
 }

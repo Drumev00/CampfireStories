@@ -5,7 +5,7 @@ export interface IStory {
     rating?: number,
     votes?: number,
     pictureUrl?: string,
-    createdOn: string,
+    createdOn?: string,
     userId?: string,
     userName?: string,
     categories: string[],

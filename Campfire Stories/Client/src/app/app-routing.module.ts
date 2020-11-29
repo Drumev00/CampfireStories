@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'create/story', component: CreateStoryComponent, canActivate: [AuthGuardService] },
   { path: '', component: ListStoryComponent},
   { path: 'user/viewProfile/:id', component: ViewProfileComponent, canActivate: [AuthGuardService] },
-  { path: 'story/details/:id', component: DetailsStoryComponent, canActivate: [AuthGuardService] }
+  { path: 'story/details/:id', component: DetailsStoryComponent }
 ];
 
 @NgModule({

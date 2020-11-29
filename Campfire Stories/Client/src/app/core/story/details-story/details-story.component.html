@@ -9,11 +9,18 @@
         </div>
     </section>
     <div *ngIf="userId !== story['result'].userId" class="rating">
-        <p>Rating: <strong>{{story['result'].rating}}</strong>/10. From {{story['result'].votes}} votes.</p>
-        <p>Author: <a [routerLink]="['/user', 'viewProfile', story['result'].userId]">{{story['result'].username}}</a></p>
+        <div>
+            <app-rating *ngIf="!isRated" (ratingValue)="rate($event)"></app-rating>
+            <p>Rating: <strong>{{story['result'].rating}}</strong>/10. From {{story['result'].votes}} votes.</p>
+        </div>
+        <p>Author: <a [routerLink]="['/user', 'viewProfile', story['result'].userId]">{{story['result'].username}}</a>
+        </p>
     </div>
-    <div *ngIf="userId === story['result'].userId" class="rating">
-        <p>Rating: <strong>{{story['result'].rating}}</strong>/10. From {{story['result'].votes}} votes.</p>
+    <div *ngIf="userId === story['result'].userId && story" class="rating">
+        <div>
+            <app-rating *ngIf="!isRated" (ratingValue)="rate($event)"></app-rating>
+            <p>Rating: <strong>{{rating}}</strong>/10. From {{votes}} votes.</p>
+        </div>
         <p>Author: <a [routerLink]="['/user', 'profile', story['result'].userId]">{{story['result'].username}}</a></p>
     </div>
     <section class="story-img">
@@ -23,11 +30,18 @@
         <p [innerHTML]="story['result'].content"></p>
     </div>
     <div *ngIf="userId !== story['result'].userId" class="rating">
-        <p>Rating: <strong>{{story['result'].rating}}</strong>/10. From {{story['result'].votes}} votes.</p>
-        <p>Author: <a [routerLink]="['/user', 'viewProfile', story['result'].userId]">{{story['result'].username}}</a></p>
+        <div>
+            <app-rating *ngIf="!isRated" (ratingValue)="rate($event)"></app-rating>
+            <p>Rating: <strong>{{story['result'].rating}}</strong>/10. From {{story['result'].votes}} votes.</p>
+        </div>
+        <p>Author: <a [routerLink]="['/user', 'viewProfile', story['result'].userId]">{{story['result'].username}}</a>
+        </p>
     </div>
     <div *ngIf="userId === story['result'].userId" class="rating">
-        <p>Rating: <strong>{{story['result'].rating}}</strong>/10. From {{story['result'].votes}} votes.</p>
+        <div>
+            <app-rating *ngIf="!isRated" (ratingValue)="rate($event)"></app-rating>
+            <p>Rating: <strong>{{story['result'].rating}}</strong>/10. From {{story['result'].votes}} votes.</p>
+        </div>
         <p>Author: <a [routerLink]="['/user', 'profile', story['result'].userId]">{{story['result'].username}}</a></p>
     </div>
 </article>

@@ -33,6 +33,7 @@
 		}
 
 		[HttpGet]
+		[AllowAnonymous]
 		[Route(StoryRoutes.Details)]
 		public async Task<ActionResult> GetDetailsAsync(string storyId)
 		{
@@ -41,6 +42,15 @@
 			{
 				return BadRequest(result.Errors);
 			}
+
+			return Ok(result);
+		}
+
+		[HttpPost]
+		[Route(StoryRoutes.Rate)]
+		public async Task<ActionResult> Rate(RateStoryRequestModel model)
+		{
+			var result = await this.storyService.Rate(model.StoryId, model.Rating);
 
 			return Ok(result);
 		}

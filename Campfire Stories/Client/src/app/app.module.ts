@@ -19,6 +19,7 @@ import { UploadService } from './services/upload/upload.service';
 import { ErrorInterceptorService } from './services/error/error-interceptor.service';
 import { CoreModule } from './core/core.module';
 import { StoryService } from './services/story/story.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { StoryService } from './services/story/story.service';
     SharedModule,
     AdminModule,
     CoreModule,
+    NgbModule,
   ],
   providers: [
     AuthService,
