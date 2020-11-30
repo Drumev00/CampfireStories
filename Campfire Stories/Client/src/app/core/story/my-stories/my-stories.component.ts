@@ -3,6 +3,7 @@ import { StoryService } from 'src/app/services/story/story.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { IStory } from 'src/app/models/IStory';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-my-stories',
@@ -12,10 +13,12 @@ import { IStory } from 'src/app/models/IStory';
 export class MyStoriesComponent implements OnInit {
   userId: string;
   stories: IStory[];
+  storyId: string;
 
   constructor(
     private storyService: StoryService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.route.params.pipe(map(params => {
@@ -28,4 +31,16 @@ export class MyStoriesComponent implements OnInit {
       })
   }
 
+  getStoryId(id: string) {
+    this.storyId = id
+    
+    return this.storyId;
+  }
+
+  deleteStory(id: string) {
+    this.storyService.delete(this.storyId).subscribe(res => {
+      console.log(res);
+      this.toastrService.success('You deleted a story successfully.');
+    });
+  }
 }

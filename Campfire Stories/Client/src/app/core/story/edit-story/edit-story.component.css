@@ -9,6 +9,7 @@
 
 .elements-wrapper {
     margin: 20px 0px;
+    width: 70%;
 }
 
 .elements-wrapper h4{
@@ -71,5 +72,5 @@
 }
 
 .img img {
-    width: 20%;
+    width: 30%;
 }

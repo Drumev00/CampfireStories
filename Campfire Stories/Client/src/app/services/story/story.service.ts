@@ -35,4 +35,8 @@ export class StoryService {
   edit(id: string, data) {
     return this.http.put(this.storyRoute + `/${id}`, data);
   }
+
+  delete(id: string): Observable<any> {
+    return this.http.delete(this.storyRoute + `/${id}`);
+  }
 }

@@ -11,10 +11,31 @@
                 </div>
                 <div class="content" [innerHTML]="story.content"></div>
                 <div class="buttons">
-                    <button [routerLink]="['/story', 'details', story.id]" class="read">Read More</button>
                     <button [routerLink]="['/edit', 'story', story.id]" class="edit">Edit</button>
+                    <button (click)="getStoryId(story.id)" data-toggle="modal" data-target="#exampleModal" class="read">Delete</button>
                 </div>
             </section>
         </section>
     </div>
 </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete a Story</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body alert alert-danger">
+          Are you sure you want to delete this story?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" (click)="deleteStory()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
