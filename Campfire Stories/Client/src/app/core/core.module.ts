@@ -7,7 +7,9 @@ import { RouterModule } from '@angular/router';
 import { ListStoryComponent } from './story/list-story/list-story.component';
 import { DetailsStoryComponent } from './story/details-story/details-story.component';
 import { RatingComponent } from './story/rating/rating.component';
-import { NgbRatingModule, NgbRating } from '@ng-bootstrap/ng-bootstrap';
+import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditStoryComponent } from './story/edit-story/edit-story.component';
+import { MyStoriesComponent } from './story/my-stories/my-stories.component';
 
 
 
@@ -17,6 +19,8 @@ import { NgbRatingModule, NgbRating } from '@ng-bootstrap/ng-bootstrap';
     ListStoryComponent,
     DetailsStoryComponent,
     RatingComponent,
+    EditStoryComponent,
+    MyStoriesComponent,
   ],
   imports: [
     CommonModule,

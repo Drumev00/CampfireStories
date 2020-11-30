@@ -13,6 +13,7 @@ import { CreateStoryComponent } from './core/story/create-story/create-story.com
 import { ListStoryComponent } from './core/story/list-story/list-story.component';
 import { ViewProfileComponent } from './user/view-profile/view-profile.component';
 import { DetailsStoryComponent } from './core/story/details-story/details-story.component';
+import { MyStoriesComponent } from './core/story/my-stories/my-stories.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'create/story', component: CreateStoryComponent, canActivate: [AuthGuardService] },
   { path: '', component: ListStoryComponent},
   { path: 'user/viewProfile/:id', component: ViewProfileComponent, canActivate: [AuthGuardService] },
-  { path: 'story/details/:id', component: DetailsStoryComponent }
+  { path: 'story/details/:id', component: DetailsStoryComponent },
+  { path: 'myStories/:id', component: MyStoriesComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({

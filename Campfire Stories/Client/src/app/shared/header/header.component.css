@@ -73,7 +73,7 @@ nav.navbar {
     margin-bottom: 15px;
 }
 
-.dropdown {
+.my-dropdown {
     position: relative;
     display: inline-block;
   }
@@ -107,7 +107,7 @@ nav.navbar {
     color: white;
 }
   
-  .dropdown:hover .dropdown-content {
+  .my-dropdown:hover .dropdown-content {
     display: block;
   }
 
@@ -122,4 +122,3 @@ nav.navbar {
 .admin li:hover {
     cursor: pointer;
 }
-

@@ -1,0 +1,65 @@
+<form [formGroup]="formGroup" (ngSubmit)="editStory()">
+    <div class="form-wrapper">
+        <div class="elements-wrapper">
+            <h1 class="form-title">What is your story?</h1>
+            <div class="title form-group">
+                <label>Title</label>
+                <input class="input-data" type="text" formControlName="title" placeholder="Title...">
+            </div>
+            <!--<div class="validations">
+                <div *ngIf="title.touched && title.errors?.required" class="alert alert-danger alert-biography">
+                    Title field is required!
+                </div>
+                <div *ngIf="title.touched && title.errors?.minlength" class="alert alert-danger alert-biography">
+                    Title should consist of atleast one chatacter!
+                </div>
+                <div *ngIf="title.touched && title.errors?.maxlength" class="alert alert-danger alert-biography">
+                    Title should consist of less than 80 characters!
+                </div>
+            </div>-->
+            <div class="tiny-mce">
+                <h4>Content</h4>
+                <editor formControlName="content" [init]="{
+                    height: 500,
+                    menubar: false,
+                    plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                    ],
+                    toolbar:
+                    'undo redo | formatselect | bold italic backcolor | \
+                    alignleft aligncenter alignright alignjustify | \
+                    bullist numlist outdent indent | removeformat | help'
+                    }">
+                </editor>
+            </div>
+            <!--<div class="validations">
+                <div *ngIf="content.touched && content.errors?.required" class="alert alert-danger alert-biography">
+                    Content field is required!
+                </div>
+                <div *ngIf="content.touched && content.errors?.minlength" class="alert alert-danger alert-biography">
+                    Content should consist of more than 500 characters!
+                </div>
+            </div>-->
+            <div class="story-picture form-group">
+                <label for="file-upload">Choose your story picture</label>
+                <input id="file-upload" type="file">
+            </div>
+            <h4 class="category-title">Choose your categories</h4>
+            <div class="categories">
+                <div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-holder">
+                <button class="btn-send">Send us Story</button>
+            </div>
+        </div>
+    </div>
+</form>

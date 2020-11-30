@@ -139,6 +139,24 @@
 				.ToListAsync();
 		}
 
+		public async Task<IEnumerable<ListingStoryResponseModel>> GetAllByUserId(string userId)
+		{
+			var userStories = await this.dbContext
+				.Stories
+				.Where(s => s.UserId == userId)
+				.Select(s => new ListingStoryResponseModel
+				{
+					Id = s.Id,
+					Title = s.Title,
+					Content = s.Content.Substring(0, 350) + "...",
+					PictureUrl = s.PictureUrl,
+					UserName = s.User.UserName,
+				})
+				.ToListAsync();
+
+			return userStories;
+		}
+
 		public async Task<ResultModel<DetailsStoryResponseModel>> GetDetailsAsync(string storyId)
 		{
 			if (storyId == null || string.IsNullOrWhiteSpace(storyId))

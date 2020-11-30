@@ -65,9 +65,18 @@
 			return Ok(result);
 		}
 
+		[HttpGet]
+		[Route(StoryRoutes.ById)]
+		public async Task<ActionResult> GetAllById(string userId)
+		{
+			var result = await this.storyService.GetAllByUserId(userId);
+
+			return Ok(result);
+		}
+
 		[HttpPut]
 		[Route(StoryRoutes.Update)]
-		public async Task<ActionResult> UpdateStory([FromBody] UpdateStoryRequestModel model, string storyId)
+		public async Task<ActionResult> UpdateStory(string storyId, UpdateStoryRequestModel model)
 		{
 			var loggedUser = this.User.GetId();
 			var result = await this.storyService.UpdateStoryAsync(model, storyId, loggedUser);

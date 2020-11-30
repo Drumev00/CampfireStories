@@ -27,4 +27,8 @@ export class StoryService {
   rate(data): Observable<any> {
     return this.http.post(this.storyRoute + '/rate', data);
   }
+
+  getAllById(id: string): Observable<IStory[]> {
+    return this.http.get<IStory[]>(this.storyRoute + `/myStories/${id}`);
+  }
 }
