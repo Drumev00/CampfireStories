@@ -31,4 +31,8 @@ export class StoryService {
   getAllById(id: string): Observable<IStory[]> {
     return this.http.get<IStory[]>(this.storyRoute + `/myStories/${id}`);
   }
+
+  edit(id: string, data) {
+    return this.http.put(this.storyRoute + `/${id}`, data);
+  }
 }

@@ -14,6 +14,7 @@ import { ListStoryComponent } from './core/story/list-story/list-story.component
 import { ViewProfileComponent } from './user/view-profile/view-profile.component';
 import { DetailsStoryComponent } from './core/story/details-story/details-story.component';
 import { MyStoriesComponent } from './core/story/my-stories/my-stories.component';
+import { EditStoryComponent } from './core/story/edit-story/edit-story.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: '', component: ListStoryComponent},
   { path: 'user/viewProfile/:id', component: ViewProfileComponent, canActivate: [AuthGuardService] },
   { path: 'story/details/:id', component: DetailsStoryComponent },
-  { path: 'myStories/:id', component: MyStoriesComponent, canActivate: [AuthGuardService] }
+  { path: 'myStories/:id', component: MyStoriesComponent, canActivate: [AuthGuardService] },
+  { path: 'edit/story/:id', component: EditStoryComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({

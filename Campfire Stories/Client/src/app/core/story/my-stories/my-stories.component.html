@@ -3,20 +3,17 @@
     <div class="row ">
         <section class="col-4" *ngFor="let story of stories">
             <div class="title">
-                <h5 [routerLink]="['story', 'details', story.id]">{{story.title}}</h5>
+                <h5 [routerLink]="['/story', 'details', story.id]">{{story.title}}</h5>
             </div>
             <section class="content-wrapper">
                 <div class="story-picture">
-                    <img [routerLink]="['story', 'details', story.id]" [src]="story.pictureUrl" alt="Story picture">
+                    <img [routerLink]="['/story', 'details', story.id]" [src]="story.pictureUrl" alt="Story picture">
                 </div>
                 <div class="content" [innerHTML]="story.content"></div>
-                <div *ngIf="userId !== story.userId" class="author">
-                    <p>Author:  <a [routerLink]="['user', 'viewProfile', story.userId]">{{story.userName}}</a></p>
+                <div class="buttons">
+                    <button [routerLink]="['/story', 'details', story.id]" class="read">Read More</button>
+                    <button [routerLink]="['/edit', 'story', story.id]" class="edit">Edit</button>
                 </div>
-                <div *ngIf="userId == story.userId" class="author">
-                    <p>Author:  <a [routerLink]="['user', 'profile', story.userId]">{{story.userName}}</a></p>
-                </div>
-                <button [routerLink]="['story', 'details', story.id]" class="read">Read More</button>
             </section>
         </section>
     </div>

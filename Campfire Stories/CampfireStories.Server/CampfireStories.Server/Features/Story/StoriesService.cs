@@ -144,6 +144,7 @@
 			var userStories = await this.dbContext
 				.Stories
 				.Where(s => s.UserId == userId)
+				.OrderByDescending(s => s.CreatedOn)
 				.Select(s => new ListingStoryResponseModel
 				{
 					Id = s.Id,
@@ -260,17 +261,11 @@
 
 
 			// All of them aren't nullable.
-			story.Title = model.Title == null || string.IsNullOrWhiteSpace(model.Title) ?
-				model.Title = story.Title :
-				story.Title = model.Title;
+			story.Title = model.Title;
 
-			story.Content = model.Content == null || string.IsNullOrWhiteSpace(model.Content) ?
-				model.Content = story.Content :
-				story.Content = model.Content;
+			story.Content = model.Content;
 
-			story.PictureUrl = model.PictureUrl == null || string.IsNullOrWhiteSpace(model.PictureUrl) ?
-				model.PictureUrl = story.PictureUrl :
-				story.PictureUrl = model.PictureUrl;
+			story.PictureUrl = model.PictureUrl;
 
 			story.ModifiedOn = DateTime.UtcNow;
 

@@ -40,16 +40,6 @@
     margin-top: 50px;
 }
 
-.author p a:hover {
-    cursor: pointer;
-    color: white;
-    text-decoration: none;
-}
-
-.author p a {
-    color: red;
-}
-
 .read {
     color: black;
     background: red;
@@ -57,4 +47,20 @@
     outline: none;
     border-radius: 12px;
     padding: 5px 15px;
+    margin-right: 15px;
+}
+
+.buttons {
+    display: flex;
+}
+
+.edit {
+    color: black;
+    background: lightblue;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    padding: 5px 15px;
+    margin-left: 15px;
+
 }
