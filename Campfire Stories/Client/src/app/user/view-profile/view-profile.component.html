@@ -1,6 +1,6 @@
-<section class="info">
+<section *ngIf="viewUser" class="info">
     <h2>{{viewUser.userName}}'s profile</h2>
-    <button>View his Stories</button>
+    <button [routerLink]="['/', viewUser.userName, 'stories']">View his Stories</button>
 </section>
 <section *ngIf="viewUser" class="d-flex flex-column profile-wrapper">
     <div class="profile-photo d-flex flex-column">
@@ -29,7 +29,7 @@
         <p>{{viewUser.createdOn}}</p>
     </div>
 </section>
-<div class="flex-column">
+<div *ngIf="viewUser" class="flex-column">
     <label>Biography:</label>
     <p>{{viewUser.biography}}</p>
 </div>

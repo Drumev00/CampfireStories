@@ -42,6 +42,8 @@
 			public const string Delete = StoryRoute + "/{storyId}";
 			public const string Rate = StoryRoute + "/rate";
 			public const string ById = StoryRoute + "/myStories/{userId}";
+			public const string Foreign = StoryRoute + "/foreign/{username}";
+
 		}
 
 		public static class CommentRoutes

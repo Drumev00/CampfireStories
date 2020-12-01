@@ -33,11 +33,9 @@ export class MyStoriesComponent implements OnInit {
 
   getStoryId(id: string) {
     this.storyId = id
-    
-    return this.storyId;
   }
 
-  deleteStory(id: string) {
+  deleteStory() {
     this.storyService.delete(this.storyId).subscribe(res => {
       console.log(res);
       this.toastrService.success('You deleted a story successfully.');

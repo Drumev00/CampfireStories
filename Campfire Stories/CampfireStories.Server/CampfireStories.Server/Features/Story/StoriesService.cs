@@ -139,6 +139,24 @@
 				.ToListAsync();
 		}
 
+		public async Task<IEnumerable<ListingStoryResponseModel>> GetAllByForeignUsername(string username)
+		{
+			var result = await this.dbContext
+				.Stories
+				.Where(s => s.User.UserName == username)
+				.OrderByDescending(s => s.CreatedOn)
+				.Select(s => new ListingStoryResponseModel
+				{
+					Id = s.Id,
+					Title = s.Title,
+					Content = s.Content.Substring(0, 350) + "...",
+					PictureUrl = s.PictureUrl,
+				})
+				.ToListAsync();
+
+			return result;
+		}
+
 		public async Task<IEnumerable<ListingStoryResponseModel>> GetAllByUserId(string userId)
 		{
 			var userStories = await this.dbContext

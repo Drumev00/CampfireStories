@@ -39,4 +39,8 @@ export class StoryService {
   delete(id: string): Observable<any> {
     return this.http.delete(this.storyRoute + `/${id}`);
   }
+
+  getByUsername(username: string): Observable<IStory[]> {
+    return this.http.get<IStory[]>(this.storyRoute + `/foreign/${username}`);
+  }
 }

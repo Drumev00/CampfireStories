@@ -10,6 +10,7 @@ import { RatingComponent } from './story/rating/rating.component';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditStoryComponent } from './story/edit-story/edit-story.component';
 import { MyStoriesComponent } from './story/my-stories/my-stories.component';
+import { ForeignStoriesComponent } from './story/foreign-stories/foreign-stories.component';
 
 
 
@@ -21,6 +22,7 @@ import { MyStoriesComponent } from './story/my-stories/my-stories.component';
     RatingComponent,
     EditStoryComponent,
     MyStoriesComponent,
+    ForeignStoriesComponent,
   ],
   imports: [
     CommonModule,

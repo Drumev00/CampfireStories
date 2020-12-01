@@ -1,0 +1,17 @@
+<h2>{{username}}'s Stories:</h2>
+<div class=" container-fluid">
+    <div class="row ">
+        <section class="col-4" *ngFor="let story of stories">
+            <div class="title">
+                <h5 [routerLink]="['/story', 'details', story.id]">{{story.title}}</h5>
+            </div>
+            <section class="content-wrapper">
+                <div class="story-picture">
+                    <img [routerLink]="['/story', 'details', story.id]" [src]="story.pictureUrl" alt="Story picture">
+                </div>
+                <div class="content" [innerHTML]="story.content"></div>
+                <button [routerLink]="['/story', 'details', story.id]" class="read">Read More</button>
+            </section>
+        </section>
+    </div>
+</div>

@@ -21,5 +21,7 @@
 		Task<RateStoryResponseModel> Rate(string storyId, int rating);
 
 		Task<IEnumerable<ListingStoryResponseModel>> GetAllByUserId(string userId);
+
+		Task<IEnumerable<ListingStoryResponseModel>> GetAllByForeignUsername(string username);
 	}
 }

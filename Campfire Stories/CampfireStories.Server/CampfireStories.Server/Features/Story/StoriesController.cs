@@ -74,6 +74,16 @@
 			return Ok(result);
 		}
 
+		[HttpGet]
+		[Route(StoryRoutes.Foreign)]
+		public async Task<ActionResult> GetAllForeignStories(string username)
+		{
+			var result = await this.storyService.GetAllByForeignUsername(username);
+
+			return Ok(result);
+		}
+
+
 		[HttpPut]
 		[Route(StoryRoutes.Update)]
 		public async Task<ActionResult> UpdateStory(string storyId, UpdateStoryRequestModel model)
