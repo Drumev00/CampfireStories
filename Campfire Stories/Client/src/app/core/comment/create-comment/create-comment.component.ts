@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { IComment } from 'src/app/models/IComment';
 
 @Component({
   selector: 'app-create-comment',
@@ -10,17 +11,18 @@ import { ToastrService } from 'ngx-toastr';
 export class CreateCommentComponent implements OnInit {
   formGroup: FormGroup;
   @Output() contentValue = new EventEmitter<string>();
+  @Input() storyId: string;
+  @Input() comments: IComment[];
 
   constructor(
     private fb: FormBuilder,
-    private toastrService: ToastrService) {
+    private toastrService: ToastrService,) {
       this.formGroup = this.fb.group({
         'content': ['', [Validators.required, Validators.maxLength(500)]]
       })
      }
 
   ngOnInit(): void {
-    
   }
 
   getValue() {
@@ -28,8 +30,9 @@ export class CreateCommentComponent implements OnInit {
       this.toastrService.error('You don\'t populate the fileds correctly.');
       return;
     }
-    return this.contentValue.emit(this.formGroup.value.content);
+    this.contentValue.emit(this.formGroup.value.content);
   }
+
 
   get content() {
     return this.formGroup.get('content');

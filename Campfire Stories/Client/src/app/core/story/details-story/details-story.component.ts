@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { StoryService } from 'src/app/services/story/story.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { IStory } from 'src/app/models/IStory';
 import { DatePipe } from '@angular/common';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommentService } from 'src/app/services/comment/comment.service';
+import { ToastrService } from 'ngx-toastr';
+import { IComment } from 'src/app/models/IComment';
 
 @Component({
   selector: 'app-details-story',
@@ -17,12 +18,14 @@ export class DetailsStoryComponent implements OnInit {
   story: IStory;
   categories: string;
   isRated: boolean;
+  
 
   constructor(
     private storyService: StoryService,
     private route: ActivatedRoute,
     private datePipe: DatePipe,
-    private commentService: CommentService,) { }
+    private commentService: CommentService,
+    private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.fetch();
@@ -37,6 +40,11 @@ export class DetailsStoryComponent implements OnInit {
         this.story = res;
         this.categories = res['result'].categories.join(' / ');
         this.story.createdOn = this.datePipe.transform(res['result'].createdOn);
+
+        for (let i = 0; i < this.story['result'].comments.length; i++) {
+          const date = this.story['result'].comments[i].createdOn;
+          this.story['result'].comments[i].createdOn = this.datePipe.transform(date);
+        }
         console.log(this.story)
       })
   }
@@ -63,6 +71,8 @@ export class DetailsStoryComponent implements OnInit {
     };
 
     this.commentService.postComment(commentToSend).subscribe(res => {
+      this.toastrService.success('You commented successfully!');
+      this.fetch();
       console.log(res)
     })
   }

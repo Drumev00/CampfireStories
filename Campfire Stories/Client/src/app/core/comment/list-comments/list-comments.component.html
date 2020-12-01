@@ -1,0 +1,19 @@
+<section class="comments-wrapper">
+    <article *ngFor="let comment of comments" class="comment">
+        <!--<p>{{comment.id}}</p>-->
+        <div class="img-wrapper">
+            <img [src]="comment.user.profilePic" alt="">
+            <div class="flex-container">
+                <p>{{comment.user.userName}}</p>
+                <p class="date">{{comment.createdOn}}</p>
+            </div>
+        </div>
+        <p class="content">{{comment.content}}</p>
+        <div class="likes">
+            <button>Reply <i class="fas fa-reply"></i></button>
+            <p><i class="fas fa-thumbs-up"></i> {{comment.likes}}</p>
+            <p><i class="fas fa-thumbs-down"></i> {{comment.dislikes}}</p>
+        </div>
+        <!--<p>{{comment.user.userId}}</p>-->
+    </article>
+</section>
