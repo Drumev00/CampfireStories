@@ -1,0 +1,16 @@
+<form [formGroup]="formGroup">
+    <section>
+        <h3>Comments</h3>
+        <textarea formControlName="content" name="comment-content" id="" cols="60" rows="3"
+            placeholder="Leave a public comment..."></textarea>
+        <div class="validations">
+            <div *ngIf="content.touched && content.errors?.required" class="alert alert-danger alert-biography">
+                Content field is required!
+            </div>
+            <div *ngIf="content.touched && content.errors?.maxlength" class="alert alert-danger alert-biography">
+                Content should consist of less than 500 characters!
+            </div>
+        </div>
+        <button (click)="getValue()">Comment</button>
+    </section>
+</form>

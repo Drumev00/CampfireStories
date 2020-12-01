@@ -5,6 +5,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import { IStory } from 'src/app/models/IStory';
 import { DatePipe } from '@angular/common';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { CommentService } from 'src/app/services/comment/comment.service';
 
 @Component({
   selector: 'app-details-story',
@@ -21,7 +22,7 @@ export class DetailsStoryComponent implements OnInit {
     private storyService: StoryService,
     private route: ActivatedRoute,
     private datePipe: DatePipe,
-    private router: Router, ) { }
+    private commentService: CommentService,) { }
 
   ngOnInit(): void {
     this.fetch();
@@ -52,6 +53,17 @@ export class DetailsStoryComponent implements OnInit {
       }
       this.story['result'].rating = res.rating;
       this.story['result'].votes = res.votes;
+    })
+  }
+
+  comment(content: string) {
+    const commentToSend = {
+      storyId: this.storyId,
+      content: content,
+    };
+
+    this.commentService.postComment(commentToSend).subscribe(res => {
+      console.log(res)
     })
   }
 

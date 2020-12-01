@@ -11,6 +11,7 @@ import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditStoryComponent } from './story/edit-story/edit-story.component';
 import { MyStoriesComponent } from './story/my-stories/my-stories.component';
 import { ForeignStoriesComponent } from './story/foreign-stories/foreign-stories.component';
+import { CreateCommentComponent } from './comment/create-comment/create-comment.component';
 
 
 
@@ -23,6 +24,7 @@ import { ForeignStoriesComponent } from './story/foreign-stories/foreign-stories
     EditStoryComponent,
     MyStoriesComponent,
     ForeignStoriesComponent,
+    CreateCommentComponent,
   ],
   imports: [
     CommonModule,

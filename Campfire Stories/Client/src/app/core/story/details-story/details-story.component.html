@@ -26,9 +26,9 @@
     <section class="story-img">
         <img [src]="story['result'].pictureUrl" alt="Story image">
     </section>
-    <div class="content">
+    <!--<div class="content">
         <p [innerHTML]="story['result'].content"></p>
-    </div>
+    </div>-->
     <div *ngIf="userId !== story['result'].userId" class="rating">
         <div>
             <app-rating *ngIf="!isRated" (ratingValue)="rate($event)"></app-rating>
@@ -45,3 +45,4 @@
         <p>Author: <a [routerLink]="['/user', 'profile', story['result'].userId]">{{story['result'].username}}</a></p>
     </div>
 </article>
+<app-create-comment (contentValue)="comment($event)"></app-create-comment>
