@@ -20,4 +20,20 @@ export class CommentService {
   getAllByStoryId(id: string): Observable<IComment[]> {
     return this.http.get<IComment[]>(this.commentRoute + `/${id}`);
   }
+
+  like(id: string): Observable<number> {
+    return this.http.get<number>(this.commentRoute + `/like/${id}`);
+  }
+
+  dislike(id: string): Observable<number> {
+    return this.http.get<number>(this.commentRoute + `/dislike/${id}`);
+  }
+
+  getById(commentId: string): Observable<IComment> {
+    return this.http.get<IComment>(this.commentRoute + `/getOne/${commentId}`);
+  }
+
+  edit(id: string, content) {
+    return this.http.put(this.commentRoute + `/${id}`, content, { responseType: 'text'});
+  }
 }

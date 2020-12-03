@@ -114,6 +114,21 @@
 			};
 		}
 
+		public async Task<int> Dislike(string commentId)
+		{
+			var comment = await this.dbContext
+				.Comments
+				.Where(c => c.Id == commentId)
+				.FirstOrDefaultAsync();
+
+			comment.Dislikes++;
+
+			this.dbContext.Comments.Update(comment);
+			await this.dbContext.SaveChangesAsync();
+
+			return comment.Dislikes;
+		}
+
 		public async Task<IEnumerable<CreateCommentResponseModel>> GetAllByStoryId(string storyId)
 		{
 			var comments = await this.dbContext
@@ -145,12 +160,45 @@
 			return comments;
 		}
 
-		public async Task<ResultModel<bool>> UpdateCommentAsync(string content, string commentId, string loggedUser)
+		public async Task<CreateCommentResponseModel> GetById(string commentId)
+		{
+			var comment = await this.dbContext
+				.Comments
+				.Where(c => c.Id == commentId)
+				.Select(c => new CreateCommentResponseModel
+				{
+					Id = c.Id,
+					Content = c.Content,
+					CreatedOn = c.CreatedOn,
+					Likes = c.Likes,
+					Dislikes = c.Dislikes,
+				})
+				.FirstOrDefaultAsync();
+
+			return comment;
+		}
+
+		public async Task<int> Like(string commentId)
+		{
+			var comment = await this.dbContext
+				.Comments
+				.Where(c => c.Id == commentId)
+				.FirstOrDefaultAsync();
+
+			comment.Likes++;
+
+			this.dbContext.Comments.Update(comment);
+			await this.dbContext.SaveChangesAsync();
+
+			return comment.Likes;
+		}
+
+		public async Task<ResultModel<string>> UpdateCommentAsync(string content, string commentId, string loggedUser)
 		{
 			var isBanned = await this.userService.IsBanned(loggedUser);
 			if (isBanned)
 			{
-				return new ResultModel<bool>
+				return new ResultModel<string>
 				{
 					Errors = { CommentErrors.BannedUserCreateComment }
 				};
@@ -162,7 +210,7 @@
 				.FirstOrDefaultAsync();
 			if (comment == null)
 			{
-				return new ResultModel<bool>
+				return new ResultModel<string>
 				{
 					Errors = { CommentErrors.NotFoundOrDeletedComment }
 				};
@@ -170,18 +218,19 @@
 
 			if (loggedUser != comment.UserId)
 			{
-				return new ResultModel<bool>
+				return new ResultModel<string>
 				{
 					Errors = { UserErrors.UserHaveNoPermissionToUpdate }
 				};
 			}
 			comment.Content = content;
 
-			this.dbContext.Update(comment);
+			this.dbContext.Comments.Update(comment);
 			await this.dbContext.SaveChangesAsync();
 
-			return new ResultModel<bool>
+			return new ResultModel<string>
 			{
+				Result = content,
 				Success = true,
 			};
 		}

@@ -42,7 +42,7 @@
 				return BadRequest(result.Errors);
 			}
 
-			return Ok(result.Success);
+			return Ok(result.Result);
 		}
 
 		[HttpDelete]
@@ -67,5 +67,33 @@
 			
 			return Ok(result);
 		}
+
+		[HttpGet]
+		[Route(CommentRoutes.Like)]
+		public async Task<ActionResult> Like(string commentId)
+		{
+			var result = await this.commentService.Like(commentId);
+
+			return Ok(result);
+		}
+
+		[HttpGet]
+		[Route(CommentRoutes.Dislike)]
+		public async Task<ActionResult> Dislike(string commentId)
+		{
+			var result = await this.commentService.Dislike(commentId);
+
+			return Ok(result);
+		}
+
+		[HttpGet]
+		[Route(CommentRoutes.ById)]
+		public async Task<ActionResult> GetById(string commentId)
+		{
+			var result = await this.commentService.GetById(commentId);
+
+			return Ok(result);
+		}
+
 	}
 }

@@ -13,6 +13,7 @@ import { MyStoriesComponent } from './story/my-stories/my-stories.component';
 import { ForeignStoriesComponent } from './story/foreign-stories/foreign-stories.component';
 import { CreateCommentComponent } from './comment/create-comment/create-comment.component';
 import { ListCommentsComponent } from './comment/list-comments/list-comments.component';
+import { EditCommentComponent } from './comment/edit-comment/edit-comment.component';
 
 
 
@@ -27,6 +28,7 @@ import { ListCommentsComponent } from './comment/list-comments/list-comments.com
     ForeignStoriesComponent,
     CreateCommentComponent,
     ListCommentsComponent,
+    EditCommentComponent,
   ],
   imports: [
     CommonModule,

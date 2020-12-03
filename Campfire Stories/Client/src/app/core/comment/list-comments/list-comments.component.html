@@ -1,19 +1,21 @@
 <section class="comments-wrapper">
     <article *ngFor="let comment of comments" class="comment">
-        <!--<p>{{comment.id}}</p>-->
         <div class="img-wrapper">
             <img [src]="comment.user.profilePic" alt="">
             <div class="flex-container">
-                <p>{{comment.user.userName}}</p>
+                <p class="author" *ngIf="userId !== comment.user.userId" [routerLink]="['/user', 'viewProfile', comment.user.userId]">{{comment.user.userName}}</p>
+                <p *ngIf="userId === comment.user.userId" class="author" [routerLink]="['/user', 'profile', comment.user.userId]">{{comment.user.userName}}</p>
+                    
                 <p class="date">{{comment.createdOn}}</p>
             </div>
         </div>
-        <p class="content">{{comment.content}}</p>
+        <p *ngIf="!isEditing || selectedId !== comment.id" class="content">{{comment.content}}</p>
+        <app-edit-comment (editedContentEmitter)="editedContent($event)" (editingEmitter)="receiveEditing($event)" *ngIf="isEditing && selectedId === comment.id" [commentForEdit]="commentForEdit" [editing]="isEditing"></app-edit-comment>
         <div class="likes">
             <button>Reply <i class="fas fa-reply"></i></button>
-            <p><i class="fas fa-thumbs-up"></i> {{comment.likes}}</p>
-            <p><i class="fas fa-thumbs-down"></i> {{comment.dislikes}}</p>
+            <p><i (click)="like(comment.id)" class="fas fa-thumbs-up"></i> {{comment.likes}}</p>
+            <p><i (click)="dislike(comment.id)" class="fas fa-thumbs-down"></i> {{comment.dislikes}}</p>
+            <button (click)="emitComment(comment.id)" *ngIf="userId === comment.user.userId">Edit</button>
         </div>
-        <!--<p>{{comment.user.userId}}</p>-->
     </article>
 </section>

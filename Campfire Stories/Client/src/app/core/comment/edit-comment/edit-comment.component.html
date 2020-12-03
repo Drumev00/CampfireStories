@@ -1,0 +1,15 @@
+<form [formGroup]="editForm">
+    <textarea rows="3" formControlName="content"></textarea>
+    <div class="validations">
+        <div *ngIf="content.touched && content.errors?.required" class="alert alert-danger">
+            Content field is required!
+        </div>
+        <div *ngIf="content.touched && content.errors?.maxlength" class="alert alert-danger">
+            Content should consist of less than 500 characters!
+        </div>
+    </div>
+    <div class="btns">
+        <button (click)="edit(commentForEdit.id)" class="save">Save</button>
+        <button (click)="closeForm()" class="close">Close</button>
+    </div>
+</form>

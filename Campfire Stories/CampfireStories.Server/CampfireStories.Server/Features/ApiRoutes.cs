@@ -53,6 +53,9 @@
 			public const string Update = CommentRoute + "/{commentId}";
 			public const string Delete = CommentRoute + "/{commentId}";
 			public const string All = CommentRoute + "/{storyId}";
+			public const string Like = CommentRoute + "/like/{commentId}";
+			public const string Dislike = CommentRoute + "/dislike/{commentId}";
+			public const string ById = CommentRoute + "/getOne/{commentId}";
 
 		}
 

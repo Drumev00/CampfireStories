@@ -61,6 +61,7 @@ export class DetailsStoryComponent implements OnInit {
       }
       this.story['result'].rating = res.rating;
       this.story['result'].votes = res.votes;
+      this.toastrService.success('You succesfully rated a story!');
     })
   }
 

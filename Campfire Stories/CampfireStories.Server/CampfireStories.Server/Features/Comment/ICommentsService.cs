@@ -11,8 +11,14 @@
 
 		Task<IEnumerable<CreateCommentResponseModel>> GetAllByStoryId(string storyId);
 
-		Task<ResultModel<bool>> UpdateCommentAsync(string content, string commentId, string loggedUser);
+		Task<ResultModel<string>> UpdateCommentAsync(string content, string commentId, string loggedUser);
 
 		Task<ResultModel<bool>> DeleteCommentAsync(string commentId, string userId);
+
+		Task<int> Like(string commentId);
+
+		Task<int> Dislike(string commentId);
+
+		Task<CreateCommentResponseModel> GetById(string commentId);
 	}
 }
