@@ -36,4 +36,8 @@ export class CommentService {
   edit(id: string, content) {
     return this.http.put(this.commentRoute + `/${id}`, content, { responseType: 'text'});
   }
+
+  delete(id: string) {
+    return this.http.delete(this.commentRoute + `/${id}`);
+  }
 }

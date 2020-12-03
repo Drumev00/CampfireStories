@@ -40,14 +40,14 @@ export class ListCommentsComponent implements OnInit {
 
   editedContent($event) {
     this.newContent = $event;
-    this.selectEditedComment();
+    this.refreshEditedComments();
   }
 
   receiveEditing($event) {
     this.isEditing = $event;
   }
 
-  selectEditedComment() {
+  refreshEditedComments() {
     const commentsTemp = this.comments.slice();
     const comment = commentsTemp.filter((val) => val.id === this.selectedId)[0];
     comment.content = this.newContent;
@@ -55,7 +55,21 @@ export class ListCommentsComponent implements OnInit {
     console.log(commentsTemp);
   }
 
+  deleteComment(id: string) {
+    this.commentService.delete(id).subscribe(res => {
+      const commentsTemp = this.comments.slice();
+      const remainedComments = commentsTemp.filter((val) => val.id !== id);
+      this.comments = remainedComments;
+
+      this.toastrService.success("You successfully deleted a comment.");
+    });
+  }
+
   get userId() {
     return localStorage.getItem('userId');
+  }
+
+  get isAdmin() {
+    return localStorage.getItem('isAdmin');
   }
 }

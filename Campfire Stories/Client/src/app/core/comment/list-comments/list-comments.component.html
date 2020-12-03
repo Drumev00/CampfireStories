@@ -16,6 +16,7 @@
             <p><i (click)="like(comment.id)" class="fas fa-thumbs-up"></i> {{comment.likes}}</p>
             <p><i (click)="dislike(comment.id)" class="fas fa-thumbs-down"></i> {{comment.dislikes}}</p>
             <button (click)="emitComment(comment.id)" *ngIf="userId === comment.user.userId">Edit</button>
+            <button (click)="deleteComment(comment.id)" *ngIf="isAdmin == 'true'" class="delete">Delete</button>
         </div>
     </article>
 </section>

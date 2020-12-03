@@ -59,3 +59,10 @@
     color: red;
     outline: none;
 }
+
+.delete {
+    outline: none !important;
+    background: red !important;
+    border: none !important;
+    margin-left: 10px !important;
+}
