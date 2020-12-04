@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IComment } from 'src/app/models/IComment';
 import { CommentService } from 'src/app/services/comment/comment.service';
 import { ToastrService } from 'ngx-toastr';
+import { ISubComment } from 'src/app/models/ISubComment';
 
 @Component({
   selector: 'app-list-comments',
@@ -18,6 +19,7 @@ export class ListCommentsComponent implements OnInit {
 
   replying: boolean;
   rootCommentId: string;
+  subComments: ISubComment[];
 
 
   constructor(private commentService: CommentService, private toastrService: ToastrService) { }
@@ -56,7 +58,6 @@ export class ListCommentsComponent implements OnInit {
     const comment = commentsTemp.filter((val) => val.id === this.selectedId)[0];
     comment.content = this.newContent;
     this.comments = commentsTemp;
-    console.log(commentsTemp);
   }
 
   deleteComment(id: string) {
@@ -81,9 +82,10 @@ export class ListCommentsComponent implements OnInit {
 
   receiveReplying($event) {
     this.replying = $event;
-    const commentsTemp = this.comments.slice();
-    this.comments = commentsTemp;
-    console.log(this.comments);
+  }
+
+  refreshedSubComments($event) {
+    this.subComments = $event;
   }
 
   get userId() {

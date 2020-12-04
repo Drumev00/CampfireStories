@@ -45,6 +45,7 @@ export class DetailsStoryComponent implements OnInit {
           const date = this.story['result'].comments[i].createdOn;
           this.story['result'].comments[i].createdOn = this.datePipe.transform(date);
         }
+        
         console.log(this.story)
       })
   }

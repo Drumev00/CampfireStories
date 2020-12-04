@@ -1,0 +1,21 @@
+<section class="sub-comments-wrapper">
+    <div class="sub-comment" *ngFor="let subComment of subComments">
+        <div class="img-wrapper">
+            <img [src]="subComment.user.profilePic" alt="Profile pic">
+            <div class="flex-container">
+                <p class="author" *ngIf="userId !== subComment.user.userId"
+                    [routerLink]="['/user', 'viewProfile', subComment.user.userId]">{{subComment.user.userName}}</p>
+                <p *ngIf="userId === subComment.user.userId" class="author"
+                    [routerLink]="['/user', 'profile', subComment.user.userId]">{{subComment.user.userName}}</p>
+
+                <p class="date">{{subComment.createdOn | date: 'MMM d, yyyy'}}</p>
+            </div>
+        </div>
+        <p class="content">{{subComment.content}}</p>
+        <div class="likes">
+            <p><i class="fas fa-thumbs-up"></i> {{subComment.likes}}</p>
+            <p><i class="fas fa-thumbs-down"></i> {{subComment.dislikes}}</p>
+        </div>
+    </div>
+
+</section>

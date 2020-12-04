@@ -135,6 +135,8 @@
 				.Where(c => c.RootCommentId == rootCommentId && !c.IsDeleted)
 				.Select(c => new SubCommentListingResponseModel
 				{
+					Id = c.Id,
+					RootCommentId = c.RootCommentId,
 					Content = c.Content,
 					CreatedOn = c.CreatedOn,
 					Likes = c.Likes,

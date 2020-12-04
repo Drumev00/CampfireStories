@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { ISubComment } from 'src/app/models/ISubComment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,5 +14,9 @@ export class SubCommentService {
 
   postSubComment(data) {
     return this.http.post(this.subCommentRoute, data, { responseType: 'text' });
+  }
+
+  getAllByRootCommentId(rootCommentId: string): Observable<ISubComment[]>{
+    return this.http.get<ISubComment[]>(this.subCommentRoute + `/${rootCommentId}`);
   }
 }

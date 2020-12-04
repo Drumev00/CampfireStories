@@ -1,16 +1,20 @@
 <section class="comments-wrapper">
     <article *ngFor="let comment of comments" class="comment">
         <div class="img-wrapper">
-            <img [src]="comment.user.profilePic" alt="">
+            <img [src]="comment.user.profilePic" alt="Profile pic">
             <div class="flex-container">
-                <p class="author" *ngIf="userId !== comment.user.userId" [routerLink]="['/user', 'viewProfile', comment.user.userId]">{{comment.user.userName}}</p>
-                <p *ngIf="userId === comment.user.userId" class="author" [routerLink]="['/user', 'profile', comment.user.userId]">{{comment.user.userName}}</p>
-                    
+                <p class="author" *ngIf="userId !== comment.user.userId"
+                    [routerLink]="['/user', 'viewProfile', comment.user.userId]">{{comment.user.userName}}</p>
+                <p *ngIf="userId === comment.user.userId" class="author"
+                    [routerLink]="['/user', 'profile', comment.user.userId]">{{comment.user.userName}}</p>
+
                 <p class="date">{{comment.createdOn}}</p>
             </div>
         </div>
         <p *ngIf="!isEditing || selectedId !== comment.id" class="content">{{comment.content}}</p>
-        <app-edit-comment (editedContentEmitter)="editedContent($event)" (editingEmitter)="receiveEditing($event)" *ngIf="isEditing && selectedId === comment.id" [commentForEdit]="commentForEdit" [editing]="isEditing"></app-edit-comment>
+        <app-edit-comment (editedContentEmitter)="editedContent($event)" (editingEmitter)="receiveEditing($event)"
+            *ngIf="isEditing && selectedId === comment.id" [commentForEdit]="commentForEdit" [editing]="isEditing">
+        </app-edit-comment>
         <div class="likes">
             <button (click)="reply(comment.id)">Reply <i class="fas fa-reply"></i></button>
             <p><i (click)="like(comment.id)" class="fas fa-thumbs-up"></i> {{comment.likes}}</p>
@@ -18,6 +22,9 @@
             <button (click)="emitComment(comment.id)" *ngIf="userId === comment.user.userId">Edit</button>
             <button (click)="deleteComment(comment.id)" *ngIf="isAdmin == 'true'" class="delete">Delete</button>
         </div>
-        <app-create-sub-comment *ngIf="rootCommentId === comment.id" (toggleForm)="receiveReplying($event)" [rootCommentId]="rootCommentId" [isReplying]="replying"></app-create-sub-comment>
+        <app-create-sub-comment *ngIf="rootCommentId === comment.id" (subCommentsEmitter)="refreshedSubComments($event)" (toggleForm)="receiveReplying($event)"
+            [rootCommentId]="rootCommentId" [subComments]="comment.subComments" [isReplying]="replying"></app-create-sub-comment>
+        <app-list-sub-comments [subComments]="subComments ? subComments : comment.subComments"></app-list-sub-comments>
+
     </article>
 </section>

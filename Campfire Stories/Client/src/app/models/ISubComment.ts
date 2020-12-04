@@ -1,6 +1,4 @@
-import { ISubComment } from './ISubComment';
-
-export interface IComment {
+export interface ISubComment {
     id: string,
     content: string,
     createdOn: string,
@@ -11,5 +9,4 @@ export interface IComment {
         userName: string,
         profilePic: string,
     },
-    subComments?: ISubComment[],
 }

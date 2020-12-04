@@ -15,6 +15,7 @@ import { CreateCommentComponent } from './comment/create-comment/create-comment.
 import { ListCommentsComponent } from './comment/list-comments/list-comments.component';
 import { EditCommentComponent } from './comment/edit-comment/edit-comment.component';
 import { CreateSubCommentComponent } from './sub-comment/create-sub-comment/create-sub-comment.component';
+import { ListSubCommentsComponent } from './sub-comment/list-sub-comments/list-sub-comments.component';
 
 
 
@@ -31,6 +32,7 @@ import { CreateSubCommentComponent } from './sub-comment/create-sub-comment/crea
     ListCommentsComponent,
     EditCommentComponent,
     CreateSubCommentComponent,
+    ListSubCommentsComponent,
   ],
   imports: [
     CommonModule,

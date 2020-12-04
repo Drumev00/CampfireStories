@@ -6,6 +6,10 @@
 
 	public class SubCommentListingResponseModel
 	{
+		public string Id { get; set; }
+
+		public string RootCommentId { get; set; }
+
 		public DateTime CreatedOn { get; set; }
 
 		public string Content { get; set; }
