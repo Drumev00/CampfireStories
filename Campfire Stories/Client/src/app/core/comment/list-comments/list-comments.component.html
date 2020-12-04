@@ -12,11 +12,12 @@
         <p *ngIf="!isEditing || selectedId !== comment.id" class="content">{{comment.content}}</p>
         <app-edit-comment (editedContentEmitter)="editedContent($event)" (editingEmitter)="receiveEditing($event)" *ngIf="isEditing && selectedId === comment.id" [commentForEdit]="commentForEdit" [editing]="isEditing"></app-edit-comment>
         <div class="likes">
-            <button>Reply <i class="fas fa-reply"></i></button>
+            <button (click)="reply(comment.id)">Reply <i class="fas fa-reply"></i></button>
             <p><i (click)="like(comment.id)" class="fas fa-thumbs-up"></i> {{comment.likes}}</p>
             <p><i (click)="dislike(comment.id)" class="fas fa-thumbs-down"></i> {{comment.dislikes}}</p>
             <button (click)="emitComment(comment.id)" *ngIf="userId === comment.user.userId">Edit</button>
             <button (click)="deleteComment(comment.id)" *ngIf="isAdmin == 'true'" class="delete">Delete</button>
         </div>
+        <app-create-sub-comment *ngIf="rootCommentId === comment.id" (toggleForm)="receiveReplying($event)" [rootCommentId]="rootCommentId" [isReplying]="replying"></app-create-sub-comment>
     </article>
 </section>

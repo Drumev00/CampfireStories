@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IComment } from 'src/app/models/IComment';
 import { CommentService } from 'src/app/services/comment/comment.service';
 import { ToastrService } from 'ngx-toastr';
@@ -16,17 +16,21 @@ export class ListCommentsComponent implements OnInit {
   selectedId: string;
   newContent: string;
 
+  replying: boolean;
+  rootCommentId: string;
+
+
   constructor(private commentService: CommentService, private toastrService: ToastrService) { }
 
   ngOnInit(): void {
   }
 
   like(id: string) {
-    this.commentService.like(id).subscribe(res => this.toastrService.success("You successfully liked a comment"))
+    this.commentService.like(id).subscribe(res => this.toastrService.success("You successfully liked a comment!"))
   }
 
   dislike(id: string) {
-    this.commentService.dislike(id).subscribe(res => this.toastrService.success("You successfully disliked a comment"))
+    this.commentService.dislike(id).subscribe(res => this.toastrService.success("You successfully disliked a comment!"))
   }
 
   emitComment(id: string) {
@@ -63,6 +67,23 @@ export class ListCommentsComponent implements OnInit {
 
       this.toastrService.success("You successfully deleted a comment.");
     });
+  }
+
+
+
+  reply(id: string) {
+    this.replying = true;
+
+    this.commentService.getById(id).subscribe(res => {
+      this.rootCommentId = res.id;
+    })
+  }
+
+  receiveReplying($event) {
+    this.replying = $event;
+    const commentsTemp = this.comments.slice();
+    this.comments = commentsTemp;
+    console.log(this.comments);
   }
 
   get userId() {

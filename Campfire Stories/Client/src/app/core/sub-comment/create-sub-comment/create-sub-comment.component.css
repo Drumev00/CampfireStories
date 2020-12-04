@@ -1,0 +1,36 @@
+form {
+    margin-left: 14%;
+}
+
+form textarea{
+    outline: none;
+    color: black;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-right: 27%;
+    margin-bottom: 3%;
+}
+
+.buttons button{
+    outline: none;
+}
+
+.close {
+    color: gray;
+}
+
+.reply {
+    background: rgb(18, 175, 89);
+    border: none;
+    padding: 2px 17px;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.validations {
+    display: flex;
+    justify-content: flex-start;
+}

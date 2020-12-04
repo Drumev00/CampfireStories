@@ -1,0 +1,15 @@
+<form *ngIf="isReplying" [formGroup]="formGroup" (ngSubmit)="createSubComment()">
+    <textarea cols="50" rows="4" formControlName="content"></textarea>
+    <div class="validations">
+        <div *ngIf="content.touched && content.errors?.required" class="alert alert-danger">
+            Content field is required!
+        </div>
+        <div *ngIf="content.touched && content.errors?.maxlength" class="alert alert-danger">
+            Content should consist of less than 500 characters!
+        </div>
+    </div>
+    <div class="buttons">
+        <button class="reply">Send</button>
+        <button (click)="closeForm()" class="close">Close</button>
+    </div>
+</form>

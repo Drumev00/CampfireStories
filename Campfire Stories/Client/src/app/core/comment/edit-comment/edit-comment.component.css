@@ -11,6 +11,7 @@ textarea {
 .btns {
     display: flex;
     justify-content: flex-end;
+    margin-right: 6%;
 }
 
 .close {
