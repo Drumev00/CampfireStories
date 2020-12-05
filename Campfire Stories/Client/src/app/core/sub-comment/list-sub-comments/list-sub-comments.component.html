@@ -14,12 +14,15 @@
         <p *ngIf="!isEditing || selectedSubCommentId !== subComment.id" class="content">{{subComment.content}}</p>
         <app-edit-sub-comment *ngIf="isEditing && selectedSubCommentId == subComment.id"
             [subCommentForEdit]="subCommentForEdit" [editing]="isEditing" (editedContentEmitter)="editedContent($event)"
-            (editingEmitter)="receiveEditing($event)"></app-edit-sub-comment>
+            (editingEmitter)="receiveEditing($event)">
+        </app-edit-sub-comment>
         <div class="likes">
             <p><i (click)="like(subComment.id)" class="fas fa-thumbs-up"></i> {{subComment.likes}}</p>
             <p><i (click)="dislike(subComment.id)" class="fas fa-thumbs-down"></i> {{subComment.dislikes}}</p>
             <button (click)="getSubComment(subComment.id)" class="edit" *ngIf="userId === subComment.user.userId">
                 <i class="far fa-edit"></i> Edit</button>
+            <button (click)="deleteSubComment(subComment.id)" *ngIf="isAdmin == 'true'" class="delete">
+                <i class="fas fa-trash-alt"></i> Delete</button>
         </div>
     </div>
 </section>

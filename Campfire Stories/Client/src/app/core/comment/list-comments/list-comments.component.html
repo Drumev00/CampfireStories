@@ -8,7 +8,7 @@
                 <p *ngIf="userId === comment.user.userId" class="author"
                     [routerLink]="['/user', 'profile', comment.user.userId]">{{comment.user.userName}}</p>
 
-                <p class="date">{{comment.createdOn}}</p>
+                <p class="date">{{comment.createdOn | date: 'MMM d, yyyy'}}</p>
             </div>
         </div>
         <p *ngIf="!isEditing || selectedId !== comment.id" class="content">{{comment.content}}</p>
@@ -19,12 +19,16 @@
             <button (click)="reply(comment.id)">Reply <i class="fas fa-reply"></i></button>
             <p><i (click)="like(comment.id)" class="fas fa-thumbs-up"></i> {{comment.likes}}</p>
             <p><i (click)="dislike(comment.id)" class="fas fa-thumbs-down"></i> {{comment.dislikes}}</p>
-            <button (click)="getComment(comment.id)" *ngIf="userId === comment.user.userId"><i class="far fa-edit"></i> Edit</button>
-            <button (click)="deleteComment(comment.id)" *ngIf="isAdmin == 'true'" class="delete"><i class="fas fa-trash-alt"></i> Delete</button>
+            <button (click)="getComment(comment.id)" *ngIf="userId === comment.user.userId"><i class="far fa-edit"></i>
+                Edit</button>
+            <button (click)="deleteComment(comment.id)" *ngIf="isAdmin == 'true'" class="delete"><i
+                    class="fas fa-trash-alt"></i> Delete</button>
         </div>
-        <app-create-sub-comment *ngIf="rootCommentId === comment.id" (subCommentsEmitter)="refreshedSubComments($event)" (toggleForm)="receiveReplying($event)"
-            [rootCommentId]="rootCommentId" [subComments]="comment.subComments" [isReplying]="replying"></app-create-sub-comment>
-        <app-list-sub-comments [subComments]="subComments ? subComments : comment.subComments"></app-list-sub-comments>
+        <app-create-sub-comment *ngIf="rootCommentId === comment.id"
+            (commentsEmitter)="receiveRefreshedSubComments($event)" (toggleForm)="receiveReplying($event)"
+            [rootCommentId]="rootCommentId" [comments]="comments" [storyId]="storyId"
+            [subComments]="comment.subComments" [isReplying]="replying"></app-create-sub-comment>
+        <app-list-sub-comments [subComments]="comment.subComments"></app-list-sub-comments>
 
     </article>
 </section>

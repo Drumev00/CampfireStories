@@ -35,4 +35,8 @@ export class SubCommentService {
   dislike(id: string) {
     return this.http.get(this.subCommentRoute + `/dislike/${id}`);
   }
+
+  delete(id: string) {
+    return this.http.delete(this.subCommentRoute + `/${id}`);
+  }
 }

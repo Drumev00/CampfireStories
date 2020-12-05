@@ -19,7 +19,6 @@ export class ListCommentsComponent implements OnInit {
 
   replying: boolean;
   rootCommentId: string;
-  subComments: ISubComment[];
 
 
   constructor(private commentService: CommentService, private toastrService: ToastrService) { }
@@ -84,8 +83,9 @@ export class ListCommentsComponent implements OnInit {
     this.replying = $event;
   }
 
-  refreshedSubComments($event) {
-    this.subComments = $event;
+  receiveRefreshedSubComments($event) {
+    this.comments = $event;
+    this.toastrService.success('You successfully replied to a comment!');
   }
 
   get userId() {

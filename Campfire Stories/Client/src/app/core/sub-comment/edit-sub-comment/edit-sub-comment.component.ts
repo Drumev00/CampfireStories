@@ -40,6 +40,7 @@ export class EditSubCommentComponent implements OnInit {
       this.editing = false;
       this.editingEmitter.emit(this.editing);
       this.editedContentEmitter.emit(res)
+      
       this.toastrService.success('You successfully edited a subcomment!');
 
     })

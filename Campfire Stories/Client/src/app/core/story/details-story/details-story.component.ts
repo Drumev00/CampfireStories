@@ -3,10 +3,8 @@ import { StoryService } from 'src/app/services/story/story.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { IStory } from 'src/app/models/IStory';
-import { DatePipe } from '@angular/common';
 import { CommentService } from 'src/app/services/comment/comment.service';
 import { ToastrService } from 'ngx-toastr';
-import { IComment } from 'src/app/models/IComment';
 
 @Component({
   selector: 'app-details-story',
@@ -23,7 +21,6 @@ export class DetailsStoryComponent implements OnInit {
   constructor(
     private storyService: StoryService,
     private route: ActivatedRoute,
-    private datePipe: DatePipe,
     private commentService: CommentService,
     private toastrService: ToastrService) { }
 
@@ -39,13 +36,7 @@ export class DetailsStoryComponent implements OnInit {
       mergeMap(id => this.storyService.getById(id))).subscribe(res => {
         this.story = res;
         this.categories = res['result'].categories.join(' / ');
-        this.story.createdOn = this.datePipe.transform(res['result'].createdOn);
 
-        for (let i = 0; i < this.story['result'].comments.length; i++) {
-          const date = this.story['result'].comments[i].createdOn;
-          this.story['result'].comments[i].createdOn = this.datePipe.transform(date);
-        }
-        
         console.log(this.story)
       })
   }

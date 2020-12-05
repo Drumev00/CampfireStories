@@ -53,6 +53,13 @@
     margin: 0px 15px;
 }
 
+.likes button {
+    background: black;
+    border: 1px solid gray;
+    border-radius: 6px;
+    outline: none;
+}
+
 .sub-comment {
     border-bottom: 1px solid gray;
     margin-top: 10px;
@@ -73,4 +80,20 @@
 .fa-thumbs-down:hover {
     cursor: pointer;
     color: #d95a83;
+}
+
+.delete {
+    outline: none !important;
+    background: red !important;
+    border: none !important;
+    margin-left: 10px !important;
+}
+
+.modal-body {
+    color: red;
+    text-align: center;
+}
+
+.modal-title {
+    color: black;
 }

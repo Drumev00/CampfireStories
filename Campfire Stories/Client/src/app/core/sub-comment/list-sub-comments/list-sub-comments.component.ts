@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ISubComment } from 'src/app/models/ISubComment';
 import { SubCommentService } from 'src/app/services/sub-comment/sub-comment.service';
 import { ToastrService } from 'ngx-toastr';
@@ -56,7 +56,21 @@ export class ListSubCommentsComponent implements OnInit {
     this.subCommentService.dislike(id).subscribe(res => this.toastrService.success('You successfully disliked a subcomment.'));
   }
 
+  deleteSubComment(id: string) {
+    this.subCommentService.delete(id).subscribe(res => {
+      const commentsTemp = this.subComments.slice();
+      const remainedComments = commentsTemp.filter((val) => val.id !== id);
+      this.subComments = remainedComments;
+
+      this.toastrService.success('You deleted a subcomment successfully.')
+    });
+  }
+
   get userId() {
     return localStorage.getItem('userId');
+  }
+
+  get isAdmin() {
+    return localStorage.getItem('isAdmin');
   }
 }
