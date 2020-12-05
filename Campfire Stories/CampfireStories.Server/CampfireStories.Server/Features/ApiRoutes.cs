@@ -65,6 +65,8 @@
 			public const string Create = SubCommentRoute;
 			public const string AllByRootCommentId = SubCommentRoute + "/{rootCommentId}";
 			public const string GetById = SubCommentRoute + "/getOne/{subCommentId}";
+			public const string Like = SubCommentRoute + "/like/{subCommentId}";
+			public const string Dislike = SubCommentRoute + "/dislike/{subCommentId}";
 			public const string Update = SubCommentRoute + "/{subCommentId}";
 			public const string Delete = SubCommentRoute + "/{subCommentId}";
 		}

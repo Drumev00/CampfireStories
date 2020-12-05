@@ -76,5 +76,23 @@
 
 			return Ok(result);
 		}
+
+		[HttpGet]
+		[Route(SubCommentRoutes.Like)]
+		public async Task<ActionResult> Like(string subCommentId)
+		{
+			var result = await this.subCommentsService.Like(subCommentId);
+
+			return Ok(result);
+		}
+
+		[HttpGet]
+		[Route(SubCommentRoutes.Dislike)]
+		public async Task<ActionResult> Dislike(string subCommentId)
+		{
+			var result = await this.subCommentsService.Dislike(subCommentId);
+
+			return Ok(result);
+		}
 	}
 }

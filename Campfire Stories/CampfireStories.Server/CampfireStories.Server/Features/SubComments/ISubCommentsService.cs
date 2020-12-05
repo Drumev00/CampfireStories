@@ -19,5 +19,9 @@
 		Task<ResultModel<bool>> DeleteAllByRootCommentIdAsync(string rootCommentId);
 
 		Task<IndividualSubCommentResponseModel> GetById(string subCommentId);
+
+		Task<bool> Like(string subCommentId);
+
+		Task<bool> Dislike(string subCommentId);
 	}
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IComment } from 'src/app/models/IComment';
 import { ISubComment } from 'src/app/models/ISubComment';
 import { SubCommentService } from 'src/app/services/sub-comment/sub-comment.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-sub-comments',
@@ -15,7 +15,9 @@ export class ListSubCommentsComponent implements OnInit {
   selectedSubCommentId: string;
   newContent: string;
 
-  constructor(private subCommentService: SubCommentService) { }
+  constructor(
+    private subCommentService: SubCommentService,
+    private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     console.log(this.subComments)
@@ -46,6 +48,13 @@ export class ListSubCommentsComponent implements OnInit {
     this.subComments = subCommentsTemp;
   }
 
+  like(id: string) {
+    this.subCommentService.like(id).subscribe(res => this.toastrService.success('You successfully liked a subcomment!'));
+  }
+
+  dislike(id: string) {
+    this.subCommentService.dislike(id).subscribe(res => this.toastrService.success('You successfully disliked a subcomment.'));
+  }
 
   get userId() {
     return localStorage.getItem('userId');

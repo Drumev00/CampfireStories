@@ -128,6 +128,20 @@
 			};
 		}
 
+		public async Task<bool> Dislike(string subCommentId)
+		{
+			var subComment = await this.dbContext
+				.SubComments
+				.Where(sc => sc.Id == subCommentId)
+				.FirstOrDefaultAsync();
+
+			subComment.Dislikes++;
+			this.dbContext.SubComments.Update(subComment);
+			await this.dbContext.SaveChangesAsync();
+
+			return true;
+		}
+
 		public async Task<IEnumerable<SubCommentListingResponseModel>> GetAllByRootCommentId(string rootCommentId)
 		{
 			return await this.dbContext
@@ -166,6 +180,20 @@
 				.FirstOrDefaultAsync();
 
 			return subComment;
+		}
+
+		public async Task<bool> Like(string subCommentId)
+		{
+			var subComment = await this.dbContext
+				.SubComments
+				.Where(sc => sc.Id == subCommentId)
+				.FirstOrDefaultAsync();
+
+			subComment.Likes++;
+			this.dbContext.SubComments.Update(subComment);
+			await this.dbContext.SaveChangesAsync();
+
+			return true;
 		}
 
 		public async Task<ResultModel<string>> UpdateAsync(UpdateSubCommentRequestModel model, string subCommentId, string userId)

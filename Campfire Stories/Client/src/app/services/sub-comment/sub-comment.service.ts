@@ -27,4 +27,12 @@ export class SubCommentService {
   editSubComment(id: string, data) {
     return this.http.put(this.subCommentRoute + `/${id}`, data, { responseType: 'text' });
   }
+
+  like(id: string) {
+    return this.http.get(this.subCommentRoute + `/like/${id}`);
+  }
+
+  dislike(id: string) {
+    return this.http.get(this.subCommentRoute + `/dislike/${id}`);
+  }
 }
