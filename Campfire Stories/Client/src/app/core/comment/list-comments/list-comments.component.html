@@ -19,8 +19,8 @@
             <button (click)="reply(comment.id)">Reply <i class="fas fa-reply"></i></button>
             <p><i (click)="like(comment.id)" class="fas fa-thumbs-up"></i> {{comment.likes}}</p>
             <p><i (click)="dislike(comment.id)" class="fas fa-thumbs-down"></i> {{comment.dislikes}}</p>
-            <button (click)="emitComment(comment.id)" *ngIf="userId === comment.user.userId">Edit</button>
-            <button (click)="deleteComment(comment.id)" *ngIf="isAdmin == 'true'" class="delete">Delete</button>
+            <button (click)="getComment(comment.id)" *ngIf="userId === comment.user.userId"><i class="far fa-edit"></i> Edit</button>
+            <button (click)="deleteComment(comment.id)" *ngIf="isAdmin == 'true'" class="delete"><i class="fas fa-trash-alt"></i> Delete</button>
         </div>
         <app-create-sub-comment *ngIf="rootCommentId === comment.id" (subCommentsEmitter)="refreshedSubComments($event)" (toggleForm)="receiveReplying($event)"
             [rootCommentId]="rootCommentId" [subComments]="comment.subComments" [isReplying]="replying"></app-create-sub-comment>

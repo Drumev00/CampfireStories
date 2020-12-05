@@ -19,4 +19,12 @@ export class SubCommentService {
   getAllByRootCommentId(rootCommentId: string): Observable<ISubComment[]>{
     return this.http.get<ISubComment[]>(this.subCommentRoute + `/${rootCommentId}`);
   }
+
+  getById(id: string): Observable<ISubComment>{
+    return this.http.get<ISubComment>(this.subCommentRoute + `/getOne/${id}`);
+  }
+
+  editSubComment(id: string, data) {
+    return this.http.put(this.subCommentRoute + `/${id}`, data, { responseType: 'text' });
+  }
 }

@@ -12,10 +12,12 @@
 
 		Task<IEnumerable<SubCommentListingResponseModel>> GetAllByRootCommentId(string rootCommentId);
 
-		Task<ResultModel<bool>> UpdateAsync(UpdateSubCommentRequestModel model, string subCommentId, string userId);
+		Task<ResultModel<string>> UpdateAsync(UpdateSubCommentRequestModel model, string subCommentId, string userId);
 
 		Task<ResultModel<bool>> DeleteAsync(string subCommentId, string userId);
 
 		Task<ResultModel<bool>> DeleteAllByRootCommentIdAsync(string rootCommentId);
+
+		Task<IndividualSubCommentResponseModel> GetById(string subCommentId);
 	}
 }

@@ -133,6 +133,8 @@
 			return await this.dbContext
 				.SubComments
 				.Where(c => c.RootCommentId == rootCommentId && !c.IsDeleted)
+				.OrderByDescending(sc => sc.Likes)
+				.ThenBy(sc => sc.CreatedOn)
 				.Select(c => new SubCommentListingResponseModel
 				{
 					Id = c.Id,
@@ -151,7 +153,22 @@
 				.ToListAsync();
 		}
 
-		public async Task<ResultModel<bool>> UpdateAsync(UpdateSubCommentRequestModel model, string subCommentId, string userId)
+		public async Task<IndividualSubCommentResponseModel> GetById(string subCommentId)
+		{
+			var subComment = await this.dbContext
+				.SubComments
+				.Where(sc => sc.Id == subCommentId)
+				.Select(sc => new IndividualSubCommentResponseModel
+				{
+					Id = sc.Id,
+					Content = sc.Content,
+				})
+				.FirstOrDefaultAsync();
+
+			return subComment;
+		}
+
+		public async Task<ResultModel<string>> UpdateAsync(UpdateSubCommentRequestModel model, string subCommentId, string userId)
 		{
 			var subComment = await this.dbContext
 				.SubComments
@@ -159,14 +176,14 @@
 				.FirstOrDefaultAsync();
 			if (subComment == null)
 			{
-				return new ResultModel<bool>
+				return new ResultModel<string>
 				{
 					Errors = { SubCommentErrors.NotFoundOrDeletedSubComment }
 				};
 			}
 			if (userId != subComment.UserId)
 			{
-				return new ResultModel<bool>
+				return new ResultModel<string>
 				{
 					Errors = { UserErrors.UserHaveNoPermissionToUpdate }
 				};
@@ -178,9 +195,9 @@
 			this.dbContext.Update(subComment);
 			await this.dbContext.SaveChangesAsync();
 
-			return new ResultModel<bool>
+			return new ResultModel<string>
 			{
-				Result = true,
+				Result = subComment.Content,
 				Success = true,
 			};
 		}

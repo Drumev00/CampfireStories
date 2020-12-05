@@ -67,5 +67,14 @@
 
 			return Ok(result);
 		}
+
+		[HttpGet]
+		[Route(SubCommentRoutes.GetById)]
+		public async Task<ActionResult> GetById(string subCommentId)
+		{
+			var result = await this.subCommentsService.GetById(subCommentId);
+
+			return Ok(result);
+		}
 	}
 }

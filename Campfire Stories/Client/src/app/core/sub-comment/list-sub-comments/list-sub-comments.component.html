@@ -11,11 +11,15 @@
                 <p class="date">{{subComment.createdOn | date: 'MMM d, yyyy'}}</p>
             </div>
         </div>
-        <p class="content">{{subComment.content}}</p>
+        <p *ngIf="!isEditing || selectedSubCommentId !== subComment.id" class="content">{{subComment.content}}</p>
+        <app-edit-sub-comment *ngIf="isEditing && selectedSubCommentId == subComment.id"
+            [subCommentForEdit]="subCommentForEdit" [editing]="isEditing" (editedContentEmitter)="editedContent($event)"
+            (editingEmitter)="receiveEditing($event)"></app-edit-sub-comment>
         <div class="likes">
             <p><i class="fas fa-thumbs-up"></i> {{subComment.likes}}</p>
             <p><i class="fas fa-thumbs-down"></i> {{subComment.dislikes}}</p>
+            <button (click)="getSubComment(subComment.id)" class="edit" *ngIf="userId === subComment.user.userId">
+                <i class="far fa-edit"></i> Edit</button>
         </div>
     </div>
-
 </section>

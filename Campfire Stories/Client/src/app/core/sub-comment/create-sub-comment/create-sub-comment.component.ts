@@ -36,13 +36,6 @@ export class CreateSubCommentComponent implements OnInit {
       content: this.formGroup.value.content,
     };
 
-    /*this.subCommentService.postSubComment(dataToSend).subscribe(res => {
-      console.log(res);
-      this.isReplying = false;
-      this.toggleForm.emit(this.isReplying);
-      this.toastrService.success('You successfully replied to a comment!');
-    })*/
-
     this.subCommentService.postSubComment(dataToSend).pipe(
       mergeMap(params => this.subCommentService.getAllByRootCommentId(this.rootCommentId)))
       .subscribe(res => {

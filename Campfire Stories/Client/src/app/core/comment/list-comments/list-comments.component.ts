@@ -35,7 +35,7 @@ export class ListCommentsComponent implements OnInit {
     this.commentService.dislike(id).subscribe(res => this.toastrService.success("You successfully disliked a comment!"))
   }
 
-  emitComment(id: string) {
+  getComment(id: string) {
     this.isEditing = true;
 
     this.commentService.getById(id).subscribe(res => {

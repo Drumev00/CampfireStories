@@ -27,7 +27,7 @@
         <img [src]="story['result'].pictureUrl" alt="Story image">
     </section>
     <div class="content">
-        <!--<p [innerHTML]="story['result'].content"></p>-->
+        <p [innerHTML]="story['result'].content"></p>
     </div>
     <div *ngIf="userId !== story['result'].userId" class="rating">
         <div>

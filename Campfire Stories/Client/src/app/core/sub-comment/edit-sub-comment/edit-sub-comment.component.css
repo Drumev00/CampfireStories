@@ -1,0 +1,34 @@
+textarea {
+    margin-left: 14%;
+    background: black;
+    border: none;
+    border-bottom: 2px solid red;
+    outline: none;
+    font-size: 18px;
+    width: 80%;
+}
+
+.btns {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 6%;
+}
+
+.close {
+    color: gray;
+    outline: none;
+}
+
+.save {
+    background: lightgreen;
+    border: none;
+    border-radius: 6px;
+    margin: 0px 15px;
+    padding: 3px 15px;
+    outline: none;
+}
+
+.validations {
+    display: flex;
+    justify-content: center;
+}
