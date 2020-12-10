@@ -15,7 +15,7 @@ export class DetailsStoryComponent implements OnInit {
   storyId: string;
   story: IStory;
   categories: string;
-  isRated: boolean;
+  isRated;
   
 
   constructor(
@@ -26,10 +26,11 @@ export class DetailsStoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetch();
+
   }
 
   fetch() {
-    this.route.params.pipe(map(params => {
+    /*this.route.params.pipe(map(params => {
       this.storyId = params['id'];
       return this.storyId;
     }),
@@ -38,19 +39,33 @@ export class DetailsStoryComponent implements OnInit {
         this.categories = res['result'].categories.join(' / ');
 
         console.log(this.story)
-      })
+      })*/
+
+
+      this.route.params.pipe(map(params => {
+        this.storyId = params['id'];
+        return this.storyId;
+      }),
+        mergeMap(id => this.storyService.getById(id))).pipe(
+          map(res => {
+          this.story = res;
+          this.categories = res['result'].categories.join(' / ');
+          console.log(res)
+          return res['result'].id;
+        }), 
+        mergeMap(id => this.storyService.alreadyRated(id))).subscribe(res => {
+          this.isRated = res;
+        })
   }
 
   rate(rating: number) {
     const dataToSend = {
       storyId: this.storyId,
+      userId: this.userId,
       rating: rating,
     };
     this.storyService.rate(dataToSend).subscribe(res => {
       console.log(res);
-      if (this.storyId === res.storyId && this.userId === res.userId) {
-        this.isRated = true;
-      }
       this.story['result'].rating = res.rating;
       this.story['result'].votes = res.votes;
       this.toastrService.success('You succesfully rated a story!');

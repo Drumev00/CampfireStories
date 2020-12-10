@@ -28,6 +28,10 @@ export class StoryService {
     return this.http.post(this.storyRoute + '/rate', data);
   }
 
+  alreadyRated(storyId: string) {
+    return this.http.get(this.storyRoute + `/rated/${storyId}`);
+  }
+
   getAllById(id: string): Observable<IStory[]> {
     return this.http.get<IStory[]>(this.storyRoute + `/myStories/${id}`);
   }

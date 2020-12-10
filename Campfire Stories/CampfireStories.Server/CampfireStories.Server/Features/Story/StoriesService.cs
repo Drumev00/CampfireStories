@@ -195,6 +195,7 @@
 				{
 					Result = new DetailsStoryResponseModel
 					{
+						Id = s.Id,
 						Title = s.Title,
 						CreatedOn = s.CreatedOn,
 						PictureUrl = s.PictureUrl,
@@ -212,40 +213,6 @@
 				.FirstOrDefaultAsync();
 
 			return story;
-		}
-
-		public async Task<RateStoryResponseModel> Rate(string storyId, int rating)
-		{
-			var story = await this.dbContext
-				.Stories
-				.Where(s => s.Id == storyId)
-				.FirstOrDefaultAsync();
-
-			double actualRating = 0.0;
-			if (story.Rating == 0 && story.Votes == 0)
-			{
-				actualRating = rating;
-			}
-			else
-			{
-				var total = (double)(story.Rating * story.Votes);
-				total += rating;
-				actualRating = (double)(total / (story.Votes + 1));
-			}
-
-			story.Rating = Math.Round(actualRating, 2);
-			story.Votes++;
-
-			this.dbContext.Stories.Update(story);
-			await this.dbContext.SaveChangesAsync();
-
-			return new RateStoryResponseModel
-			{
-				UserId = story.UserId,
-				StoryId = story.Id,
-				Rating = story.Rating,
-				Votes = story.Votes,
-			};
 		}
 
 		public async Task<ResultModel<bool>> UpdateStoryAsync(UpdateStoryRequestModel model, string storyId, string userId)

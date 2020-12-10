@@ -18,7 +18,7 @@
 
 		Task<ResultModel<bool>> DeleteStoryAsync(string storyId, string userId);
 
-		Task<RateStoryResponseModel> Rate(string storyId, int rating);
+		//Task<RateStoryResponseModel> Rate(string storyId, int rating);
 
 		Task<IEnumerable<ListingStoryResponseModel>> GetAllByUserId(string userId);
 

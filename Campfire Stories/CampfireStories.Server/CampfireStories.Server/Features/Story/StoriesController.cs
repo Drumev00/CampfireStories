@@ -8,14 +8,18 @@
 
 	using static ApiRoutes;
 	using Microsoft.AspNetCore.Authorization;
+	using CampfireStories.Server.Features.Rating.Models;
+	using CampfireStories.Server.Features.Rating;
 
 	public class StoriesController : ApiController
 	{
 		private readonly IStoriesService storyService;
+		private readonly IRatingsService ratingsService;
 
-		public StoriesController(IStoriesService storyService)
+		public StoriesController(IStoriesService storyService, IRatingsService ratingsService)
 		{
 			this.storyService = storyService;
+			this.ratingsService = ratingsService;
 		}
 
 		[HttpPost]
@@ -50,7 +54,18 @@
 		[Route(StoryRoutes.Rate)]
 		public async Task<ActionResult> Rate(RateStoryRequestModel model)
 		{
-			var result = await this.storyService.Rate(model.StoryId, model.Rating);
+			var loggedUser = this.User.GetId();
+			var result = await this.ratingsService.Rate(model.StoryId, loggedUser, model.Rating);
+
+			return Ok(result);
+		}
+
+		[HttpGet]
+		[Route(StoryRoutes.Rated)]
+		public async Task<ActionResult> Rated(string storyId)
+		{
+			var loggedUser = this.User.GetId();
+			var result = await this.ratingsService.AlreadyRated(storyId, loggedUser);
 
 			return Ok(result);
 		}

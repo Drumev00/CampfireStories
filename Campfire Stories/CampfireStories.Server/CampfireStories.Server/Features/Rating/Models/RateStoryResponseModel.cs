@@ -1,4 +1,4 @@
-﻿namespace CampfireStories.Server.Features.Story.Models
+﻿namespace CampfireStories.Server.Features.Rating.Models
 {
 	public class RateStoryResponseModel
 	{

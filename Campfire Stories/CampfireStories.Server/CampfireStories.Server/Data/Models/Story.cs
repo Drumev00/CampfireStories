@@ -19,7 +19,8 @@
 			StoryCategories = new HashSet<StoryCategories>();
 			StoryReports = new HashSet<StoryReport>();
 			Comments = new HashSet<Comment>();
-			Rating = 1.0;
+			Rating = 0.0;
+			Ratings = new HashSet<Rating>();
 		}
 
 		[Required]
@@ -50,5 +51,7 @@
 		public virtual ICollection<StoryReport> StoryReports { get; set; }
 
 		public virtual ICollection<StoryCategories> StoryCategories { get; set; }
+
+		public virtual ICollection<Rating> Ratings { get; set; }
 	}
 }

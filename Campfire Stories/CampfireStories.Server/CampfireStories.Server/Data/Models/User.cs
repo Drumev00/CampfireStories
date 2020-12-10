@@ -22,6 +22,7 @@
 			StoryReports = new HashSet<StoryReport>();
 			UserReports = new HashSet<UserReport>();
 			Stories = new HashSet<Story>();
+			Ratings = new HashSet<Rating>();
 		}
 
 		[MinLength(MinBiographyLength)]
@@ -53,5 +54,7 @@
 		public virtual ICollection<UserReport> UserReports { get; set; }
 
 		public virtual ICollection<Story> Stories { get; set; }
+
+		public virtual ICollection<Rating> Ratings { get; set; }
 	}
 }
