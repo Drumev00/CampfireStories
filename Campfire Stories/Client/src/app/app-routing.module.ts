@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'list/category', component: ListCategoriesComponent, canActivate: [AdminGuardService] },
   { path: 'edit/category/:id', component: EditCategoryComponent, canActivate: [AdminGuardService] },
   { path: 'create/story', component: CreateStoryComponent, canActivate: [AuthGuardService] },
-  { path: '', component: ListStoryComponent},
+  { path: '', component: ListStoryComponent },
   { path: 'user/viewProfile/:id', component: ViewProfileComponent, canActivate: [AuthGuardService] },
   { path: 'story/details/:id', component: DetailsStoryComponent },
   { path: 'myStories/:id', component: MyStoriesComponent, canActivate: [AuthGuardService] },

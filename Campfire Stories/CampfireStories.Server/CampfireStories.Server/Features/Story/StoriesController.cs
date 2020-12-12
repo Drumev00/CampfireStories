@@ -6,10 +6,12 @@
 	using Infrastructure;
 	using Features.Story.Models;
 
-	using static ApiRoutes;
 	using Microsoft.AspNetCore.Authorization;
-	using CampfireStories.Server.Features.Rating.Models;
-	using CampfireStories.Server.Features.Rating;
+	using Features.Rating.Models;
+	using Features.Rating;
+
+	using static ApiRoutes;
+	using static Data.Models.Common.Constants.Story;
 
 	public class StoriesController : ApiController
 	{
@@ -73,9 +75,10 @@
 		[HttpGet]
 		[AllowAnonymous]
 		[Route(StoryRoutes.GetAll)]
-		public async Task<ActionResult> GetAllStories()
+		public async Task<ActionResult> GetAllStories(string title, int page = 1)
 		{
-			var result = await this.storyService.GetAll();
+			var result = await this.storyService.GetAll(StoriesPerPage, (page - 1) * StoriesPerPage, title);
+			result.CurrentPage = page;
 
 			return Ok(result);
 		}

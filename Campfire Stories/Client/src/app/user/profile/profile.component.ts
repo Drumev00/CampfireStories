@@ -55,9 +55,9 @@ export class ProfileComponent implements OnInit {
         this.profileForm = this.fb.group({
           'userName': [this.user.userName, [Validators.required]],
           'email': [this.user.email, Validators.required],
-          'biography': [this.user.biography, [Validators.minLength(20)]],
+          'biography': [this.user.biography],
           'createdOn': [this.user.createdOn, [Validators.required]],
-          'displayName': [this.user.displayName, [Validators.minLength(2), Validators.maxLength(50)]],
+          'displayName': [this.user.displayName, [Validators.min(2), Validators.max(50)]],
           'gender': [this.user.gender, [Validators.required]],
         })
         this.profileForm.controls['userName'].disable();
@@ -79,6 +79,10 @@ export class ProfileComponent implements OnInit {
     }
     if (this.selectedFileUrl) {
       userToSend.profilePictureUrl = this.selectedFileUrl;
+      localStorage.setItem('profilePic', this.selectedFileUrl);
+    }
+    else {
+      userToSend.profilePictureUrl = localStorage.getItem('profilePic');
     }
     
     this.usersService.editUser(userId, userToSend).subscribe(data => {
@@ -91,9 +95,7 @@ export class ProfileComponent implements OnInit {
         localStorage.setItem('displayName', this.user.userName);
       }
 
-      localStorage.setItem('profilePic', this.selectedFileUrl);
       this.toastrService.success("You successfully modified your profile!")
-
     });
   }
 

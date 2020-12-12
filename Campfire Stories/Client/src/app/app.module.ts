@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpHeaders, HttpHeaderResponse } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -54,7 +54,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       useClass: ErrorInterceptorService,
       multi: true,
     },
-    StoryService
+    StoryService,
   ],
   bootstrap: [AppComponent]
 })

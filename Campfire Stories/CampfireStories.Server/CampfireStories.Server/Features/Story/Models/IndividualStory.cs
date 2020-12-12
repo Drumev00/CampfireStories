@@ -1,6 +1,6 @@
 ﻿namespace CampfireStories.Server.Features.Story.Models
 {
-	public class ListingStoryResponseModel
+	public class IndividualStory
 	{
 		public string Id { get; set; }
 
@@ -13,7 +13,5 @@
 		public string UserId { get; set; }
 
 		public string UserName { get; set; }
-
-		public int TotalItems { get; set; }
 	}
 }

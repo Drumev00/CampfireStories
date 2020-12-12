@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { IStory } from 'src/app/models/IStory';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,8 +16,8 @@ export class StoryService {
     return this.http.post(this.storyRoute, data);
   }
 
-  getAll(): Observable<IStory[]> {
-    return this.http.get<IStory[]>(this.storyRoute);
+  getAll(params): Observable<IStory[]> {
+    return this.http.get<IStory[]>(this.storyRoute, { params });
   }
 
   getById(id: string): Observable<IStory> {

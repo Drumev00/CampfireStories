@@ -1,7 +1,25 @@
 <h2>Latest Stories:</h2>
+<form [formGroup]="searchForm" (ngSubmit)="retrieveStories()">
+    <div class="list row">
+        <div class="col-md-8 search">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search by title" (keyup)="logg()" formControlName="search"/>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" (click)="retrieveStories()">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <div class=" container-fluid">
     <div class="row ">
-        <section class="col-4" *ngFor="let story of stories">
+        <section class="col-4" *ngFor="let story of stories | paginate: {
+            totalItems: count,
+            currentPage: page,
+            itemsPerPage: pageSize
+        }">
             <div class="title">
                 <h5 [routerLink]="['story', 'details', story.id]">{{story.title}}</h5>
             </div>
@@ -11,13 +29,17 @@
                 </div>
                 <div class="content" [innerHTML]="story.content"></div>
                 <div *ngIf="userId !== story.userId" class="author">
-                    <p>Author:  <a [routerLink]="['user', 'viewProfile', story.userId]">{{story.userName}}</a></p>
+                    <p>Author: <a [routerLink]="['user', 'viewProfile', story.userId]">{{story.userName}}</a></p>
                 </div>
                 <div *ngIf="userId == story.userId" class="author">
-                    <p>Author:  <a [routerLink]="['user', 'profile', story.userId]">{{story.userName}}</a></p>
+                    <p>Author: <a [routerLink]="['user', 'profile', story.userId]">{{story.userName}}</a></p>
                 </div>
                 <button [routerLink]="['story', 'details', story.id]" class="read">Read More</button>
             </section>
         </section>
+        <div class="col-md-12">
+            <pagination-controls class="pagination" previousLabel="Prev" nextLabel="Next" responsive="true">
+            </pagination-controls>
+        </div>
     </div>
 </div>

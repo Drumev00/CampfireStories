@@ -14,6 +14,7 @@
 	using Features.StoryCategories;
 
 	using static Features.Common.Errors;
+	using static Data.Models.Common.Constants.Story;
 	using System.Collections.Generic;
 
 	public class StoriesService : IStoriesService
@@ -121,13 +122,29 @@
 			};
 		}
 
-		// Pagination later on...
-		public async Task<IEnumerable<ListingStoryResponseModel>> GetAll()
+
+		public async Task<ListingPaginationStories> GetAll(int? take, int skip, string title)
 		{
-			return await this.dbContext
+			var total = this.dbContext
 				.Stories
-				.OrderByDescending(s => s.CreatedOn)
-				.Select(s => new ListingStoryResponseModel
+				.Count();
+
+			var query = this.dbContext
+				.Stories
+				.AsQueryable();
+
+			if (!string.IsNullOrWhiteSpace(title))
+			{
+				query = query.Where(s => s.Title.ToLower().Contains(title));
+			}
+
+			if (take.HasValue)
+			{
+				query = query.Take(take.Value);
+			}
+
+			var stories = await query
+				.Select(s => new IndividualStory
 				{
 					Id = s.Id,
 					Title = s.Title,
@@ -137,6 +154,15 @@
 					UserName = s.User.UserName,
 				})
 				.ToListAsync();
+
+			var result = new ListingPaginationStories
+			{
+				TotalItems = total,
+				Stories = stories,
+				TotalPages = (int)Math.Ceiling((double)total / StoriesPerPage),
+			};
+
+			return result;
 		}
 
 		public async Task<IEnumerable<ListingStoryResponseModel>> GetAllByForeignUsername(string username)

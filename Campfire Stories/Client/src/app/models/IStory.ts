@@ -8,5 +8,6 @@ export interface IStory {
     createdOn?: string,
     userId?: string,
     userName?: string,
+    totalItems?: number,
     categories: string[],
 }

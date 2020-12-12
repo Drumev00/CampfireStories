@@ -21,9 +21,6 @@
         <div *ngIf="email.touched && email.errors?.required" class="alert alert-danger alert-biography">
             Your email field is required!
         </div>
-        <div *ngIf="biography.touched && biography.errors?.minlength" class="alert alert-danger alert-biography">
-            Your biography should be atleast 20 characters!
-        </div>
         <div class="row biography">
             <label>Biography</label>
             <textarea type="text" formControlName="biography"></textarea>
@@ -36,10 +33,10 @@
             <label>Display Name</label>
             <input type="text" formControlName="displayName">
         </div>
-        <div *ngIf="displayName.touched && displayName.errors?.minlength" class="alert alert-danger alert-biography">
+        <div *ngIf="displayName.touched && displayName.errors?.min" class="alert alert-danger alert-biography">
             Your display name should be atleast 2 characters!
         </div>
-        <div *ngIf="displayName.touched && displayName.errors?.maxlength" class="alert alert-danger alert-biography">
+        <div *ngIf="displayName.touched && displayName.errors?.max" class="alert alert-danger alert-biography">
             Your display name should be less than 50 characters!
         </div>
         <div class="row">

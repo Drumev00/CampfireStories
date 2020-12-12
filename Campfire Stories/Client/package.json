@@ -24,6 +24,7 @@
     "@tinymce/tinymce-angular": "^4.2.0",
     "bootstrap": "^4.5.0",
     "bootstrap-star-rating": "^4.0.6",
+    "ngx-pagination": "^5.0.0",
     "ngx-toastr": "^13.1.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

@@ -22,6 +22,8 @@
 
 			public const int MinRating = 0;
 			public const int MaxRating = 10;
+
+			public const int StoriesPerPage = 12;
 		}
 
 		public static class StoryReport
