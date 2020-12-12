@@ -63,6 +63,11 @@ export class ListStoryComponent implements OnInit {
         });
   }
 
+  handlePageChange(event): void {
+    this.page = event;
+    this.retrieveStories();
+  }
+
   get userId() {
     return localStorage.getItem('userId');
   }

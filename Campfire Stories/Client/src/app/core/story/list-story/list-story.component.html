@@ -19,7 +19,9 @@
             totalItems: count,
             currentPage: page,
             itemsPerPage: pageSize
-        }">
+        };
+        let i = index
+        "[class.active]="i == currentIndex">
             <div class="title">
                 <h5 [routerLink]="['story', 'details', story.id]">{{story.title}}</h5>
             </div>
@@ -38,7 +40,7 @@
             </section>
         </section>
         <div class="col-md-12">
-            <pagination-controls class="pagination" previousLabel="Prev" nextLabel="Next" responsive="true">
+            <pagination-controls class="pagination" previousLabel="Prev" nextLabel="Next" responsive="true" (pageChange)="handlePageChange($event)">
             </pagination-controls>
         </div>
     </div>

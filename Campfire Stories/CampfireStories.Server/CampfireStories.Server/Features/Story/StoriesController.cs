@@ -75,7 +75,7 @@
 		[HttpGet]
 		[AllowAnonymous]
 		[Route(StoryRoutes.GetAll)]
-		public async Task<ActionResult> GetAllStories(string title, int page = 1)
+		public async Task<ActionResult> GetAllStories(string title, int page)
 		{
 			var result = await this.storyService.GetAll(StoriesPerPage, (page - 1) * StoriesPerPage, title);
 			result.CurrentPage = page;

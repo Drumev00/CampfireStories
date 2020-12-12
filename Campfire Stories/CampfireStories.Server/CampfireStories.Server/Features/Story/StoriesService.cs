@@ -131,6 +131,7 @@
 
 			var query = this.dbContext
 				.Stories
+				.Skip(skip)
 				.AsQueryable();
 
 			if (!string.IsNullOrWhiteSpace(title))
@@ -144,6 +145,7 @@
 			}
 
 			var stories = await query
+				.OrderByDescending(s => s.CreatedOn)
 				.Select(s => new IndividualStory
 				{
 					Id = s.Id,
