@@ -131,6 +131,7 @@
 
 			var query = this.dbContext
 				.Stories
+				.OrderByDescending(s => s.CreatedOn)
 				.Skip(skip)
 				.AsQueryable();
 
@@ -145,7 +146,6 @@
 			}
 
 			var stories = await query
-				.OrderByDescending(s => s.CreatedOn)
 				.Select(s => new IndividualStory
 				{
 					Id = s.Id,
